@@ -9,7 +9,7 @@ const isProd = import.meta.env.PROD;
 
 // https://astro.build/config
 export default defineConfig({
-    site: 'https://locomotive-astro-boilerplate.vercel.app',
+    site: 'https://leostrangman.dev',
     vite: {
         css: {
             preprocessorOptions: {
@@ -46,7 +46,7 @@ export default defineConfig({
         enabled: false
     },
     image: {
-        domains: ['locomotive.ca'],
+        domains: ['leostrangman.dev'],
         remotePatterns: [{ protocol: 'https' }]
     }
 });

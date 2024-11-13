@@ -6,11 +6,18 @@ import Accordion from '@components/Accordion/Accordion.astro';
 
 import Layout from '../layouts/Layout.astro';
 ---
+<Layout title="Leo Strangman.">
+    <!-- Hero Section with Fullscreen Background Image -->
+    <div class="hero">
+        <div class="hero-content">
+            <h1 style = "background-color: white; padding: 5px;" class="u-heading-h2">Leo Strangman.</h1>
+        </div>
+    </div>
 
-<Layout title="Welcome to the Locomotive Astro Boilerplate.">
     <header class="u-container">
         <Icon name="logo" />
-        <h1 class="u-heading-h1">Welcome to the Locomotive Astro Boilerplate.</h1>
+        <h1 class="u-heading-h1">Leo Strangman.</h1>
+        <h3 class="u-heading-h3">Developer</h3>
 
         <button class="shortcut-functions">Test</button>
     </header>
@@ -68,4 +75,28 @@ import Layout from '../layouts/Layout.astro';
         <div class="w-full u-mt-fluid-xl u-h-[50vh] u-bg-black u-opacity-50"></div>
         <div class="w-full u-mt-fluid-xl u-h-[50vh] u-bg-primary"></div>
     </div>
+
+    <style>
+        /* Fullscreen Hero Section */
+        .hero {
+            position: relative;
+            height: 100vh;
+            background-image: url('/src/assets/images/glassrender.png'); /* Set path to your image */
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-content {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            font-size: 2rem;
+        }
+        
+        /* Optional: Make sure content below is visible on top of hero section */
+        header {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
 </Layout>

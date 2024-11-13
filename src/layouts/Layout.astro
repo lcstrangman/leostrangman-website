@@ -24,7 +24,9 @@ const FONTS: string[] = [
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" href="/public/favicon.svg" type="image/svg+xml">
+        <link rel="icon" href="/public/favicon.png" type="image/png">
+        <link rel="icon" href="/public/favicon.ico" type="image/x-icon">
         <meta name="generator" content={Astro.generator} />
 
         <SEO {...seoData} />
@@ -43,6 +45,7 @@ const FONTS: string[] = [
         }
     </head>
     <body>
+        <!--
         <div class="u-container">
             <nav class="u-flex u-gap-gutter u-py-fluid-md">
                 <a href="/">Index</a>
@@ -50,6 +53,7 @@ const FONTS: string[] = [
                 <a href="/post">The post</a>
             </nav>
         </div>
+        -->
 
         <main id="swup" class="transition-fade">
             <div id="content">
