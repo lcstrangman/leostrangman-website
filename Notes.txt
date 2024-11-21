@@ -1,0 +1,9 @@
+make the title text not have a background, add a logo and cool styles, but make it invert the colors behind it
+
+Increase scroll speed
+
+Possibly increase brightness of image
+
+make image change on scroll
+
+make lower part of website scroll over the image
