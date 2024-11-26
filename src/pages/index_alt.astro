@@ -10,9 +10,33 @@ import Layout from '../layouts/Layout.astro';
     <!-- Hero Section with Fullscreen Background Image -->
     <div class="hero" id="parallax-hero">
         <div style = "display: grid;" class="hero-content">
-            <h1 class = "title-font u-text-amber-200 u-mix-blend-exclusion" id = "parallax-name" style = "font-family: Supply;">Leo Strangman.</h1>
-            <div class = "u-text-amber-200 icon-text-wrapper u-mix-blend-difference" style = "font-family: Supply; line-height: 0.9;">
-                <div id = "parallax-logo"><Icon name="icon-amber" class = "icon"/></div>
+            <!--<h1 class = "title-font filter-text copy-overlay" id = "parallax-name">Leo Strangman.</h1> -->
+            <svg height="100%" width="100%" style="display: grid; grid-column: 1; grid-row: 1;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 200" preserveAspectRatio="xMidYMid meet">
+                <defs>
+                    <clipPath id="svg-title-transp">
+                        <text x="15%" y="50%" class="title-font" text-anchor="middle" dominant-baseline="middle">
+                            Leo&nbsp
+                        </text>
+                        <text x="60%" y="50%" class="title-font" text-anchor="middle" dominant-baseline="middle">
+                            Strangman.
+                        </text>
+                    </clipPath>
+                </defs>
+            </svg>
+            <svg height="100%" width="100%" style="display: grid; grid-column: 1; grid-row: 1;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 200" preserveAspectRatio="xMidYMid meet">
+                <g id="svg-title">
+                    <text x="15%" y="50%" class="title-font" text-anchor="middle" dominant-baseline="middle" fill = "white" >
+                        Leo&nbsp
+                    </text>
+                    <text x="60%" y="50%" class="title-font" text-anchor="middle" dominant-baseline="middle" fill = "white" >
+                        Strangman.
+                    </text>
+                </g>
+            </svg>
+            <div id = "svgtitlecopy" class = "clipped title-font"></div>
+            <div id = "svgtitlecopy" class = "svg-title title-font"></div>
+            <div class = "icon-text-wrapper filter-text">
+                <div id = "parallax-logo"><Icon name="icon-white" class = "icon"/></div>
                 <h2 id = "parallax-title">Developer</h2>
             </div>
         </div>
@@ -82,10 +106,12 @@ import Layout from '../layouts/Layout.astro';
             const name = document.getElementById("parallax-name");
             const title = document.getElementById("parallax-title");
             const logo = document.getElementById("parallax-logo");
+            const svg = document.getElementById("svgtitlecopy");
             if (!hero) return; // Exit if the hero element isn't found
             if (!name) return;
             if (!title) return;
             if (!logo) return;
+            if (!svg) return;
     
             document.addEventListener("scroll", () => {
                 const scrollY = window.scrollY;
@@ -95,19 +121,12 @@ import Layout from '../layouts/Layout.astro';
                 name.style.transform = `translateY(${scrollY * -0.2}px)`;
                 title.style.transform = `translateY(${scrollY * -0.1}px)`;
                 logo.style.transform = `translateY(${scrollY * -0.14}px)`;
+                svg.style.transform = `translateY(${scrollY * -0.2}px)`;
             });
         });
     </script>
 
     <style>
-
-        @font-face {
-            font-family: 'Supply'; /* Choose a custom name */
-            src: url('/public/fonts/PPSupplySans-Regular.otf') format('opentype'); /* Path to the font */
-            font-weight: 400; /* Specify the weight (e.g., 400 for regular) */
-            font-style: normal; /* Specify style: normal, italic, etc. */
-        }
-
         .hero {
             position: relative;
             height: 100vh;
@@ -130,6 +149,13 @@ import Layout from '../layouts/Layout.astro';
         header {
             position: relative;
             z-index: 2;
+        }
+        .filter-text {
+            color: white;
+            z-index: 3;
+            position: relative;
+            mix-blend-mode: difference;
+            /*backdrop-filter: hue-rotate(90deg);*/
         }
 
         .icon-text-wrapper {
@@ -158,5 +184,28 @@ import Layout from '../layouts/Layout.astro';
             }
         }
 
+        .copy-overlay {
+            grid-column: 1; 
+            grid-row: 1;
+        }
+
+        .clipped {
+            clip-path: url(#svg-title-transp);
+            background: rgba(255, 255, 255, 0);
+            backdrop-filter: blur(3px);
+            z-index: 2; /* Behind text */
+            grid-column: 1;
+            grid-row: 1;
+        }
+
+        .svg-title {
+            color: white;
+            position: relative;
+            z-index: 2; /* Behind text */
+            grid-column: 1;
+            grid-row: 1;
+        }
+
     </style>
 </Layout>
+

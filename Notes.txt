@@ -1,9 +1,17 @@
-make the title text not have a background, add a logo and cool styles, but make it invert the colors behind it
-
 Increase scroll speed
 
 Possibly increase brightness of image
 
 make image change on scroll
 
-make lower part of website scroll over the image
+Baillat studio hamburger menu
+
+HOVER OVER TITLE TEXT:
+Use something like Hikaru Mono to obfuscate text for a second on hover
+
+        
+Title color options for exclusion:
+Cyan
+plum
+burlywood
+rgb(253 230 138)

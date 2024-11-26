@@ -5,19 +5,21 @@
 * This injects Tailwind's base styles and any base styles registered by
 * plugins.
 */
-@tailwind base;
+@import "/node_modules/tailwindcss/base.css";
 
 /**
 * This injects Tailwind's component classes and any component classes
 * registered by plugins.
 */
-@tailwind components;
+@import "/node_modules/tailwindcss/components.css";
+
 
 /**
 * This injects Tailwind's utility classes and any utility classes registered
 * by plugins.
 */
-@tailwind utilities;
+@import "/node_modules/tailwindcss/utilities.css";
+
 
 // ==========================================================================
 // Fonts imports
