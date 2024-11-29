@@ -6,12 +6,14 @@ import Accordion from '@components/Accordion/Accordion.astro';
 
 import Layout from '../layouts/Layout.astro';
 ---
+
+
 <Layout title="Leo Strangman.">
     <!-- Hero Section with Fullscreen Background Image -->
     <div class="hero" id="parallax-hero">
         <div style = "display: grid;" class="hero-content">
             <h1 class = "title-font u-text-amber-200 u-mix-blend-exclusion" id = "parallax-name" style = "font-family: Supply;">Leo Strangman.</h1>
-            <div class = "u-text-amber-200 icon-text-wrapper u-mix-blend-difference" style = "font-family: Supply; line-height: 0.9;">
+            <div class = "u-text-amber-200 icon-text-wrapper u-mix-blend-difference" style = "font-family: Supply;">
                 <div id = "parallax-logo"><Icon name="icon-amber" class = "icon"/></div>
                 <h2 id = "parallax-title">Developer</h2>
             </div>
@@ -82,19 +84,47 @@ import Layout from '../layouts/Layout.astro';
             const name = document.getElementById("parallax-name");
             const title = document.getElementById("parallax-title");
             const logo = document.getElementById("parallax-logo");
+            const totalFrames = 60; // Number of frames
+            const folder = "colorshhift";
+
+            for (let i = 1; i <= totalFrames; i++) {
+                const paddedIndex = `00${i}`; // Adds leading zeros to make it 3 digits (e.g., 001, 002, ...)
+                const link = document.createElement('link');
+                link.rel = 'preload';
+                link.as = 'image';
+                link.href = `/src/assets/images/${folder}/${paddedIndex}.png`;
+                document.head.appendChild(link);
+            }
+
             if (!hero) return; // Exit if the hero element isn't found
             if (!name) return;
             if (!title) return;
             if (!logo) return;
-    
+
+            const heroHeight = hero.offsetHeight; // Height of the hero section
+            let currentFrame = 1;
+
+            const updateFrame = (frame: number) => {
+                // Format the frame number with leading zeros (e.g., 001, 002, ..., 060)
+                const paddedFrame = `00${frame}`;
+                hero.style.backgroundImage = `url('/src/assets/images/${folder}/${paddedFrame}.png')`;
+            };
+
             document.addEventListener("scroll", () => {
                 const scrollY = window.scrollY;
-    
+                const scrollProgress = Math.min(scrollY / heroHeight, 1); // Scroll progress (0 to 1)
+                const newFrame = Math.min(Math.floor(scrollProgress * totalFrames) + 1, totalFrames);
+
+                //if (newFrame !== currentFrame) {
+                 //   currentFrame = newFrame;
+                  //  updateFrame(currentFrame);
+                //}
+
                 // Adjust background position based on scroll position
                 hero.style.backgroundPositionY = `${scrollY * 0.5}px`; // Adjust multiplier for effect strength
-                name.style.transform = `translateY(${scrollY * -0.2}px)`;
-                title.style.transform = `translateY(${scrollY * -0.1}px)`;
-                logo.style.transform = `translateY(${scrollY * -0.14}px)`;
+                name.style.transform = `translateY(${scrollY * -0.27}px)`;
+                title.style.transform = `translateY(${scrollY * -0.15}px)`;
+                logo.style.transform = `translateY(${scrollY * -0.2}px)`;
             });
         });
     </script>
@@ -111,7 +141,7 @@ import Layout from '../layouts/Layout.astro';
         .hero {
             position: relative;
             height: 100vh;
-            background-image: url('/src/assets/images/glassrender.png'); /* Path to your image */
+            background-image: url('/src/assets/images/glassrender3.png'); /* Path to your image */
             background-size: cover;
             background-position: center; /* Initial position */
             background-attachment: scroll; /* Allows dynamic updates with JavaScript */
@@ -142,7 +172,7 @@ import Layout from '../layouts/Layout.astro';
 
         .icon {
             width: 2.5em;
-            height: 2.5em;
+            height: 2.65em;
             z-index: 2;
             position: relative;
         }
@@ -157,6 +187,5 @@ import Layout from '../layouts/Layout.astro';
                 font-size: 4em;
             }
         }
-
     </style>
 </Layout>

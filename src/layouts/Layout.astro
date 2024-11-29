@@ -17,6 +17,7 @@ const FONTS: string[] = [
     // 'WebfontRegular.woff2',
     // 'WebfontBold.woff2',
 ];
+const scriptUrl = new URL('/src/scripts/index_script.js', import.meta.url).href;
 ---
 
 <!doctype html>
@@ -28,6 +29,7 @@ const FONTS: string[] = [
         <link rel="icon" href="/favicon.png" type="image/png">
         <link rel="icon" href="/favicon.ico" type="image/x-icon">
         <meta name="generator" content={Astro.generator} />
+        <script src={scriptUrl} defer></script>
 
         <SEO {...seoData} />
 
