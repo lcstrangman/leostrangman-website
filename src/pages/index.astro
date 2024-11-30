@@ -98,6 +98,7 @@ import Layout from '../layouts/Layout.astro';
             const name = document.getElementById("parallax-name");
             const title = document.getElementById("parallax-title");
             const logo = document.getElementById("parallax-logo");
+            const originalText = name.textContent;
             //Folder containing animation images
             const folder = "animation";
             //Info for the canvas logic
@@ -186,8 +187,6 @@ import Layout from '../layouts/Layout.astro';
 
             // Function to apply the glitch effect
             function glitchText() {
-                const originalText = name.textContent;
-
                 // Create the glitch effect by rapidly shuffling the letters of each word
                 glitchInterval = setInterval(() => {
                     name.textContent = shuffleText(originalText);  // Shuffle letters of each word independently

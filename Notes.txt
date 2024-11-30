@@ -6,14 +6,6 @@ make image change on scroll
 
 Baillat studio hamburger menu
 
-HOVER OVER TITLE TEXT:
-Use something like Hikaru Mono to obfuscate text for a second on hover
-
-BACKGROUND ANIMATION:
-Have light rays shining through the glass blocks
-When scrolling down, move the light rays upward in the animation
-OR, ALTERNATIVELY, MAKE MORE BUILDING LIGHTS FADE IN AS YOU SCROLL DOWN
-
 PAGE LOAD:
 When loading any page, give some sort of animation
 Make it be my name/logo and the developer text, maybe location or something
