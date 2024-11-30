@@ -6,134 +6,232 @@ import Accordion from '@components/Accordion/Accordion.astro';
 
 import Layout from '../layouts/Layout.astro';
 ---
-
-
 <Layout title="Leo Strangman.">
-    <!-- Hero Section with Fullscreen Background Image -->
+    <!-- Hero Section Container -->
     <div class="hero" id="parallax-hero">
-        <div style = "display: grid;" class="hero-content">
-            <h1 class = "title-font u-text-amber-200 u-mix-blend-exclusion" id = "parallax-name" style = "font-family: Supply;">Leo Strangman.</h1>
-            <div class = "u-text-amber-200 icon-text-wrapper u-mix-blend-difference" style = "font-family: Supply;">
-                <div id = "parallax-logo"><Icon name="icon-amber" class = "icon"/></div>
+         <!-- Fullscreen background image as canvas -->
+        <canvas class = "parallax-canvas" id = "parallax-canvas"></canvas>
+         <!-- Text/svg logo in hero section -->
+        <div class="hero-content">
+             <!-- Name title text -->
+            <h1 class = "title-font u-text-amber-200 u-mix-blend-exclusion" id = "parallax-name">Leo Strangman.</h1>
+             <!-- Secondary heading text/svg -->
+            <div class = "icon-text-wrapper u-text-amber-200 u-mix-blend-exclusion">
+                <div id = "parallax-logo"><Icon name="icon-amber-supply" class = "icon"/></div>
                 <h2 id = "parallax-title">Developer</h2>
             </div>
         </div>
     </div>
 
-    <header class="u-container">
-        <button class="shortcut-functions">Test</button>
-    </header>
+     <!-- Div to correctly display parallax effect with background sliding over image -->
+    <div class = "u-bg-white u-z-2 u-relative">
+        <header class="u-container">
+            <button class="shortcut-functions">Test</button>
+        </header>
 
-    <div class="u-container u-mt-fluid-xl">
-        <div class="u-grid u-grid-cols-12 u-gap-gutter">
-            <div class="u-col-span-full u-text-body md:u-col-span-4">
-                <Wysiwyg>
-                    <Fragment
-                        set:html={`<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque quam, nam omnis sunt laudantium tenetur obcaecati? Inventore eos vitae id repellat cum possimus voluptates nam voluptatum, assumenda, atque nesciunt debitis?</p>`}
-                    />
-                </Wysiwyg>
-
-                <Button href="/about" class="u-mt-fluid-s"> Learn More </Button>
-            </div>
-
-            <div class="u-col-span-full u-text-body md:u-col-span-4">
-                <Wysiwyg tag="article">
-                    <Fragment
-                        set:html={`<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque quam, nam omnis sunt laudantium tenetur obcaecati? Inventore eos vitae id repellat cum possimus voluptates nam voluptatum, assumenda, atque nesciunt debitis?</p>`}
-                    />
-                    <Button href="https://google.ca" target="_blank" class="u-mt-fluid-s">
-                        Visit Us
-                    </Button>
-                </Wysiwyg>
-            </div>
-
-            <div class="u-col-span-full u-text-body md:u-col-span-4">
-                <Wysiwyg>
-                    <Fragment
-                        set:html={`<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque quam, nam omnis sunt laudantium tenetur obcaecati? Inventore eos vitae id repellat cum possimus voluptates nam voluptatum, assumenda, atque nesciunt debitis?</p>`}
-                    />
-                </Wysiwyg>
-            </div>
-
-            <div class="u-col-span-full u-text-body md:u-col-span-4">
-                <Accordion label="Accordion summary">
+        <div class="u-container u-mt-fluid-xl">
+            <div class="u-grid u-grid-cols-12 u-gap-gutter">
+                <div class="u-col-span-full u-text-body md:u-col-span-4">
                     <Wysiwyg>
                         <Fragment
                             set:html={`<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque quam, nam omnis sunt laudantium tenetur obcaecati? Inventore eos vitae id repellat cum possimus voluptates nam voluptatum, assumenda, atque nesciunt debitis?</p>`}
                         />
                     </Wysiwyg>
-                </Accordion>
-                <Accordion label="Accordion summary">
+
+                    <Button href="/about" class="u-mt-fluid-s"> Learn More </Button>
+                </div>
+
+                <div class="u-col-span-full u-text-body md:u-col-span-4">
+                    <Wysiwyg tag="article">
+                        <Fragment
+                            set:html={`<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque quam, nam omnis sunt laudantium tenetur obcaecati? Inventore eos vitae id repellat cum possimus voluptates nam voluptatum, assumenda, atque nesciunt debitis?</p>`}
+                        />
+                        <Button href="https://google.ca" target="_blank" class="u-mt-fluid-s">
+                            Visit Us
+                        </Button>
+                    </Wysiwyg>
+                </div>
+
+                <div class="u-col-span-full u-text-body md:u-col-span-4">
                     <Wysiwyg>
                         <Fragment
                             set:html={`<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque quam, nam omnis sunt laudantium tenetur obcaecati? Inventore eos vitae id repellat cum possimus voluptates nam voluptatum, assumenda, atque nesciunt debitis?</p>`}
                         />
                     </Wysiwyg>
-                </Accordion>
+                </div>
+
+                <div class="u-col-span-full u-text-body md:u-col-span-4">
+                    <Accordion label="Accordion summary">
+                        <Wysiwyg>
+                            <Fragment
+                                set:html={`<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque quam, nam omnis sunt laudantium tenetur obcaecati? Inventore eos vitae id repellat cum possimus voluptates nam voluptatum, assumenda, atque nesciunt debitis?</p>`}
+                            />
+                        </Wysiwyg>
+                    </Accordion>
+                    <Accordion label="Accordion summary">
+                        <Wysiwyg>
+                            <Fragment
+                                set:html={`<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque quam, nam omnis sunt laudantium tenetur obcaecati? Inventore eos vitae id repellat cum possimus voluptates nam voluptatum, assumenda, atque nesciunt debitis?</p>`}
+                            />
+                        </Wysiwyg>
+                    </Accordion>
+                </div>
             </div>
+
+            <!-- Placeholder -->
+            <div class="w-full u-mt-fluid-xl u-h-[50vh] u-bg-black u-opacity-50"></div>
+            <div class="w-full u-mt-fluid-xl u-h-[50vh] u-bg-primary"></div>
         </div>
-
-        <!-- Placeholder -->
-        <div class="w-full u-mt-fluid-xl u-h-[50vh] u-bg-black u-opacity-50"></div>
-        <div class="w-full u-mt-fluid-xl u-h-[50vh] u-bg-primary"></div>
     </div>
 
-    <script>
+    <script type="module">
+        //Imports for gsap to setup animation for the cover image
+        import gsap from '../../node_modules/gsap';
+        import { ScrollTrigger } from '../../node_modules/gsap/ScrollTrigger';
+        gsap.registerPlugin(ScrollTrigger);
+
+        //Run on content loaded
         document.addEventListener("DOMContentLoaded", () => {
+            //Load in elements from HTML
+            const canvas = document.getElementById("parallax-canvas");
             const hero = document.getElementById("parallax-hero");
             const name = document.getElementById("parallax-name");
             const title = document.getElementById("parallax-title");
             const logo = document.getElementById("parallax-logo");
-            const totalFrames = 60; // Number of frames
-            const folder = "colorshhift";
+            //Folder containing animation images
+            const folder = "animation";
+            //Info for the canvas logic
+            const context = canvas.getContext("2d");
+            const frameCount = 60;
+            canvas.width = 2560;
+            canvas.height = 1440;
 
-            for (let i = 1; i <= totalFrames; i++) {
-                const paddedIndex = `00${i}`; // Adds leading zeros to make it 3 digits (e.g., 001, 002, ...)
-                const link = document.createElement('link');
-                link.rel = 'preload';
-                link.as = 'image';
-                link.href = `/src/assets/images/${folder}/${paddedIndex}.png`;
-                document.head.appendChild(link);
-            }
+            //Ensure that all elements exist
+            if (!hero || !name || !title || !logo || !canvas || !context) { return; }
 
-            if (!hero) return; // Exit if the hero element isn't found
-            if (!name) return;
-            if (!title) return;
-            if (!logo) return;
+            console.clear();
+            
+            //Frame file paths
+            const currentFrame = index => (
+                `/assets/images/${folder}/${(index + 1).toString().padStart(4, '0')}.webp`
+            );
 
-            const heroHeight = hero.offsetHeight; // Height of the hero section
-            let currentFrame = 1;
-
-            const updateFrame = (frame: number) => {
-                // Format the frame number with leading zeros (e.g., 001, 002, ..., 060)
-                const paddedFrame = `00${frame}`;
-                hero.style.backgroundImage = `url('/src/assets/images/${folder}/${paddedFrame}.png')`;
+            const images = []
+            const glassrender = {
+                frame: 0
             };
 
+            //Preload images
+            for (let i = 0; i < frameCount; i++) {
+                const img = new Image();
+                img.src = currentFrame(i);
+                images.push(img);
+            }
+
+            //Gsap function to allow for animation
+            gsap.to(glassrender, {
+                frame: frameCount - 1,
+                snap: "frame",
+                ease: "none",
+                scrollTrigger: {
+                    scrub: 0,
+                    start: "top top",
+                    end: "center center"
+                },
+                onUpdate: render // use animation onUpdate instead of scrollTrigger's onUpdate
+            });
+
+            images[0].onload = render;
+
+            //Rendering function to render correct frame and size on canvas
+            function render() {
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Calculate the scaling factor based on the canvas size
+                const scaleX = canvas.width / images[glassrender.frame].width;
+                const scaleY = canvas.height / images[glassrender.frame].height;
+
+                // Scale the image to fill the canvas without distortion (aspect ratio)
+                const scale = Math.max(scaleX, scaleY) * 1; // Choose the smaller scale to preserve aspect ratio
+                
+                const x = (canvas.width - images[glassrender.frame].width * scale) / 2; // Center horizontally
+                const y = (canvas.height - images[glassrender.frame].height * scale) / 2; // Center vertically
+                
+                context.drawImage(images[glassrender.frame], x, y, images[glassrender.frame].width * scale, images[glassrender.frame].height * scale); 
+            }
+            
+            function shuffleText(text) {
+                // Split the text into words and handle punctuation
+                const words = text.split(' ').map(word => {
+                    // Separate letters and punctuation within each word
+                    const letters = word.replace(/[^a-zA-Z]/g, '');  // Only alphabetic characters
+                    const punctuation = word.replace(/[a-zA-Z]/g, '');  // Only non-alphabetic characters (punctuation)
+
+                    // Shuffle the letters
+                    let shuffledLetters = letters.split('');
+                    for (let i = shuffledLetters.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [shuffledLetters[i], shuffledLetters[j]] = [shuffledLetters[j], shuffledLetters[i]];
+                    }
+
+                    // Return shuffled letters followed by punctuation
+                    return shuffledLetters.join('') + punctuation;
+                });
+
+                // Join the words back with spaces
+                return words.join(' ');
+            }
+
+            let glitchInterval;
+
+            // Function to apply the glitch effect
+            function glitchText() {
+                const originalText = name.textContent;
+
+                // Create the glitch effect by rapidly shuffling the letters of each word
+                glitchInterval = setInterval(() => {
+                    name.textContent = shuffleText(originalText);  // Shuffle letters of each word independently
+                }, 50);  // Shuffle every 50ms for faster effect
+
+                setTimeout(() => {
+                    clearInterval(glitchInterval);  // Stop the glitch effect after 500ms
+                    name.textContent = originalText;  // Reset back to the original text
+                }, 500);  // Duration of glitch effect (500ms)
+            }
+
+            // Trigger the glitch effect on mouse enter
+            name.addEventListener("mouseenter", glitchText);
+
+            // Immediately reset the text on mouse leave
+            name.addEventListener("mouseleave", () => {
+                clearInterval(glitchInterval);  // Stop the glitch effect immediately
+                name.textContent = name.textContent; // Reset to original text
+            });
+
+            
+            //Move hero page text on scroll
             document.addEventListener("scroll", () => {
                 const scrollY = window.scrollY;
-                const scrollProgress = Math.min(scrollY / heroHeight, 1); // Scroll progress (0 to 1)
-                const newFrame = Math.min(Math.floor(scrollProgress * totalFrames) + 1, totalFrames);
-
-                //if (newFrame !== currentFrame) {
-                 //   currentFrame = newFrame;
-                  //  updateFrame(currentFrame);
-                //}
-
-                // Adjust background position based on scroll position
-                hero.style.backgroundPositionY = `${scrollY * 0.5}px`; // Adjust multiplier for effect strength
+                
+                canvas.style.transform = `translateY(${scrollY * 0.5}px)`;
                 name.style.transform = `translateY(${scrollY * -0.27}px)`;
                 title.style.transform = `translateY(${scrollY * -0.15}px)`;
                 logo.style.transform = `translateY(${scrollY * -0.2}px)`;
             });
         });
-    </script>
+      </script>
 
     <style>
 
+        /*Remove horizontal scrolling in some browsers caused by canvas image*/
+        html body {
+            overflow-x: hidden;
+        }
+
+        /* Custom title font using free trial license from Pangram Pangram Foundry: https://pangrampangram.com/pages/faq*/
         @font-face {
             font-family: 'Supply'; /* Choose a custom name */
-            src: url('/public/fonts/PPSupplySans-Regular.otf') format('opentype'); /* Path to the font */
+            src: url('/fonts/PPSupplySans-Regular.woff2') format('woff2'); /* Path to the font */
             font-weight: 400; /* Specify the weight (e.g., 400 for regular) */
             font-style: normal; /* Specify style: normal, italic, etc. */
         }
@@ -141,11 +239,19 @@ import Layout from '../layouts/Layout.astro';
         .hero {
             position: relative;
             height: 100vh;
-            background-image: url('/src/assets/images/glassrender3.png'); /* Path to your image */
+            background-image: url('assets/images/animation/0001.webp');
             background-size: cover;
             background-position: center; /* Initial position */
             background-attachment: scroll; /* Allows dynamic updates with JavaScript */
             z-index: 0;
+        }
+
+        .parallax-canvas {
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            z-index: -1;
+            position: relative;
         }
 
 
@@ -154,12 +260,7 @@ import Layout from '../layouts/Layout.astro';
             bottom: 20px;
             left: 20px;
             font-size: 2rem;
-        }
-
-        /* Optional: Make sure content below is visible on top of hero section */
-        header {
-            position: relative;
-            z-index: 2;
+            display: grid;
         }
 
         .icon-text-wrapper {
@@ -168,6 +269,7 @@ import Layout from '../layouts/Layout.astro';
             gap: 0.5em; /* Space between icon and text */
             padding-left: 0.3em;
             padding-bottom: 0.3em;
+            font-family: 'Supply';
         }
 
         .icon {
@@ -180,8 +282,15 @@ import Layout from '../layouts/Layout.astro';
         .title-font {
             font-size: 17.5vw;
             line-height: 1.2;
+            font-family: 'Supply';
         }
 
+        ::selection {
+            color: rgb(253 230 138);
+            background: black;
+        }
+
+        /* Limit text size on larger screens */
         @media (min-width: 720px) {
             .title-font {
                 font-size: 4em;
@@ -189,3 +298,4 @@ import Layout from '../layouts/Layout.astro';
         }
     </style>
 </Layout>
+

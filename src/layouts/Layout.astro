@@ -3,6 +3,8 @@ import '@styles/main.scss';
 import { SEO } from 'astro-seo';
 import { defaultSeo } from '@data/seo';
 import { getSeo } from '@scripts/utils/seo';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 interface Props {
     title: string;
@@ -14,10 +16,10 @@ const { title, seo = {} } = Astro.props;
 const seoData = getSeo(seo, defaultSeo, title);
 
 const FONTS: string[] = [
+    'PPSupplySans-Regular.woff2'
     // 'WebfontRegular.woff2',
     // 'WebfontBold.woff2',
 ];
-const scriptUrl = new URL('/src/scripts/index_script.js', import.meta.url).href;
 ---
 
 <!doctype html>
@@ -29,7 +31,6 @@ const scriptUrl = new URL('/src/scripts/index_script.js', import.meta.url).href;
         <link rel="icon" href="/favicon.png" type="image/png">
         <link rel="icon" href="/favicon.ico" type="image/x-icon">
         <meta name="generator" content={Astro.generator} />
-        <script src={scriptUrl} defer></script>
 
         <SEO {...seoData} />
 
@@ -56,6 +57,7 @@ const scriptUrl = new URL('/src/scripts/index_script.js', import.meta.url).href;
             </nav>
         </div>
         -->
+        
 
         <main id="swup" class="transition-fade">
             <div id="content">
