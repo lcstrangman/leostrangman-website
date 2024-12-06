@@ -139,7 +139,7 @@ import Layout from '../layouts/Layout.astro';
                     start: "top top",
                     end: "center center"
                 },
-                onUpdate: render // use animation onUpdate instead of scrollTrigger's onUpdate
+                onUpdate: render, // use animation onUpdate instead of scrollTrigger's onUpdate
             });
 
             images[0].onload = render;
@@ -147,18 +147,7 @@ import Layout from '../layouts/Layout.astro';
             //Rendering function to render correct frame and size on canvas
             function render() {
                 context.clearRect(0, 0, canvas.width, canvas.height);
-                
-                // Calculate the scaling factor based on the canvas size
-                const scaleX = canvas.width / images[glassrender.frame].width;
-                const scaleY = canvas.height / images[glassrender.frame].height;
-
-                // Scale the image to fill the canvas without distortion (aspect ratio)
-                const scale = Math.max(scaleX, scaleY) * 1; // Choose the smaller scale to preserve aspect ratio
-                
-                const x = (canvas.width - images[glassrender.frame].width * scale) / 2; // Center horizontally
-                const y = (canvas.height - images[glassrender.frame].height * scale) / 2; // Center vertically
-                
-                context.drawImage(images[glassrender.frame], x, y, images[glassrender.frame].width * scale, images[glassrender.frame].height * scale); 
+                context.drawImage(images[glassrender.frame], 0, 0);
             }
             
             function shuffleText(text) {
@@ -297,4 +286,5 @@ import Layout from '../layouts/Layout.astro';
         }
     </style>
 </Layout>
+
 
