@@ -1,15 +1,24 @@
 Increase scroll speed
 
-Possibly increase brightness of image
-
-make image change on scroll
-
 Baillat studio hamburger menu
+
+Override scroll bar
 
 PAGE LOAD:
 When loading any page, give some sort of animation
 Make it be my name/logo and the developer text, maybe location or something
 Have the letters distort/rearrange while it happens, make a full-screen thing that animates in and out
+Maybe while doing this have it cycle through the canvas quickly just to hide that being an issue
+
+OTHER INTERESTING IDEAS:
+Custom mouse cursor
+Mouse trail effect
+Page progress bar
+Hover over images/elements like sayhito-atlas.com
+
+
+FIXES:
+Issues upon going back to the page, everything 
 
         
 Title color options for exclusion:

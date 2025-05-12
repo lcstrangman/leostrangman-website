@@ -1,20 +1,23 @@
 ---
 import Button from '@components/Button/Button.astro';
 import Icon from '@components/Icon/Icon.astro';
+import Image from '@components/Image/Image.astro';
 import Wysiwyg from '@components/Wysiwyg/Wysiwyg.astro';
 import Accordion from '@components/Accordion/Accordion.astro';
 
 import Layout from '../layouts/Layout.astro';
 ---
 <Layout title="Leo Strangman.">
+
     <!-- Hero Section Container -->
-    <div class="hero" id="parallax-hero">
+    <div class="hero page-background" id="parallax-hero">
          <!-- Fullscreen background image as canvas -->
         <canvas class = "parallax-canvas" id = "parallax-canvas"></canvas>
          <!-- Text/svg logo in hero section -->
         <div class="hero-content">
              <!-- Name title text -->
             <h1 class = "title-font u-text-amber-200 u-mix-blend-exclusion" id = "parallax-name">Leo Strangman.</h1>
+            <h1 class = "title-font parallax-name-copy" id = "parallax-name-copy">Leo Strangman.</h1>
              <!-- Secondary heading text/svg -->
             <div class = "icon-text-wrapper u-text-amber-200 u-mix-blend-exclusion">
                 <div id = "parallax-logo"><Icon name="icon-amber-supply" class = "icon"/></div>
@@ -24,63 +27,53 @@ import Layout from '../layouts/Layout.astro';
     </div>
 
      <!-- Div to correctly display parallax effect with background sliding over image -->
-    <div class = "u-bg-white u-z-2 u-relative">
-        <header class="u-container">
-            <button class="shortcut-functions">Test</button>
-        </header>
+    <div class = "page-background u-z-2 u-relative">
 
-        <div class="u-container u-mt-fluid-xl">
-            <div class="u-grid u-grid-cols-12 u-gap-gutter">
-                <div class="u-col-span-full u-text-body md:u-col-span-4">
-                    <Wysiwyg>
-                        <Fragment
-                            set:html={`<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque quam, nam omnis sunt laudantium tenetur obcaecati? Inventore eos vitae id repellat cum possimus voluptates nam voluptatum, assumenda, atque nesciunt debitis?</p>`}
-                        />
-                    </Wysiwyg>
-
-                    <Button href="/about" class="u-mt-fluid-s"> Learn More </Button>
-                </div>
-
-                <div class="u-col-span-full u-text-body md:u-col-span-4">
-                    <Wysiwyg tag="article">
-                        <Fragment
-                            set:html={`<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque quam, nam omnis sunt laudantium tenetur obcaecati? Inventore eos vitae id repellat cum possimus voluptates nam voluptatum, assumenda, atque nesciunt debitis?</p>`}
-                        />
-                        <Button href="https://google.ca" target="_blank" class="u-mt-fluid-s">
-                            Visit Us
-                        </Button>
-                    </Wysiwyg>
-                </div>
-
-                <div class="u-col-span-full u-text-body md:u-col-span-4">
-                    <Wysiwyg>
-                        <Fragment
-                            set:html={`<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque quam, nam omnis sunt laudantium tenetur obcaecati? Inventore eos vitae id repellat cum possimus voluptates nam voluptatum, assumenda, atque nesciunt debitis?</p>`}
-                        />
-                    </Wysiwyg>
-                </div>
-
-                <div class="u-col-span-full u-text-body md:u-col-span-4">
-                    <Accordion label="Accordion summary">
-                        <Wysiwyg>
-                            <Fragment
-                                set:html={`<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque quam, nam omnis sunt laudantium tenetur obcaecati? Inventore eos vitae id repellat cum possimus voluptates nam voluptatum, assumenda, atque nesciunt debitis?</p>`}
-                            />
-                        </Wysiwyg>
-                    </Accordion>
-                    <Accordion label="Accordion summary">
-                        <Wysiwyg>
-                            <Fragment
-                                set:html={`<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque quam, nam omnis sunt laudantium tenetur obcaecati? Inventore eos vitae id repellat cum possimus voluptates nam voluptatum, assumenda, atque nesciunt debitis?</p>`}
-                            />
-                        </Wysiwyg>
-                    </Accordion>
-                </div>
+        <div class="u-container u-mt-fluid-xl u-pt-2">
+            <div class="w-full u-mt-4 u-h-[50vh] heading-box u-text-center u-flex u-items-center u-justify-center">
+                <p class = "glitchable heading-box-text u-tracking-wide">PROJECTS</p>
+            </div>
+            <div class="w-full u-mt-12 u-h-[50vh] heading-box u-text-center u-flex u-items-center u-justify-center">
+                <p class = "glitchable heading-box-text tracking-work">MY WORK</p>
+            </div>
+            <div class="w-full u-mt-12 u-h-[50vh] heading-box u-text-center u-flex u-items-center u-justify-center">
+                <p class = "glitchable heading-box-text tracking-about">ABOUT ME</p>
+            </div>
+            <div class="w-full u-mt-12 u-h-[50vh] heading-box u-text-center u-flex u-items-center u-justify-center">
+                <p class = "glitchable heading-box-text tracking-contact">CONTACT</p>
             </div>
 
-            <!-- Placeholder -->
-            <div class="w-full u-mt-fluid-xl u-h-[50vh] u-bg-black u-opacity-50"></div>
-            <div class="w-full u-mt-fluid-xl u-h-[50vh] u-bg-primary"></div>
+            <div class="u-mt-12 u-grid u-grid-cols-2 u-gap-gutter">
+                <div>
+                    <Image
+                        src="https://locomotive.ca/uploads/careers/pltropics-2000w.jpg"
+                        alt="Placeholder alt"
+                        caption="Loading lazy native"
+                        loading="lazy"
+                        width={500}
+                        height={500}
+                        data-scroll="" 
+                        data-scroll-offset="15%" 
+                        data-scroll-call="lazyLoad, Scroll" 
+                        data-depixelate=""
+                    />
+                </div>
+                <div>
+                    <Image
+                        src="https://locomotive.ca/uploads/careers/fullscreen-image-2000w.jpg"
+                        alt="Placeholder alt"
+                        caption="Loading lazy native + locomotive-scroll inview anim"
+                        loading="lazy"
+                        width={500}
+                        height={500}
+                        data-scroll="" 
+                        data-scroll-offset="15%" 
+                        data-scroll-call="lazyLoad, Scroll" 
+                        data-depixelate=""
+                    />
+                </div>
+            </div>
+            <div class="w-full u-mt-fluid-xl u-h-[50vh] u-bg-[#9ab28a]"></div>
         </div>
     </div>
 
@@ -89,6 +82,9 @@ import Layout from '../layouts/Layout.astro';
         import gsap from '../../node_modules/gsap';
         import { ScrollTrigger } from '../../node_modules/gsap/ScrollTrigger';
         gsap.registerPlugin(ScrollTrigger);
+        ScrollTrigger.defaults({
+            fastScrollEnd: true,
+        });
 
         //Run on content loaded
         document.addEventListener("DOMContentLoaded", () => {
@@ -96,68 +92,102 @@ import Layout from '../layouts/Layout.astro';
             const canvas = document.getElementById("parallax-canvas");
             const hero = document.getElementById("parallax-hero");
             const name = document.getElementById("parallax-name");
+            const namecopy = document.getElementById("parallax-name-copy");
             const title = document.getElementById("parallax-title");
             const logo = document.getElementById("parallax-logo");
-            const originalText = name.textContent;
-            //Folder containing animation images
-            const folder = "animation";
-            //Info for the canvas logic
-            const context = canvas.getContext("2d");
-            const frameCount = 60;
-            canvas.width = 2560;
-            canvas.height = 1440;
+            const glitchables = document.querySelectorAll('.glitchable');
 
-            //Ensure that all elements exist
+            //Set up canvas
+            const context = canvas.getContext("2d");
+            canvas.width = 1920;
+            canvas.height = 1080;
+
+            //Ensure that all elements exist, otherwise don't continue
             if (!hero || !name || !title || !logo || !canvas || !context) { return; }
 
-            console.clear();
-            
-            //Frame file paths
-            const currentFrame = index => (
-                `/assets/images/${folder}/${(index + 1).toString().padStart(4, '0')}.webp`
-            );
+            //Set up sprite sheets for hero canvas content
+            const spriteSheet1 = new Image();
+            spriteSheet1.src = "/assets/images/sprite_sheet_alt_1.png";
+            const spriteSheet2 = new Image();
+            spriteSheet2.src = "/assets/images/sprite_sheet_alt_2.png";
+            //Set up important info for sprite sheets/canvas
+            const columns = 5; // 10 frames per row
+            const frameCount = 60;
 
-            const images = []
-            const glassrender = {
-                frame: 0
+             //When window loads, preload and predraw frames
+             window.onload = () => {
+                preloadFrames();
+                startAnimation(); // Now run GSAP animation
             };
 
-            //Preload images
-            for (let i = 0; i < frameCount; i++) {
-                const img = new Image();
-                img.src = currentFrame(i);
-                images.push(img);
+            //Separate context to load images
+            const bufferCtx = canvas.getContext("2d");
+            //Preload all frames to avoid lag when loading/moving back to the tab after a long time
+            function preloadFrames() {
+                for (let i = 0; i < frameCount; i++) {
+                    let spriteSheet = i > 30 ? spriteSheet2 : spriteSheet1;
+                    let localFrameIndex = i > 30 ? i - 30 : i;
+                    let col = localFrameIndex % columns;
+                    let row = Math.floor(localFrameIndex / columns);
+
+                    let sx = col * canvas.width;
+                    let sy = row * canvas.height;
+
+                    bufferCtx.drawImage(spriteSheet, sx, sy, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
+                }
+                //Redraw first frame to start on the correct one
+                bufferCtx.drawImage(spriteSheet1, 0, 0, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
             }
 
-            //Gsap function to allow for animation
-            gsap.to(glassrender, {
-                frame: frameCount - 1,
-                snap: "frame",
-                ease: "none",
-                scrollTrigger: {
-                    scrub: 0,
-                    start: "top top",
-                    end: "center center"
-                },
-                onUpdate: render, // use animation onUpdate instead of scrollTrigger's onUpdate
-            });
+            //Variable for running GSAP animation
+            const glassrender = { frame: 0 };
 
-            images[0].onload = render;
+            //Gsap function to animate on scroll
+            function startAnimation() {
+                gsap.to(glassrender, {
+                    frame: frameCount - 1,
+                    snap: "frame",
+                    ease: "none",
+                    scrollTrigger: {
+                        scrub: 0,
+                        start: "top top",
+                        end: () => `${hero.offsetHeight*0.7}px`,
+                    },
+                    //Run custom render function on scroll
+                    onUpdate: render,
+                });
+            }
 
-            //Rendering function to render correct frame and size on canvas
+            //Properly render current frame based on scroll progress
             function render() {
+                //Clear canvas, set up frame index
                 context.clearRect(0, 0, canvas.width, canvas.height);
-                context.drawImage(images[glassrender.frame], 0, 0);
+                let frameIndex = glassrender.frame;
+                console.log(frameIndex);
+
+                //Determine which sprite sheet/index to use
+                let spriteSheet = frameIndex >= 30 ? spriteSheet2 : spriteSheet1;
+                frameIndex -= frameIndex >= 30 ? 30: 0;
+                
+                //Get column, row, and pixel locations from sprite sheet to draw correct image
+                let col = frameIndex % columns;
+                let row = Math.floor(frameIndex / columns);
+                let sx = col * canvas.width;
+                let sy = row * canvas.height;
+
+                //Draw the current frame
+                context.drawImage(spriteSheet, sx, sy, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
             }
-            
+
+            //Shuffle name title text on hover
             function shuffleText(text) {
                 // Split the text into words and handle punctuation
                 const words = text.split(' ').map(word => {
                     // Separate letters and punctuation within each word
                     const letters = word.replace(/[^a-zA-Z]/g, '');  // Only alphabetic characters
-                    const punctuation = word.replace(/[a-zA-Z]/g, '');  // Only non-alphabetic characters (punctuation)
+                    const punctuation = word.replace(/[a-zA-Z]/g, '');  // Only punctuation to leave periods at the end
 
-                    // Shuffle the letters
+                    // Randomly shuffle the letters
                     let shuffledLetters = letters.split('');
                     for (let i = shuffledLetters.length - 1; i > 0; i--) {
                         const j = Math.floor(Math.random() * (i + 1));
@@ -172,37 +202,36 @@ import Layout from '../layouts/Layout.astro';
                 return words.join(' ');
             }
 
-            let glitchInterval;
+            glitchables.forEach((el) => {
+                let originalText = el.textContent;
+                let glitchInterval;
 
-            // Function to apply the glitch effect
-            function glitchText() {
-                // Create the glitch effect by rapidly shuffling the letters of each word
-                glitchInterval = setInterval(() => {
-                    name.textContent = shuffleText(originalText);  // Shuffle letters of each word independently
-                }, 50);  // Shuffle every 50ms for faster effect
+                function glitchText() {
+                    glitchInterval = setInterval(() => {
+                        el.textContent = shuffleText(originalText);
+                    }, 50);
 
-                setTimeout(() => {
-                    clearInterval(glitchInterval);  // Stop the glitch effect after 500ms
-                    name.textContent = originalText;  // Reset back to the original text
-                }, 500);  // Duration of glitch effect (500ms)
-            }
+                    setTimeout(() => {
+                        clearInterval(glitchInterval);
+                        el.textContent = originalText;
+                    }, 250);
+                }
 
-            // Trigger the glitch effect on mouse enter
-            name.addEventListener("mouseenter", glitchText);
+                el.addEventListener("mouseenter", glitchText);
 
-            // Immediately reset the text on mouse leave
-            name.addEventListener("mouseleave", () => {
-                clearInterval(glitchInterval);  // Stop the glitch effect immediately
-                name.textContent = name.textContent; // Reset to original text
+                el.addEventListener("mouseleave", () => {
+                    clearInterval(glitchInterval);
+                    el.textContent = originalText;
+                });
             });
-
             
-            //Move hero page text on scroll
+            //Move hero page text on scroll with a parallax effect
             document.addEventListener("scroll", () => {
                 const scrollY = window.scrollY;
                 
                 canvas.style.transform = `translateY(${scrollY * 0.5}px)`;
                 name.style.transform = `translateY(${scrollY * -0.27}px)`;
+                namecopy.style.transform = `translateY(${scrollY * -0.27}px)`;
                 title.style.transform = `translateY(${scrollY * -0.15}px)`;
                 logo.style.transform = `translateY(${scrollY * -0.2}px)`;
             });
@@ -211,44 +240,59 @@ import Layout from '../layouts/Layout.astro';
 
     <style>
 
-        /*Remove horizontal scrolling in some browsers caused by canvas image*/
+        /*Remove horizontal scrolling in some browsers caused by canvas image
+        e4c787*/
         html body {
             overflow-x: hidden;
+            background-color: #e4c787;
+        }
+        
+        .page-background {
+            background-color: #e4c787;
         }
 
-        /* Custom title font using free trial license from Pangram Pangram Foundry: https://pangrampangram.com/pages/faq*/
+        /* Custom font using free trial license from Pangram Pangram Foundry: https://pangrampangram.com/pages/faq*/
         @font-face {
-            font-family: 'Supply'; /* Choose a custom name */
-            src: url('/fonts/PPSupplySans-Regular.woff2') format('woff2'); /* Path to the font */
-            font-weight: 400; /* Specify the weight (e.g., 400 for regular) */
-            font-style: normal; /* Specify style: normal, italic, etc. */
+            font-family: 'Supply';
+            src: url('/fonts/Supply/PPSupplySans-Regular.woff2') format('woff2');
+            font-weight: 400;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Neue-Mono';
+            src: url('/fonts/NeueMono/PPNeueMontrealMono-Book.otf') format('opentype');
+            font-weight: 200;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Nikkei';
+            src: url('/fonts/Nikkei/PPNikkeiLine-Light.otf') format('opentype');
+            font-weight: 200;
+            font-style: normal;
         }
 
         .hero {
             position: relative;
             height: 100vh;
-            background-image: url('assets/images/animation/0001.webp');
+            background-image: url('assets/images/animation2/0001.webp'); /* Fallback image if canvas doesn't load */
             background-size: cover;
-            background-position: center; /* Initial position */
-            background-attachment: scroll; /* Allows dynamic updates with JavaScript */
-            z-index: 0;
+            background-position: center;
+            background-attachment: scroll; /* Allow for parallax effect */
         }
 
         .parallax-canvas {
             width: 100vw;
             height: 100vh;
             object-fit: cover;
-            z-index: -1;
             position: relative;
         }
-
 
         .hero-content {
             position: absolute;
             bottom: 20px;
             left: 20px;
             font-size: 2rem;
-            display: grid;
+            display: grid; /* Display content in proper relative location */
         }
 
         .icon-text-wrapper {
@@ -258,6 +302,7 @@ import Layout from '../layouts/Layout.astro';
             padding-left: 0.3em;
             padding-bottom: 0.3em;
             font-family: 'Supply';
+            user-select: none;
         }
 
         .icon {
@@ -265,6 +310,7 @@ import Layout from '../layouts/Layout.astro';
             height: 2.65em;
             z-index: 2;
             position: relative;
+            user-select: none;
         }
 
         .title-font {
@@ -273,18 +319,68 @@ import Layout from '../layouts/Layout.astro';
             font-family: 'Supply';
         }
 
-        ::selection {
-            color: rgb(253 230 138);
-            background: black;
+        .parallax-name-copy {
+            position: absolute;
+            z-index: 5;
+            color: transparent;
         }
 
-        /* Limit text size on larger screens */
+        /*Alternate Color Scheme:
+            color: #fde68a;    
+            background-color: #2c1300;
+        */
+        .parallax-name-copy::selection {
+            color: #9ab28a;
+            background-color: #593636;
+        }
+
+        .heading-box {
+            font-size: 16vw;
+            line-height: 1.2;
+            font-family: 'Nikkei';
+            background-color: #192727;
+            color: #e4c787;
+        }
+
+        .heading-box:hover {
+            outline: 25px solid #192727;
+            background-color: #9ab28a;
+            color: #593636;
+        }
+
+        .heading-box-text::selection {
+            color: #9ab28a;
+            background-color: #593636;
+        }
+
+        .tracking-work {
+            letter-spacing: 0.117em;
+        }
+
+        .tracking-about {
+            letter-spacing: 0.035em;
+        }
+
+        .tracking-contact {
+            letter-spacing: 0.115em;
+        }
+
+        /*Properties for larger screens*/
         @media (min-width: 720px) {
             .title-font {
                 font-size: 4em;
             }
         }
+        /*Properties for smaller screens */
+        @media (max-width: 720px) {
+            .heading-box {
+                height: 20vh;
+            }
+        }
     </style>
 </Layout>
+
+
+
 
 
