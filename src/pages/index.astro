@@ -4,10 +4,14 @@ import Icon from '@components/Icon/Icon.astro';
 import Image from '@components/Image/Image.astro';
 import Wysiwyg from '@components/Wysiwyg/Wysiwyg.astro';
 import Accordion from '@components/Accordion/Accordion.astro';
+import scenery from '../assets/images/scenery.jpg';
+import leostrangman from '../assets/images/leostrangman.jpg';
 
 import Layout from '../layouts/Layout.astro';
 ---
 <Layout title="Leo Strangman.">
+
+    <div class = "circle"></div>
 
     <!-- Hero Section Container -->
     <div class="hero page-background" id="parallax-hero">
@@ -16,6 +20,7 @@ import Layout from '../layouts/Layout.astro';
          <!-- Text/svg logo in hero section -->
         <div class="hero-content">
              <!-- Name title text -->
+            <div class = "title-background" id = "parallax-background"></div>
             <h1 class = "title-font u-text-amber-200 u-mix-blend-exclusion" id = "parallax-name">Leo Strangman.</h1>
             <h1 class = "title-font parallax-name-copy" id = "parallax-name-copy">Leo Strangman.</h1>
              <!-- Secondary heading text/svg -->
@@ -31,45 +36,39 @@ import Layout from '../layouts/Layout.astro';
 
         <div class="u-container u-mt-fluid-xl u-pt-2">
             <div class="w-full u-mt-4 u-h-[50vh] heading-box u-text-center u-flex u-items-center u-justify-center">
-                <p class = "glitchable heading-box-text u-tracking-wide">PROJECTS</p>
+                <p class = "glitchable heading-box-text u-tracking-wide hover-text">PROJECTS</p>
             </div>
             <div class="w-full u-mt-12 u-h-[50vh] heading-box u-text-center u-flex u-items-center u-justify-center">
-                <p class = "glitchable heading-box-text tracking-work">MY WORK</p>
+                <p class = "glitchable heading-box-text tracking-work hover-text">MY WORK</p>
             </div>
             <div class="w-full u-mt-12 u-h-[50vh] heading-box u-text-center u-flex u-items-center u-justify-center">
-                <p class = "glitchable heading-box-text tracking-about">ABOUT ME</p>
+                <p class = "glitchable heading-box-text tracking-about hover-text">ABOUT ME</p>
             </div>
             <div class="w-full u-mt-12 u-h-[50vh] heading-box u-text-center u-flex u-items-center u-justify-center">
-                <p class = "glitchable heading-box-text tracking-contact">CONTACT</p>
+                <p class = "glitchable heading-box-text tracking-contact hover-text">CONTACT</p>
             </div>
 
             <div class="u-mt-12 u-grid u-grid-cols-2 u-gap-gutter">
                 <div>
                     <Image
-                        src="https://locomotive.ca/uploads/careers/pltropics-2000w.jpg"
+                        src= {scenery} alt = "Switzerland Scenery"
                         alt="Placeholder alt"
-                        caption="Loading lazy native"
+                        caption=""
                         loading="lazy"
                         width={500}
                         height={500}
-                        data-scroll="" 
-                        data-scroll-offset="15%" 
-                        data-scroll-call="lazyLoad, Scroll" 
-                        data-depixelate=""
+                        data-depixelate
                     />
                 </div>
                 <div>
                     <Image
-                        src="https://locomotive.ca/uploads/careers/fullscreen-image-2000w.jpg"
+                        src={leostrangman} alt = "Leo Strangman"
                         alt="Placeholder alt"
-                        caption="Loading lazy native + locomotive-scroll inview anim"
+                        caption=""
                         loading="lazy"
                         width={500}
                         height={500}
-                        data-scroll="" 
-                        data-scroll-offset="15%" 
-                        data-scroll-call="lazyLoad, Scroll" 
-                        data-depixelate=""
+                        data-depixelate
                     />
                 </div>
             </div>
@@ -92,10 +91,14 @@ import Layout from '../layouts/Layout.astro';
             const canvas = document.getElementById("parallax-canvas");
             const hero = document.getElementById("parallax-hero");
             const name = document.getElementById("parallax-name");
+            const background = document.getElementById("parallax-background");
             const namecopy = document.getElementById("parallax-name-copy");
             const title = document.getElementById("parallax-title");
             const logo = document.getElementById("parallax-logo");
             const glitchables = document.querySelectorAll('.glitchable');
+
+            let mouseX = 0;
+            let mouseY = 0;
 
             //Set up canvas
             const context = canvas.getContext("2d");
@@ -103,13 +106,13 @@ import Layout from '../layouts/Layout.astro';
             canvas.height = 1080;
 
             //Ensure that all elements exist, otherwise don't continue
-            if (!hero || !name || !title || !logo || !canvas || !context) { return; }
+            if (!hero || !name || !background || !title || !logo || !canvas || !context) { return; }
 
             //Set up sprite sheets for hero canvas content
             const spriteSheet1 = new Image();
-            spriteSheet1.src = "/assets/images/sprite_sheet_alt_1.png";
+            spriteSheet1.src = "/assets/images/updated_sp1_dark.png";
             const spriteSheet2 = new Image();
-            spriteSheet2.src = "/assets/images/sprite_sheet_alt_2.png";
+            spriteSheet2.src = "/assets/images/updated_sp2.png";
             //Set up important info for sprite sheets/canvas
             const columns = 5; // 10 frames per row
             const frameCount = 60;
@@ -151,7 +154,7 @@ import Layout from '../layouts/Layout.astro';
                     scrollTrigger: {
                         scrub: 0,
                         start: "top top",
-                        end: () => `${hero.offsetHeight*0.7}px`,
+                        end: () => `${hero.offsetHeight*0.5}px`,
                     },
                     //Run custom render function on scroll
                     onUpdate: render,
@@ -231,10 +234,110 @@ import Layout from '../layouts/Layout.astro';
                 
                 canvas.style.transform = `translateY(${scrollY * 0.5}px)`;
                 name.style.transform = `translateY(${scrollY * -0.27}px)`;
+                background.style.transform = `translateY(${scrollY * -0.27}px)`;
                 namecopy.style.transform = `translateY(${scrollY * -0.27}px)`;
                 title.style.transform = `translateY(${scrollY * -0.15}px)`;
                 logo.style.transform = `translateY(${scrollY * -0.2}px)`;
+
+                updateCirclePosition(mouseX, mouseY);
             });
+
+            const circle = document.querySelector('.circle');
+            const nameCopy = document.getElementById('parallax-name-copy'); // Target the specific element
+            const titleBackground = document.querySelector('.title-background'); // Target the title background
+            const hoverTexts = document.querySelectorAll('.hover-text');
+
+            nameCopy.addEventListener('mouseenter', (e) => {
+                circle.classList.add('hovered-title');
+                const rect = titleBackground.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                // Calculate the diagonal of the background to ensure the circle fully covers it
+                const maxDiameter = Math.sqrt(rect.width ** 2 + rect.height ** 2) * 2;
+
+                const fillCircle = document.createElement("div");
+                fillCircle.classList.add("fill-circle");
+                Object.assign(fillCircle.style, {
+                    position: "absolute",
+                    left: `${x}px`,
+                    top: `${y}px`,
+                    width: `0px`,
+                    height: `0px`,
+                    borderRadius: `50%`,
+                    backgroundColor: "#192727",
+                    transform: "translate(-50%, -50%)",
+                    zIndex: "-1",
+                    pointerEvents: "none"
+                });
+
+                titleBackground.appendChild(fillCircle);
+
+                gsap.to(fillCircle, {
+                    width: `${maxDiameter}px`,
+                    height: `${maxDiameter}px`,
+                    duration: 0.6,
+                    ease: "power2.out"
+                });
+            });
+
+            nameCopy.addEventListener('mouseleave', (e) => {
+                circle.classList.remove('hovered-title');
+                const fillCircle = titleBackground.querySelector(".fill-circle");
+                if (fillCircle) {
+                    const rect = titleBackground.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+
+                    // Reposition the origin of the shrinking animation
+                    gsap.set(fillCircle, {
+                        left: `${x}px`,
+                        top: `${y}px`,
+                        transform: "translate(-50%, -50%)"
+                    });
+
+                    gsap.to(fillCircle, {
+                        width: 0,
+                        height: 0,
+                        duration: 0.3,
+                        ease: "power2.in",
+                        onComplete: () => {
+                            fillCircle.remove();
+                        }
+                    });
+                }
+            });
+
+            hoverTexts.forEach(text => {
+                text.addEventListener('mouseenter', () => {
+                    circle.classList.add('hovered');
+                });
+
+                text.addEventListener('mouseleave', () => {
+                    circle.classList.remove('hovered');
+                });
+            });
+
+            document.addEventListener('mousemove', (event) => {
+                mouseX = event.clientX; // Get the X coordinate of the mouse
+                mouseY = event.clientY; // Get the Y coordinate of the mouse, accounting for scroll
+
+                updateCirclePosition(mouseX, mouseY);
+            });
+
+            function updateCirclePosition() {
+                if (!circle) return;
+        
+                const circleSize = circle.offsetWidth;
+                const halfSize = circleSize / 2;
+                
+                // Combine viewport position with scroll offset for absolute page position
+                const absoluteY = mouseY + scrollY;
+                
+                // Apply the transformation
+                circle.style.transform = `translate(${mouseX - halfSize}px, ${absoluteY - halfSize}px)`;
+            }
+
         });
       </script>
 
@@ -245,6 +348,60 @@ import Layout from '../layouts/Layout.astro';
         html body {
             overflow-x: hidden;
             background-color: #e4c787;
+        }
+
+        .circle {
+            position: absolute;
+            width: 25px; /* Circle diameter */
+            height: 25px; /* Circle diameter */
+            border: 3px solid white; /* Circle outline color */
+            mix-blend-mode: difference;
+            border-radius: 50%; /* Make it a circle */
+            pointer-events: none; /* Prevent the circle from interfering with mouse events */
+            transition: transform 0.05s, background-color 0.1s, width 0.1s ease, height 0.1s ease; /* Smooth movement and color transition */
+            background-color: transparent; /* Initial background color */
+            z-index: 10;
+        }
+
+        .circle.hovered {
+            background-color: white; /* Fill color on hover */
+            mix-blend-mode: difference;
+            width: 50px;
+            height: 50px;
+        }
+
+        .circle.hovered-title {
+            background-color: transparent; /* Fill color on hover */
+            border: none;
+        }
+
+        .title-background {
+            position: absolute;
+            width: 100%;
+            height: 118px;
+            background-color: transparent;
+            transition: background-color 0.3s ease; /* Smooth transition for background color */
+            top: 18px;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            overflow: hidden;
+        }
+
+        .title-background::before {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background-color: #192727;
+            transform: translate(-50%, -50%);
+            transition: none;
+            z-index: -1;
+        }
+
+        .title-background.visible {
+            background-color: #192727;
         }
         
         .page-background {
@@ -274,7 +431,7 @@ import Layout from '../layouts/Layout.astro';
         .hero {
             position: relative;
             height: 100vh;
-            background-image: url('assets/images/animation2/0001.webp'); /* Fallback image if canvas doesn't load */
+            background-image: url('assets/images/default.png'); /* Fallback image if canvas doesn't load */
             background-size: cover;
             background-position: center;
             background-attachment: scroll; /* Allow for parallax effect */
@@ -289,6 +446,7 @@ import Layout from '../layouts/Layout.astro';
 
         .hero-content {
             position: absolute;
+            mix-blend-mode: normal;
             bottom: 20px;
             left: 20px;
             font-size: 2rem;
