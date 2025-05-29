@@ -1,9 +1,9 @@
 ---
+import Layout from '../layouts/Layout.astro';
 import Image from '@components/Image/Image.astro';
+import Icon from '@components/Icon/Icon.astro';
 import scenery from '../assets/images/scenery.jpg';
 import leostrangman from '../assets/images/leostrangman.jpg';
-
-import Layout from '../layouts/Layout.astro';
 ---
 <Layout title="Leo Strangman.">
 
@@ -12,51 +12,47 @@ import Layout from '../layouts/Layout.astro';
 
     <!-- Hero Section Container -->
     <div class="hero" id="parallax-hero">
-         <!-- Fullscreen background image as canvas -->
+        <!-- Fullscreen background image as canvas -->
         <canvas class = "hero-canvas" id = "parallax-canvas"></canvas>
 
         <div class = "accessibility-background hidden" id = "accessibility-background"></div>
         <div class="accessibility-wrapper" id = "parallax-accessibility">
             <div class="accessibility-button glitchable hover-text" aria-label="Accessibility Options">Accessible Mode</div>
         </div>
-         <!-- Text/svg logo in hero section -->
+        <!-- Text/svg logo in hero section -->
         <div class="hero-content" id = "hero-content-primary">
-             <!-- Name text -->
+            <!-- Name text -->
             <div class = "title-name-background" id = "parallax-name-background"></div>
             <div class = "title-logo-background" id = "parallax-logo-background"></div>
             <div class = "title-role-background" id = "parallax-role-background"></div>
             <h1 class = "title-name-text title-name-color glitchable hover-text" id = "parallax-title-name">Leo Strangman.</h1>
-             <!-- Secondary heading text/svg -->
+            <!-- Secondary heading text/svg -->
             <div class = "logo-role-wrapper" id = "logo-role-wrapper">
+                <!-- Wrapper for main logo svg -->
                 <div class = "logo-wrapper" id = "parallax-title-logo">
-                    <svg viewBox="0 0 75 75" class="icon">
-                        <use href="../../public/assets/images/sprite.svg#icon-amber-supply"></use>
-                    </svg>
+                    <Icon class = "hover-text" name = "icon-amber-supply">
                 </div>
+                <!-- Wrapper for secondary logo svg that shows on hover -->
                 <div class = "logo-wrapper icon-hover u-hidden "id = "parallax-logo-hover">
-                    <svg viewBox="0 0 75 75" class="icon">
-                        <use href="../../public/assets/images/sprite.svg#icon-green-supply"></use>
-                    </svg>
+                    <Icon class = "hover-text" name = "icon-green-supply">
                 </div>
-                <h2 class = "title-role-text u-mt-1.5 glitchable" id = "parallax-title-role">Developer</h2>
+                <h2 class = "title-role-text u-mt-1.5 glitchable hover-text" id = "parallax-title-role">Developer</h2>
             </div>
         </div>
-         <!-- Alternate hero-content div for when the accessibility mode is selected -->
+        <!-- Alternate hero-content div for when the accessibility mode is selected -->
         <div class="hero-content-alt" id = "hero-content-alt">
            <h1 class = "title-name-text title-name-color-alt glitchable hover-text" id = "parallax-title-name">Leo Strangman.</h1>
-            <!-- Secondary heading text/svg -->
+        <!-- Secondary heading text/svg -->
            <div class = "logo-role-wrapper-alt">
                <div class = "logo-wrapper" id = "parallax-title-logo">
-                    <svg viewBox="0 0 75 75" class="icon">
-                        <use href="../../public/assets/images/sprite.svg#icon-green-supply"></use>
-                    </svg>
+                    <Icon class = "hover-text" name = "icon-green-supply">
                </div>
-               <h2 class = "title-role-text u-mt-1.5 glitchable" id = "parallax-title-role">Developer</h2>
+               <h2 class = "title-role-text u-mt-1.5 glitchable hover-text" id = "parallax-title-role">Developer</h2>
            </div>
        </div>
     </div>
 
-     <!-- Div to correctly display parallax effect with background sliding over image -->
+    <!-- Div to correctly display parallax effect with background sliding over image -->
     <div class = "page-background u-z-2 u-relative">
         <div class="link-box-wrapper">
             <div class="w-full u-h-[50vh] link-box u-text-center u-flex u-items-center u-justify-center">
@@ -141,10 +137,6 @@ import Layout from '../layouts/Layout.astro';
             const circle = document.querySelector('.mouse-circle');
             const hoverTexts = document.querySelectorAll('.hover-text');
 
-            //Global mouse position
-            let mouseX = 0;
-            let mouseY = 0;
-
             //Initialize canvas
             const context = canvas.getContext("2d");
             canvas.width = 1920;
@@ -219,39 +211,43 @@ import Layout from '../layouts/Layout.astro';
                 context.drawImage(spriteSheet, sx, sy, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
             }
 
-            //For every "hover-text" element, update mouse cursor when hovered
+            let mouseX = window.innerWidth / 2;
+            let mouseY = window.innerHeight / 2;
+
+            let circleX = mouseX;
+            let circleY = mouseY;
+
+            const speed = 0.5; // Smaller = smoother
+
+            function animate() {
+                // Smooth interpolation toward the mouse
+                circleX += (mouseX - circleX) * speed;
+                circleY += (mouseY - circleY) * speed;
+
+                const circleSize = circle.offsetWidth;
+                const halfSize = circleSize / 2;
+
+                circle.style.transform = `translate(${circleX - halfSize}px, ${circleY - halfSize}px)`;
+
+                requestAnimationFrame(animate);
+            }
+            animate();
+
+            // Update target position on mouse move
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+
             hoverTexts.forEach(text => {
                 text.addEventListener('mouseenter', () => {
                     circle.classList.add('hovered');
-                    updateCirclePosition(mouseX, mouseY);
                 });
-
                 text.addEventListener('mouseleave', () => {
                     circle.classList.remove('hovered');
-                    updateCirclePosition(mouseX, mouseY);
                 });
             });
-            
-            function updateCirclePosition() {
-                if (!circle) return;
-        
-                const circleSize = circle.offsetWidth;
-                const halfSize = circleSize / 2;
-                
-                // Combine viewport position with scroll offset for absolute page position
-                const absoluteY = mouseY + scrollY;
-                
-                // Apply the transformation
-                circle.style.transform = `translate(${mouseX - halfSize}px, ${absoluteY - halfSize}px)`;
-            }
-
-            //When the mouse moves, update cursor location
-            document.addEventListener('mousemove', (event) => {
-                mouseX = event.clientX; // Get the X coordinate of the mouse
-                mouseY = event.clientY; // Get the Y coordinate of the mouse, accounting for scroll
-
-                updateCirclePosition(mouseX, mouseY);
-            });     
 
             //Shuffle given text randomly, keeping punctuation at the end
             function shuffleText(text) {
@@ -335,7 +331,7 @@ import Layout from '../layouts/Layout.astro';
                 name.classList.add('title-name-color-hover');
                 role.classList.add('role-color-hover');
                 logoRoleWrapper.classList.add('logo-role-wrapper-hover');
-                logoHover.classList.remove('displayNone');
+                logoHover.classList.remove('display-none');
                 logoHover.classList.add('display');
             }
 
@@ -350,7 +346,7 @@ import Layout from '../layouts/Layout.astro';
                 logoRoleWrapper.classList.remove('logo-role-wrapper-hover');
                 logo.setAttribute("name", "icon-amber-supply");
                 logoHover.classList.remove('display');
-                logoHover.classList.add('displayNone');
+                logoHover.classList.add('display-none');
             }
 
             //Determine if screen size is large enough for hover effect
@@ -397,7 +393,7 @@ import Layout from '../layouts/Layout.astro';
             //When clicking the accessibility mode button, update css styles of necessary elements
             accessibilityButton.addEventListener('click', () => {
                 accessibilityBackground.classList.toggle('hidden');
-                heroContent.classList.toggle('displayNone');
+                heroContent.classList.toggle('display-none');
                 heroContentAlt.classList.toggle('display');
             });
 
@@ -450,7 +446,7 @@ import Layout from '../layouts/Layout.astro';
         .display {
             display: grid !important;
         }
-        .displayNone {
+        .display-none {
             display: none !important;
         }
         .hidden {
@@ -460,56 +456,57 @@ import Layout from '../layouts/Layout.astro';
         /* Styles for mouse circle following the cursor */
         .mouse-circle {
             position: absolute;
-            width: 25px; /* Circle diameter */
-            height: 25px; /* Circle diameter */
-            border: 3px solid white; /* Circle outline color */
-            mix-blend-mode: difference;
-            border-radius: 50%; /* Make it a circle */
-            pointer-events: none; /* Prevent the circle from interfering with mouse events */
-            transition: transform 0.05s, background-color 0.1s, width 0.1s ease, height 0.1s ease; /* Smooth movement and color transition */
-            background-color: transparent; /* Initial background color */
             z-index: 999;
+            width: 25px;
+            height: 25px;
+            border: 3px solid cyan;
+            border-radius: 50%;
+            /*transform: translateX(-50%), translateY(-50%), translateZ(0px);*/
+            transition: transform 0.05s, background-color 0.1s, width 0.1s ease, height 0.1s ease;
+            background-color: transparent;
+            mix-blend-mode: difference;
+            pointer-events: none;
         }
         .mouse-circle.hovered {
-            background-color: white; /* Fill color on hover */
-            mix-blend-mode: difference;
             width: 50px;
             height: 50px;
+            background-color: cyan;
+            mix-blend-mode: difference;
         }
 
         /* Initial loading screen styles */
         #loading-screen {
             position: fixed;
+            z-index: 9999;
+            display: flex;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: #111;
-            color: white;
-            font-size: 2rem;
-            display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 9999;
+            background: #111;
+            color: white;
+            font-size: 2rem;   
         }
 
         /* Main hero page styles */
         .hero {
             position: relative;
             height: 100vh;
-            background-image: url('assets/images/default.png'); /* Fallback image if canvas doesn't load */
+            background-image: url('assets/images/default.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            background-attachment: scroll; /* Allow for parallax effect */
+            background-attachment: scroll;
         }
 
         /* Hero page image styles */
         .hero-canvas {
+            position: relative;
             width: 100vw;
             height: 100vh;
             object-fit: cover;
-            position: relative;
         }
 
         /* Corner background when accessibility mode is on */
@@ -517,8 +514,8 @@ import Layout from '../layouts/Layout.astro';
             position: absolute;
             bottom: 0;
             left: 0;
-            width:100%;
-            height:calc(11.5rem + 2em);
+            width: 100%;
+            height: calc(11.5rem + 2em);
             background-color: #e4c787;
             font-size: 16.3vw;
         }
@@ -526,44 +523,45 @@ import Layout from '../layouts/Layout.astro';
         /* Wrapper for the accessibility button */
         .accessibility-wrapper {
             position: absolute;
+            z-index: 3;
             bottom: 0;
             right: 0;
-            z-index: 3;
         }
 
         /* Accessibility button styles */
         .accessibility-button {
-            background-color: #e4c787; /* Matches page background */
-            color:#192727; /* Dark green text */
+            position: relative;
+            z-index: 3;
+            background-color: #e4c787;
+            color: #192727;
             font-family: "Supply", sans-serif;
             font-size: 3vw;
             line-height: 1;
             cursor: pointer;
-            z-index: 3;
         }
         .accessibility-button::selection {
-            background-color:#e4c787;
-            color:#192727;
+            background-color: #e4c787;
+            color: #192727;
         }
 
         /* Styles for hero content at the bottom left of the hero page */
         .hero-content {
             position: absolute;
-            mix-blend-mode: normal;
+            display: grid;
             bottom: 20px;
             left: 20px;
             font-size: 2rem;
-            display: grid; /* Display content in proper relative location */
+            mix-blend-mode: normal;
         }
 
         /* Alt hero-content div for accessibility mode */
         .hero-content-alt {
             position: absolute;
-            mix-blend-mode: normal;
+            display: none;
             bottom: 20px;
             left: 20px;
             font-size: 2rem;
-            display: none; /* Display content in proper relative location */
+            mix-blend-mode: normal;
         }
 
         /* Styles for background divs when highlighting the title text */
@@ -602,28 +600,28 @@ import Layout from '../layouts/Layout.astro';
         .title-name-text {
             position: relative;
             z-index: 2;
+            font-family: 'Supply';
             font-size: 17.5vw;
             line-height: 1;
-            font-family: 'Supply';
         }
         .title-name-text::selection {
-            mix-blend-mode: normal;
-            color:#e4c787;
             background-color:#192727;
+            color:#e4c787;
+            mix-blend-mode: normal;
         }
         .title-name-color {
-            mix-blend-mode: exclusion;
             color: #FDE484;
+            mix-blend-mode: exclusion;
         }
         .title-name-color-hover {
-            mix-blend-mode: normal !important;
             color:#192727 !important;
+            mix-blend-mode: normal !important;
         }
 
         /* Alt title-name colors for accessibility mode */
         .title-name-color-alt {
-            mix-blend-mode: normal;
             color: #192727;
+            mix-blend-mode: normal;
         }
 
         /* Styles for both logo-role-wrappers */
@@ -635,8 +633,8 @@ import Layout from '../layouts/Layout.astro';
             gap: 0.5em;
             margin-left: 9px;
             margin-bottom: 9px;
-            line-height: 1;
             font-family: 'Supply';
+            line-height: 1;
         }
         #parallax-title-logo, #parallax-title-role {
             user-select: none;
@@ -644,34 +642,34 @@ import Layout from '../layouts/Layout.astro';
 
         /* Styles for the wrapper around the logo svg and role text */
         .logo-role-wrapper {
-            mix-blend-mode: exclusion;
-            color: #fde484;
             height: 127px;
             width: 250px;
+            color: #fde484;
+            mix-blend-mode: exclusion;
         }
         .logo-role-wrapper-hover {
-            mix-blend-mode: normal;
             color: #192727;
+            mix-blend-mode: normal;
         }
         .role-color-hover {
-            mix-blend-mode: normal !important;
             color: #192727 !important;
+            mix-blend-mode: normal !important;
         }
 
         /*Alt version of logo-role-wrapper for accessibility mode */
         .logo-role-wrapper-alt {
-            mix-blend-mode: normal;
-            color: #192727;
             height: 127px;
             width: 250px;
+            color: #192727;
+            mix-blend-mode: normal;
         }
 
         /* Styles for specificially the logo svg wrapper */
         .logo-wrapper {
-            user-select: none;
-            cursor: default;
             width: 75px;
             height: 75px;
+            user-select: none;
+            cursor: default;
         }
 
         /* Styles for hovered svg version */
@@ -688,31 +686,32 @@ import Layout from '../layouts/Layout.astro';
         /* Styling for the link box wrapper */
         .link-box-wrapper {
             width: 100%;
-            box-sizing: border-box;
-            outline: 25px solid transparent;
             padding-left: 15px;
             padding-right: 15px;
             padding-top: 25px;
+            box-sizing: border-box;
+            outline: 25px solid transparent;
         }
 
         /* Styling for the link boxes and text */
         .link-box {
-            font-size: 16vw;
-            line-height: 1.2;
-            font-family: 'Nikkei';
             background-color: #192727;
             color: #e4c787;
-            cursor: pointer;
             box-sizing: border-box;
+            font-family: 'Nikkei';
+            font-size: 16vw;
+            line-height: 1.2;
+            cursor: pointer;
+            
         }
         .link-box:hover {
-            outline: 25px solid #192727;
             background-color: #9ab28a;
             color: #593636;
+            outline: 25px solid #192727;
         }
         .link-box-text::selection {
-            color: #9ab28a;
             background-color: #593636;
+            color: #9ab28a;
         }
 
         /*Different letter spacing to keep link text the same width */
@@ -756,10 +755,6 @@ import Layout from '../layouts/Layout.astro';
             }
         }
         /*Properties for smallest screens */
-        @media (max-width: 550px) {
-            .accessibility-background {
-                height: 363px;
-            }
-        }
+        @media (max-width: 550px) {}
     </style>
 </Layout>

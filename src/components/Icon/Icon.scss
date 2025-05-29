@@ -20,3 +20,17 @@
     --_icon-width: 32px;
     --icon-ratio: #{math.div(925, 302)};
 }
+
+.svg-icon-amber-supply {
+    --_icon-width: 75px;
+    --icon-width: 75px;
+    --icon-height: 75px;
+    --icon-ratio: 1;
+}
+
+.svg-icon-green-supply {
+    --_icon-width: 75px;
+    --icon-width: 75px;
+    --icon-height: 75px;
+    --icon-ratio: 1;
+}

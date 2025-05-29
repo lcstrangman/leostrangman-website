@@ -1,8 +1,4 @@
-Increase scroll speed
 
-Baillat studio hamburger menu
-
-Override scroll bar
 
 PAGE LOAD:
 When loading any page, give some sort of animation
@@ -13,10 +9,17 @@ Maybe while doing this have it cycle through the canvas quickly just to hide tha
 OTHER INTERESTING IDEAS:
 Page progress bar
 Hover over images/elements like sayhito-atlas.com
+Increase scroll speed
+Baillat studio hamburger menu
+Override scroll bar
 
 
 FIXES:
 Make the name text be in line with the svg properly
+Make Developer text include the circle highlight class
+Fix files in public served at root path
+Change mouse circle color
+Make mouse circle disappear when cursor leaves screen
 
         
 Title color options for exclusion:
