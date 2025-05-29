@@ -11,14 +11,12 @@ Have the letters distort/rearrange while it happens, make a full-screen thing th
 Maybe while doing this have it cycle through the canvas quickly just to hide that being an issue
 
 OTHER INTERESTING IDEAS:
-Custom mouse cursor
-Mouse trail effect
 Page progress bar
 Hover over images/elements like sayhito-atlas.com
 
 
 FIXES:
-Issues upon going back to the page, everything 
+Make the name text be in line with the svg properly
 
         
 Title color options for exclusion:
@@ -26,3 +24,8 @@ Cyan
 plum
 burlywood
 rgb(253 230 138)
+FDE484 (Current)
+F9E076 (Similar)
+E6BE8A (Muted)
+F8E9A1 (Lighter)
+F7DC6F (Darker)

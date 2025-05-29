@@ -1,9 +1,5 @@
 ---
-import Button from '@components/Button/Button.astro';
-import Icon from '@components/Icon/Icon.astro';
 import Image from '@components/Image/Image.astro';
-import Wysiwyg from '@components/Wysiwyg/Wysiwyg.astro';
-import Accordion from '@components/Accordion/Accordion.astro';
 import scenery from '../assets/images/scenery.jpg';
 import leostrangman from '../assets/images/leostrangman.jpg';
 
@@ -11,41 +7,69 @@ import Layout from '../layouts/Layout.astro';
 ---
 <Layout title="Leo Strangman.">
 
-    <div class = "circle"></div>
+    <div class = "mouse-circle"></div>
+    <div id="loading-screen">Loading...</div>
 
     <!-- Hero Section Container -->
-    <div class="hero page-background" id="parallax-hero">
+    <div class="hero" id="parallax-hero">
          <!-- Fullscreen background image as canvas -->
-        <canvas class = "parallax-canvas" id = "parallax-canvas"></canvas>
+        <canvas class = "hero-canvas" id = "parallax-canvas"></canvas>
+
+        <div class = "accessibility-background hidden" id = "accessibility-background"></div>
+        <div class="accessibility-wrapper" id = "parallax-accessibility">
+            <div class="accessibility-button glitchable hover-text" aria-label="Accessibility Options">Accessible Mode</div>
+        </div>
          <!-- Text/svg logo in hero section -->
-        <div class="hero-content">
-             <!-- Name title text -->
-            <div class = "title-background" id = "parallax-background"></div>
-            <h1 class = "title-font u-text-amber-200 u-mix-blend-exclusion" id = "parallax-name">Leo Strangman.</h1>
-            <h1 class = "title-font parallax-name-copy" id = "parallax-name-copy">Leo Strangman.</h1>
+        <div class="hero-content" id = "hero-content-primary">
+             <!-- Name text -->
+            <div class = "title-name-background" id = "parallax-name-background"></div>
+            <div class = "title-logo-background" id = "parallax-logo-background"></div>
+            <div class = "title-role-background" id = "parallax-role-background"></div>
+            <h1 class = "title-name-text title-name-color glitchable hover-text" id = "parallax-title-name">Leo Strangman.</h1>
              <!-- Secondary heading text/svg -->
-            <div class = "icon-text-wrapper u-text-amber-200 u-mix-blend-exclusion">
-                <div id = "parallax-logo"><Icon name="icon-amber-supply" class = "icon"/></div>
-                <h2 id = "parallax-title">Developer</h2>
+            <div class = "logo-role-wrapper" id = "logo-role-wrapper">
+                <div class = "logo-wrapper" id = "parallax-title-logo">
+                    <svg viewBox="0 0 75 75" class="icon">
+                        <use href="../../public/assets/images/sprite.svg#icon-amber-supply"></use>
+                    </svg>
+                </div>
+                <div class = "logo-wrapper icon-hover u-hidden "id = "parallax-logo-hover">
+                    <svg viewBox="0 0 75 75" class="icon">
+                        <use href="../../public/assets/images/sprite.svg#icon-green-supply"></use>
+                    </svg>
+                </div>
+                <h2 class = "title-role-text u-mt-1.5 glitchable" id = "parallax-title-role">Developer</h2>
             </div>
         </div>
+         <!-- Alternate hero-content div for when the accessibility mode is selected -->
+        <div class="hero-content-alt" id = "hero-content-alt">
+           <h1 class = "title-name-text title-name-color-alt glitchable hover-text" id = "parallax-title-name">Leo Strangman.</h1>
+            <!-- Secondary heading text/svg -->
+           <div class = "logo-role-wrapper-alt">
+               <div class = "logo-wrapper" id = "parallax-title-logo">
+                    <svg viewBox="0 0 75 75" class="icon">
+                        <use href="../../public/assets/images/sprite.svg#icon-green-supply"></use>
+                    </svg>
+               </div>
+               <h2 class = "title-role-text u-mt-1.5 glitchable" id = "parallax-title-role">Developer</h2>
+           </div>
+       </div>
     </div>
 
      <!-- Div to correctly display parallax effect with background sliding over image -->
     <div class = "page-background u-z-2 u-relative">
-
-        <div class="u-container u-mt-fluid-xl u-pt-2">
-            <div class="w-full u-mt-4 u-h-[50vh] heading-box u-text-center u-flex u-items-center u-justify-center">
-                <p class = "glitchable heading-box-text u-tracking-wide hover-text">PROJECTS</p>
+        <div class="link-box-wrapper">
+            <div class="w-full u-h-[50vh] link-box u-text-center u-flex u-items-center u-justify-center">
+                <p class = "glitchable link-box-text u-tracking-wide hover-text">PROJECTS</p>
             </div>
-            <div class="w-full u-mt-12 u-h-[50vh] heading-box u-text-center u-flex u-items-center u-justify-center">
-                <p class = "glitchable heading-box-text tracking-work hover-text">MY WORK</p>
+            <div class="w-full u-mt-12 u-h-[50vh] link-box u-text-center u-flex u-items-center u-justify-center">
+                <p class = "glitchable link-box-text tracking-work hover-text">MY WORK</p>
             </div>
-            <div class="w-full u-mt-12 u-h-[50vh] heading-box u-text-center u-flex u-items-center u-justify-center">
-                <p class = "glitchable heading-box-text tracking-about hover-text">ABOUT ME</p>
+            <div class="w-full u-mt-12 u-h-[50vh] link-box u-text-center u-flex u-items-center u-justify-center">
+                <p class = "glitchable link-box-text tracking-about hover-text">ABOUT ME</p>
             </div>
-            <div class="w-full u-mt-12 u-h-[50vh] heading-box u-text-center u-flex u-items-center u-justify-center">
-                <p class = "glitchable heading-box-text tracking-contact hover-text">CONTACT</p>
+            <div class="w-full u-mt-12 u-h-[50vh] link-box u-text-center u-flex u-items-center u-justify-center">
+                <p class = "glitchable link-box-text tracking-contact hover-text">CONTACT</p>
             </div>
 
             <div class="u-mt-12 u-grid u-grid-cols-2 u-gap-gutter">
@@ -85,61 +109,78 @@ import Layout from '../layouts/Layout.astro';
             fastScrollEnd: true,
         });
 
+        //Loading Screen
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+            document.getElementById('loading-screen').style.display = 'none';
+            document.getElementById('content').style.display = 'block';
+            }, 2000); // 2000ms = 2 seconds
+        });
+
         //Run on content loaded
         document.addEventListener("DOMContentLoaded", () => {
             //Load in elements from HTML
             const canvas = document.getElementById("parallax-canvas");
             const hero = document.getElementById("parallax-hero");
-            const name = document.getElementById("parallax-name");
-            const background = document.getElementById("parallax-background");
-            const namecopy = document.getElementById("parallax-name-copy");
-            const title = document.getElementById("parallax-title");
-            const logo = document.getElementById("parallax-logo");
+            const heroContent = document.getElementById("hero-content-primary");
+            const heroContentAlt = document.getElementById("hero-content-alt");
+            //Hero content elements
+            const name = document.getElementById("parallax-title-name");
+            const background = document.getElementById("parallax-name-background");
+            const logoBackground = document.getElementById("parallax-logo-background");
+            const roleBackground = document.getElementById("parallax-role-background");
+            const logoRoleWrapper = document.getElementById('logo-role-wrapper');
+            const role = document.getElementById("parallax-title-role");
+            const logo = document.getElementById("parallax-title-logo");
+            const logoHover = document.getElementById("parallax-logo-hover");
+            //Accessibility elements
+            const accessibilityBackground = document.getElementById('accessibility-background');
+            const accessibilityButton = document.getElementById('parallax-accessibility');
+            //Other elements
             const glitchables = document.querySelectorAll('.glitchable');
+            const circle = document.querySelector('.mouse-circle');
+            const hoverTexts = document.querySelectorAll('.hover-text');
 
+            //Global mouse position
             let mouseX = 0;
             let mouseY = 0;
 
-            //Set up canvas
+            //Initialize canvas
             const context = canvas.getContext("2d");
             canvas.width = 1920;
             canvas.height = 1080;
 
-            //Ensure that all elements exist, otherwise don't continue
-            if (!hero || !name || !background || !title || !logo || !canvas || !context) { return; }
-
             //Set up sprite sheets for hero canvas content
-            const spriteSheet1 = new Image();
-            spriteSheet1.src = "/assets/images/updated_sp1_dark.png";
-            const spriteSheet2 = new Image();
-            spriteSheet2.src = "/assets/images/updated_sp2.png";
-            //Set up important info for sprite sheets/canvas
-            const columns = 5; // 10 frames per row
+            const spriteSheet = new Image();
+            spriteSheet.src = "/assets/images/sprite_sheet_full.png";
+            spriteSheet.decoding = "async";
+            spriteSheet.loading = "eager";
+            const columns = 5;
             const frameCount = 60;
 
-             //When window loads, preload and predraw frames
-             window.onload = () => {
+            //When window loads, preload and predraw frames with GSAP animation
+            window.onload = () => {
                 preloadFrames();
-                startAnimation(); // Now run GSAP animation
+                startAnimation();
             };
 
-            //Separate context to load images
+            //Copy of canvas context to preload images to improve performance
             const bufferCtx = canvas.getContext("2d");
             //Preload all frames to avoid lag when loading/moving back to the tab after a long time
             function preloadFrames() {
+                //Loop through all frames, render on screen with correct coordinates
                 for (let i = 0; i < frameCount; i++) {
-                    let spriteSheet = i > 30 ? spriteSheet2 : spriteSheet1;
-                    let localFrameIndex = i > 30 ? i - 30 : i;
-                    let col = localFrameIndex % columns;
-                    let row = Math.floor(localFrameIndex / columns);
+                    let col = i % columns;
+                    let row = Math.floor(i / columns);
 
                     let sx = col * canvas.width;
                     let sy = row * canvas.height;
 
+                    bufferCtx.drawImage(spriteSheet, 0, 0, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
                     bufferCtx.drawImage(spriteSheet, sx, sy, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
                 }
                 //Redraw first frame to start on the correct one
-                bufferCtx.drawImage(spriteSheet1, 0, 0, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
+                bufferCtx.drawImage(spriteSheet, 0, 0, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
             }
 
             //Variable for running GSAP animation
@@ -154,7 +195,8 @@ import Layout from '../layouts/Layout.astro';
                     scrollTrigger: {
                         scrub: 0,
                         start: "top top",
-                        end: () => `${hero.offsetHeight*0.5}px`,
+                        //Modify to change speed animation plays at
+                        end: () => `${hero.offsetHeight*0.8}px`,
                     },
                     //Run custom render function on scroll
                     onUpdate: render,
@@ -166,11 +208,6 @@ import Layout from '../layouts/Layout.astro';
                 //Clear canvas, set up frame index
                 context.clearRect(0, 0, canvas.width, canvas.height);
                 let frameIndex = glassrender.frame;
-                console.log(frameIndex);
-
-                //Determine which sprite sheet/index to use
-                let spriteSheet = frameIndex >= 30 ? spriteSheet2 : spriteSheet1;
-                frameIndex -= frameIndex >= 30 ? 30: 0;
                 
                 //Get column, row, and pixel locations from sprite sheet to draw correct image
                 let col = frameIndex % columns;
@@ -182,7 +219,41 @@ import Layout from '../layouts/Layout.astro';
                 context.drawImage(spriteSheet, sx, sy, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
             }
 
-            //Shuffle name title text on hover
+            //For every "hover-text" element, update mouse cursor when hovered
+            hoverTexts.forEach(text => {
+                text.addEventListener('mouseenter', () => {
+                    circle.classList.add('hovered');
+                    updateCirclePosition(mouseX, mouseY);
+                });
+
+                text.addEventListener('mouseleave', () => {
+                    circle.classList.remove('hovered');
+                    updateCirclePosition(mouseX, mouseY);
+                });
+            });
+            
+            function updateCirclePosition() {
+                if (!circle) return;
+        
+                const circleSize = circle.offsetWidth;
+                const halfSize = circleSize / 2;
+                
+                // Combine viewport position with scroll offset for absolute page position
+                const absoluteY = mouseY + scrollY;
+                
+                // Apply the transformation
+                circle.style.transform = `translate(${mouseX - halfSize}px, ${absoluteY - halfSize}px)`;
+            }
+
+            //When the mouse moves, update cursor location
+            document.addEventListener('mousemove', (event) => {
+                mouseX = event.clientX; // Get the X coordinate of the mouse
+                mouseY = event.clientY; // Get the Y coordinate of the mouse, accounting for scroll
+
+                updateCirclePosition(mouseX, mouseY);
+            });     
+
+            //Shuffle given text randomly, keeping punctuation at the end
             function shuffleText(text) {
                 // Split the text into words and handle punctuation
                 const words = text.split(' ').map(word => {
@@ -196,15 +267,14 @@ import Layout from '../layouts/Layout.astro';
                         const j = Math.floor(Math.random() * (i + 1));
                         [shuffledLetters[i], shuffledLetters[j]] = [shuffledLetters[j], shuffledLetters[i]];
                     }
-
                     // Return shuffled letters followed by punctuation
                     return shuffledLetters.join('') + punctuation;
                 });
-
                 // Join the words back with spaces
                 return words.join(' ');
             }
 
+            //For every "glitchable" item, use shuffleText function to loop shuffling the text for a glitch effect
             glitchables.forEach((el) => {
                 let originalText = el.textContent;
                 let glitchInterval;
@@ -227,187 +297,129 @@ import Layout from '../layouts/Layout.astro';
                     el.textContent = originalText;
                 });
             });
-            
-            //Move hero page text on scroll with a parallax effect
+
+            //Variables to enable hover effect on hero-content for readability
+            let hoverEnabled = false;
+            let hoverTargets = [name, logoRoleWrapper];
+
+            //Handle triggering hover effects for mouse enter and mouse leave on all targets
+            //Enable event listeners if screen size is large enough
+            function enableHoverEffects() {
+                if (hoverEnabled) return;
+
+                hoverTargets.forEach(target => {
+                    target.addEventListener('mouseenter', handleMouseEnter);
+                    target.addEventListener('mouseleave', handleMouseLeave);
+                });
+                hoverEnabled = true;
+            }
+
+            //Handle disabling hover effects based on screen size
+            //If screen is too small, text hover highlights do not work, so event listeners are disabled
+            function disableHoverEffects() {
+                if (!hoverEnabled) return;
+
+                hoverTargets.forEach(target => {
+                    target.removeEventListener('mouseenter', handleMouseEnter);
+                    target.removeEventListener('mouseleave', handleMouseLeave);
+                });
+                hoverEnabled = false;
+            }
+
+            //Update css of elements to properly show hover effect
+            function handleMouseEnter() {
+                background.classList.add('hovered-bg');
+                roleBackground.classList.add('hovered-bg');
+                logoBackground.classList.add('hovered-bg');
+                name.classList.remove('title-name-color');
+                name.classList.add('title-name-color-hover');
+                role.classList.add('role-color-hover');
+                logoRoleWrapper.classList.add('logo-role-wrapper-hover');
+                logoHover.classList.remove('displayNone');
+                logoHover.classList.add('display');
+            }
+
+            //Update css of elements to properly disable hover effect
+            function handleMouseLeave() {
+                background.classList.remove('hovered-bg');
+                roleBackground.classList.remove('hovered-bg');
+                logoBackground.classList.remove('hovered-bg');
+                name.classList.add('title-name-color');
+                name.classList.remove('title-name-color-hover');
+                role.classList.remove('role-color-hover');
+                logoRoleWrapper.classList.remove('logo-role-wrapper-hover');
+                logo.setAttribute("name", "icon-amber-supply");
+                logoHover.classList.remove('display');
+                logoHover.classList.add('displayNone');
+            }
+
+            //Determine if screen size is large enough for hover effect
+            const mediaQuery = window.matchMedia('(min-width: 910px)');
+
+            //If screen is large enough, enable hover effects
+            function handleMediaChange(e) {
+                if (e.matches) {
+                    enableHoverEffects();
+                } else {
+                    disableHoverEffects();
+                }
+            }
+
+            // Run once on load
+            handleMediaChange(mediaQuery);
+
+            // Listen for screen resize changes
+            mediaQuery.addEventListener('change', handleMediaChange);
+
+            //When highlighting title text, remove any mix-blend modes to allow for proper highlighting
+            document.addEventListener('selectionchange', () => {
+                const selection = window.getSelection();
+
+                if (!selection || selection.isCollapsed || !selection.rangeCount) {
+                    name.style.mixBlendMode = 'exclusion';
+                    return;
+                }
+
+                const range = selection.getRangeAt(0);
+
+                try {
+                    if (range.intersectsNode(name)) {
+                        name.style.mixBlendMode = 'normal';
+                    } else {
+                        name.style.mixBlendMode = 'exclusion';
+                    }
+                } catch (e) {
+                    // If the element is detached or causes a DOM error
+                    name.style.mixBlendMode = 'exclusion';
+                }
+            });
+
+            //When clicking the accessibility mode button, update css styles of necessary elements
+            accessibilityButton.addEventListener('click', () => {
+                accessibilityBackground.classList.toggle('hidden');
+                heroContent.classList.toggle('displayNone');
+                heroContentAlt.classList.toggle('display');
+            });
+
+            //Move hero page elements on scroll with a parallax effect
             document.addEventListener("scroll", () => {
                 const scrollY = window.scrollY;
                 
                 canvas.style.transform = `translateY(${scrollY * 0.5}px)`;
                 name.style.transform = `translateY(${scrollY * -0.27}px)`;
                 background.style.transform = `translateY(${scrollY * -0.27}px)`;
-                namecopy.style.transform = `translateY(${scrollY * -0.27}px)`;
-                title.style.transform = `translateY(${scrollY * -0.15}px)`;
+                role.style.transform = `translateY(${scrollY * -0.15}px)`;
+                roleBackground.style.transform = `translateY(${scrollY * -0.15}px)`;
                 logo.style.transform = `translateY(${scrollY * -0.2}px)`;
+                logoBackground.style.transform = `translateY(${scrollY * -0.2}px)`;
+                logoHover.style.transform = `translateY(${scrollY * -0.2}px)`;
 
                 updateCirclePosition(mouseX, mouseY);
             });
-
-            const circle = document.querySelector('.circle');
-            const nameCopy = document.getElementById('parallax-name-copy'); // Target the specific element
-            const titleBackground = document.querySelector('.title-background'); // Target the title background
-            const hoverTexts = document.querySelectorAll('.hover-text');
-
-            nameCopy.addEventListener('mouseenter', (e) => {
-                circle.classList.add('hovered-title');
-                const rect = titleBackground.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-
-                // Calculate the diagonal of the background to ensure the circle fully covers it
-                const maxDiameter = Math.sqrt(rect.width ** 2 + rect.height ** 2) * 2;
-
-                const fillCircle = document.createElement("div");
-                fillCircle.classList.add("fill-circle");
-                Object.assign(fillCircle.style, {
-                    position: "absolute",
-                    left: `${x}px`,
-                    top: `${y}px`,
-                    width: `0px`,
-                    height: `0px`,
-                    borderRadius: `50%`,
-                    backgroundColor: "#192727",
-                    transform: "translate(-50%, -50%)",
-                    zIndex: "-1",
-                    pointerEvents: "none"
-                });
-
-                titleBackground.appendChild(fillCircle);
-
-                gsap.to(fillCircle, {
-                    width: `${maxDiameter}px`,
-                    height: `${maxDiameter}px`,
-                    duration: 0.6,
-                    ease: "power2.out"
-                });
-            });
-
-            nameCopy.addEventListener('mouseleave', (e) => {
-                circle.classList.remove('hovered-title');
-                const fillCircle = titleBackground.querySelector(".fill-circle");
-                if (fillCircle) {
-                    const rect = titleBackground.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-
-                    // Reposition the origin of the shrinking animation
-                    gsap.set(fillCircle, {
-                        left: `${x}px`,
-                        top: `${y}px`,
-                        transform: "translate(-50%, -50%)"
-                    });
-
-                    gsap.to(fillCircle, {
-                        width: 0,
-                        height: 0,
-                        duration: 0.3,
-                        ease: "power2.in",
-                        onComplete: () => {
-                            fillCircle.remove();
-                        }
-                    });
-                }
-            });
-
-            hoverTexts.forEach(text => {
-                text.addEventListener('mouseenter', () => {
-                    circle.classList.add('hovered');
-                });
-
-                text.addEventListener('mouseleave', () => {
-                    circle.classList.remove('hovered');
-                });
-            });
-
-            document.addEventListener('mousemove', (event) => {
-                mouseX = event.clientX; // Get the X coordinate of the mouse
-                mouseY = event.clientY; // Get the Y coordinate of the mouse, accounting for scroll
-
-                updateCirclePosition(mouseX, mouseY);
-            });
-
-            function updateCirclePosition() {
-                if (!circle) return;
-        
-                const circleSize = circle.offsetWidth;
-                const halfSize = circleSize / 2;
-                
-                // Combine viewport position with scroll offset for absolute page position
-                const absoluteY = mouseY + scrollY;
-                
-                // Apply the transformation
-                circle.style.transform = `translate(${mouseX - halfSize}px, ${absoluteY - halfSize}px)`;
-            }
-
         });
-      </script>
+    </script>
 
     <style>
-
-        /*Remove horizontal scrolling in some browsers caused by canvas image
-        e4c787*/
-        html body {
-            overflow-x: hidden;
-            background-color: #e4c787;
-        }
-
-        .circle {
-            position: absolute;
-            width: 25px; /* Circle diameter */
-            height: 25px; /* Circle diameter */
-            border: 3px solid white; /* Circle outline color */
-            mix-blend-mode: difference;
-            border-radius: 50%; /* Make it a circle */
-            pointer-events: none; /* Prevent the circle from interfering with mouse events */
-            transition: transform 0.05s, background-color 0.1s, width 0.1s ease, height 0.1s ease; /* Smooth movement and color transition */
-            background-color: transparent; /* Initial background color */
-            z-index: 10;
-        }
-
-        .circle.hovered {
-            background-color: white; /* Fill color on hover */
-            mix-blend-mode: difference;
-            width: 50px;
-            height: 50px;
-        }
-
-        .circle.hovered-title {
-            background-color: transparent; /* Fill color on hover */
-            border: none;
-        }
-
-        .title-background {
-            position: absolute;
-            width: 100%;
-            height: 118px;
-            background-color: transparent;
-            transition: background-color 0.3s ease; /* Smooth transition for background color */
-            top: 18px;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            overflow: hidden;
-        }
-
-        .title-background::before {
-            content: "";
-            position: absolute;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background-color: #192727;
-            transform: translate(-50%, -50%);
-            transition: none;
-            z-index: -1;
-        }
-
-        .title-background.visible {
-            background-color: #192727;
-        }
-        
-        .page-background {
-            background-color: #e4c787;
-        }
-
         /* Custom font using free trial license from Pangram Pangram Foundry: https://pangrampangram.com/pages/faq*/
         @font-face {
             font-family: 'Supply';
@@ -428,22 +440,113 @@ import Layout from '../layouts/Layout.astro';
             font-style: normal;
         }
 
+        /* Hide horizontal scroll bar, set background color */
+        html body {
+            overflow-x: hidden;
+            background-color: #e4c787;
+        }
+
+        /* TOGGLED STYLES */
+        .display {
+            display: grid !important;
+        }
+        .displayNone {
+            display: none !important;
+        }
+        .hidden {
+            visibility: hidden !important;
+        }
+
+        /* Styles for mouse circle following the cursor */
+        .mouse-circle {
+            position: absolute;
+            width: 25px; /* Circle diameter */
+            height: 25px; /* Circle diameter */
+            border: 3px solid white; /* Circle outline color */
+            mix-blend-mode: difference;
+            border-radius: 50%; /* Make it a circle */
+            pointer-events: none; /* Prevent the circle from interfering with mouse events */
+            transition: transform 0.05s, background-color 0.1s, width 0.1s ease, height 0.1s ease; /* Smooth movement and color transition */
+            background-color: transparent; /* Initial background color */
+            z-index: 999;
+        }
+        .mouse-circle.hovered {
+            background-color: white; /* Fill color on hover */
+            mix-blend-mode: difference;
+            width: 50px;
+            height: 50px;
+        }
+
+        /* Initial loading screen styles */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #111;
+            color: white;
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        /* Main hero page styles */
         .hero {
             position: relative;
             height: 100vh;
             background-image: url('assets/images/default.png'); /* Fallback image if canvas doesn't load */
             background-size: cover;
             background-position: center;
+            background-repeat: no-repeat;
             background-attachment: scroll; /* Allow for parallax effect */
         }
 
-        .parallax-canvas {
+        /* Hero page image styles */
+        .hero-canvas {
             width: 100vw;
             height: 100vh;
             object-fit: cover;
             position: relative;
         }
 
+        /* Corner background when accessibility mode is on */
+        .accessibility-background {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width:100%;
+            height:calc(11.5rem + 2em);
+            background-color: #e4c787;
+            font-size: 16.3vw;
+        }
+
+        /* Wrapper for the accessibility button */
+        .accessibility-wrapper {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            z-index: 3;
+        }
+
+        /* Accessibility button styles */
+        .accessibility-button {
+            background-color: #e4c787; /* Matches page background */
+            color:#192727; /* Dark green text */
+            font-family: "Supply", sans-serif;
+            font-size: 3vw;
+            line-height: 1;
+            cursor: pointer;
+            z-index: 3;
+        }
+        .accessibility-button::selection {
+            background-color:#e4c787;
+            color:#192727;
+        }
+
+        /* Styles for hero content at the bottom left of the hero page */
         .hero-content {
             position: absolute;
             mix-blend-mode: normal;
@@ -453,92 +556,210 @@ import Layout from '../layouts/Layout.astro';
             display: grid; /* Display content in proper relative location */
         }
 
-        .icon-text-wrapper {
-            display: flex;
-            align-items: center; /* Vertically align icon and text */
-            gap: 0.5em; /* Space between icon and text */
-            padding-left: 0.3em;
-            padding-bottom: 0.3em;
-            font-family: 'Supply';
-            user-select: none;
-        }
-
-        .icon {
-            width: 2.5em;
-            height: 2.65em;
-            z-index: 2;
-            position: relative;
-            user-select: none;
-        }
-
-        .title-font {
-            font-size: 17.5vw;
-            line-height: 1.2;
-            font-family: 'Supply';
-        }
-
-        .parallax-name-copy {
+        /* Alt hero-content div for accessibility mode */
+        .hero-content-alt {
             position: absolute;
-            z-index: 5;
-            color: transparent;
+            mix-blend-mode: normal;
+            bottom: 20px;
+            left: 20px;
+            font-size: 2rem;
+            display: none; /* Display content in proper relative location */
         }
 
-        /*Alternate Color Scheme:
-            color: #fde68a;    
-            background-color: #2c1300;
-        */
-        .parallax-name-copy::selection {
-            color: #9ab28a;
-            background-color: #593636;
+        /* Styles for background divs when highlighting the title text */
+        .title-name-background, .title-logo-background, .title-role-background {
+            position: absolute;
+            z-index: 1;
+            background-color: transparent;
+            pointer-events: none;
+            
+        }
+        .title-name-background {
+            width: 889.6px;
+            height: 117.4px;;
+            top: 5.3px;
+            bottom: 0;
+            left: 0;
+        }
+        .hovered-bg {
+            background-color: #e4c787;
+            color: #192727 !important;
+        }
+        .title-logo-background {
+            width: 99px;
+            height: 133px;
+            bottom: 9px;
+            left: 0;
+        }
+        .title-role-background {
+            width: 155px;
+            height: 133px;
+            bottom: 9px;
+            left: 97.5px;
         }
 
-        .heading-box {
+        /* Styles for the name text */
+        .title-name-text {
+            position: relative;
+            z-index: 2;
+            font-size: 17.5vw;
+            line-height: 1;
+            font-family: 'Supply';
+        }
+        .title-name-text::selection {
+            mix-blend-mode: normal;
+            color:#e4c787;
+            background-color:#192727;
+        }
+        .title-name-color {
+            mix-blend-mode: exclusion;
+            color: #FDE484;
+        }
+        .title-name-color-hover {
+            mix-blend-mode: normal !important;
+            color:#192727 !important;
+        }
+
+        /* Alt title-name colors for accessibility mode */
+        .title-name-color-alt {
+            mix-blend-mode: normal;
+            color: #192727;
+        }
+
+        /* Styles for both logo-role-wrappers */
+        .logo-role-wrapper, .logo-role-wrapper-alt {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 0.5em;
+            margin-left: 9px;
+            margin-bottom: 9px;
+            line-height: 1;
+            font-family: 'Supply';
+        }
+        #parallax-title-logo, #parallax-title-role {
+            user-select: none;
+        }
+
+        /* Styles for the wrapper around the logo svg and role text */
+        .logo-role-wrapper {
+            mix-blend-mode: exclusion;
+            color: #fde484;
+            height: 127px;
+            width: 250px;
+        }
+        .logo-role-wrapper-hover {
+            mix-blend-mode: normal;
+            color: #192727;
+        }
+        .role-color-hover {
+            mix-blend-mode: normal !important;
+            color: #192727 !important;
+        }
+
+        /*Alt version of logo-role-wrapper for accessibility mode */
+        .logo-role-wrapper-alt {
+            mix-blend-mode: normal;
+            color: #192727;
+            height: 127px;
+            width: 250px;
+        }
+
+        /* Styles for specificially the logo svg wrapper */
+        .logo-wrapper {
+            user-select: none;
+            cursor: default;
+            width: 75px;
+            height: 75px;
+        }
+
+        /* Styles for hovered svg version */
+        .icon-hover {
+            position: absolute;
+            left: 0;
+        }
+
+        /* Page background after hero page styles */
+        .page-background {
+            background-color: #e4c787;
+        }
+
+        /* Styling for the link box wrapper */
+        .link-box-wrapper {
+            width: 100%;
+            box-sizing: border-box;
+            outline: 25px solid transparent;
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-top: 25px;
+        }
+
+        /* Styling for the link boxes and text */
+        .link-box {
             font-size: 16vw;
             line-height: 1.2;
             font-family: 'Nikkei';
             background-color: #192727;
             color: #e4c787;
+            cursor: pointer;
+            box-sizing: border-box;
         }
-
-        .heading-box:hover {
+        .link-box:hover {
             outline: 25px solid #192727;
             background-color: #9ab28a;
             color: #593636;
         }
-
-        .heading-box-text::selection {
+        .link-box-text::selection {
             color: #9ab28a;
             background-color: #593636;
         }
 
+        /*Different letter spacing to keep link text the same width */
         .tracking-work {
             letter-spacing: 0.117em;
         }
-
         .tracking-about {
             letter-spacing: 0.035em;
         }
-
         .tracking-contact {
             letter-spacing: 0.115em;
         }
 
-        /*Properties for larger screens*/
+        /*Properties for larger screens */
+        @media (min-width: 911px) {
+            .accessibility-background {
+                width: 940px;
+                height: 300px;
+            }
+        }
+        /*Properties for medium + larger screens*/
         @media (min-width: 720px) {
-            .title-font {
+            .title-name-text {
                 font-size: 4em;
+            }
+            .accessibility-button {
+                font-size: 1.5em;
+            }
+        }
+        /*Properties for medium screens */
+        @media (min-width: 721px) and (max-width: 910px) {
+            .accessibility-background {
+                width: 730px;
+                height: 420px;
             }
         }
         /*Properties for smaller screens */
         @media (max-width: 720px) {
-            .heading-box {
-                height: 20vh;
+            .link-box {
+                height: 30vh;
+            }
+        }
+        /*Properties for smallest screens */
+        @media (max-width: 550px) {
+            .accessibility-background {
+                height: 363px;
             }
         }
     </style>
 </Layout>
-
-
-
-
-
