@@ -221,8 +221,10 @@ import leostrangman from '../assets/images/leostrangman.jpg';
 
             function animate() {
                 // Smooth interpolation toward the mouse
+                const absoluteY =  mouseY + window.scrollY
+
                 circleX += (mouseX - circleX) * speed;
-                circleY += (mouseY - circleY) * speed;
+                circleY += (absoluteY - circleY) * speed;
 
                 const circleSize = circle.offsetWidth;
                 const halfSize = circleSize / 2;
