@@ -33,8 +33,8 @@ import leostrangman from '../assets/images/leostrangman.jpg';
                     <Icon class = "hover-text" name = "icon-amber-supply">
                 </div>
                 <!-- Wrapper for secondary logo svg that shows on hover -->
-                <div class = "logo-wrapper icon-hover u-hidden "id = "parallax-logo-hover">
-                    <Icon class = "hover-text" name = "icon-green-supply">
+                <div class = "logo-wrapper logo-hover u-hidden "id = "parallax-logo-hover">
+                    <Icon class = "hover-text" name = "icon-green-supply" width = "75" height = "75" viewBox="0, 0, 75, 75">
                 </div>
                 <h2 class = "title-role-text u-mt-1.5 glitchable hover-text" id = "parallax-title-role">Developer</h2>
             </div>
@@ -45,7 +45,7 @@ import leostrangman from '../assets/images/leostrangman.jpg';
         <!-- Secondary heading text/svg -->
            <div class = "logo-role-wrapper-alt">
                <div class = "logo-wrapper" id = "parallax-title-logo">
-                    <Icon class = "hover-text" name = "icon-green-supply">
+                    <Icon class = "hover-text" name = "icon-green-supply" width = "75" height = "75" viewBox="0, 0, 75, 75">
                </div>
                <h2 class = "title-role-text u-mt-1.5 glitchable hover-text" id = "parallax-title-role">Developer</h2>
            </div>
@@ -55,48 +55,55 @@ import leostrangman from '../assets/images/leostrangman.jpg';
     <!-- Div to correctly display parallax effect with background sliding over image -->
     <div class = "page-background u-z-2 u-relative">
         <div class="link-box-wrapper">
-            <div class="w-full u-h-[50vh] link-box u-text-center u-flex u-items-center u-justify-center">
+            <div class="u-w-full u-h-[50vh] link-box u-text-center u-flex u-items-center u-justify-center">
                 <p class = "glitchable link-box-text u-tracking-wide hover-text">PROJECTS</p>
             </div>
-            <div class="w-full u-mt-12 u-h-[50vh] link-box u-text-center u-flex u-items-center u-justify-center">
+            <div class="u-w-full u-mt-12 u-h-[50vh] link-box u-text-center u-flex u-items-center u-justify-center">
                 <p class = "glitchable link-box-text tracking-work hover-text">MY WORK</p>
             </div>
-            <div class="w-full u-mt-12 u-h-[50vh] link-box u-text-center u-flex u-items-center u-justify-center">
+            <div class="u-w-full u-mt-12 u-h-[50vh] link-box u-text-center u-flex u-items-center u-justify-center">
                 <p class = "glitchable link-box-text tracking-about hover-text">ABOUT ME</p>
             </div>
-            <div class="w-full u-mt-12 u-h-[50vh] link-box u-text-center u-flex u-items-center u-justify-center">
+            <div class="u-w-full u-mt-12 u-h-[50vh] link-box u-text-center u-flex u-items-center u-justify-center">
                 <p class = "glitchable link-box-text tracking-contact hover-text">CONTACT</p>
             </div>
-
+        
             <div class="u-mt-12 u-grid u-grid-cols-2 u-gap-gutter">
-                <div>
+                <div class = "image-wrapper u-w-full u-h-full">
+                    <canvas class = "pixel-canvas"></canvas>
                     <Image
-                        src= {scenery} alt = "Switzerland Scenery"
-                        alt="Placeholder alt"
+                        class = "source-image"
+                        src= {scenery}
+                        alt = "Switzerland Scenery"
                         caption=""
-                        loading="lazy"
                         width={500}
-                        height={500}
-                        data-depixelate
+                        height={700}
                     />
                 </div>
-                <div>
+                <div class = "image-wrapper u-w-full u-h-full">
+                    <canvas class = "pixel-canvas"></canvas>
                     <Image
-                        src={leostrangman} alt = "Leo Strangman"
-                        alt="Placeholder alt"
+                        class = "source-image"
+                        src={leostrangman}
+                        alt = "Leo Strangman"
                         caption=""
-                        loading="lazy"
                         width={500}
-                        height={500}
-                        data-depixelate
+                        height={700}
                     />
                 </div>
             </div>
-            <div class="w-full u-mt-fluid-xl u-h-[50vh] u-bg-[#9ab28a]"></div>
+            <div class = "scroll-container u-bg-[#9ab28a] u-w-full u-mt-fluid-xl u-h-[50vh]">
+                <ul class = "scroll-track">
+                    <li class = "scroll-text hover-text glitchable">©2025</li>
+                    <li class = "scroll-text hover-text glitchable">/* Designed and Developed - LCS */</li>
+                    <li class = "scroll-text hover-text glitchable">©2025</li>
+                    <li class = "scroll-text hover-text glitchable">/* Open to Work */</li>
+                </ul>
+            </div>
         </div>
     </div>
 
-    <script type="module">
+    <script is:inline type="module">
         //Imports for gsap to setup animation for the cover image
         import gsap from '../../node_modules/gsap';
         import { ScrollTrigger } from '../../node_modules/gsap/ScrollTrigger';
@@ -115,6 +122,9 @@ import leostrangman from '../assets/images/leostrangman.jpg';
 
         //Run on content loaded
         document.addEventListener("DOMContentLoaded", () => {
+            // ===================================================================================
+            // Section: Initialize Variables
+            // ===================================================================================
             //Load in elements from HTML
             const canvas = document.getElementById("parallax-canvas");
             const hero = document.getElementById("parallax-hero");
@@ -132,11 +142,20 @@ import leostrangman from '../assets/images/leostrangman.jpg';
             //Accessibility elements
             const accessibilityBackground = document.getElementById('accessibility-background');
             const accessibilityButton = document.getElementById('parallax-accessibility');
+            let accessToggled = false;
+            //Scroll elements
+            const scroller = document.querySelector('.scroll-container');
+            const scrollTrack = scroller.querySelector('.scroll-track');
+            const scrollTrackContent = Array.from(scrollTrack.children);
             //Other elements
             const glitchables = document.querySelectorAll('.glitchable');
             const circle = document.querySelector('.mouse-circle');
             const hoverTexts = document.querySelectorAll('.hover-text');
 
+
+            // ===================================================================================
+            // Section: Hero Page Scroll Animation
+            // ===================================================================================
             //Initialize canvas
             const context = canvas.getContext("2d");
             canvas.width = 1920;
@@ -211,53 +230,77 @@ import leostrangman from '../assets/images/leostrangman.jpg';
                 context.drawImage(spriteSheet, sx, sy, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
             }
 
+            // ===================================================================================
+            // Section: Circular Mouse Cursor Follow
+            // ===================================================================================
+            //Mouse positions
             let mouseX = window.innerWidth / 2;
             let mouseY = window.innerHeight / 2;
-
-            let circleX = mouseX;
-            let circleY = mouseY;
-
-            const speed = 0.5; // Smaller = smoother
-
-            function animate() {
-                // Smooth interpolation toward the mouse
-                const absoluteY =  mouseY + window.scrollY
-
-                circleX += (mouseX - circleX) * speed;
-                circleY += (absoluteY - circleY) * speed;
-
-                const circleSize = circle.offsetWidth;
-                const halfSize = circleSize / 2;
-
-                circle.style.transform = `translate(${circleX - halfSize}px, ${circleY - halfSize}px)`;
-
-                requestAnimationFrame(animate);
-            }
-            animate();
 
             // Update target position on mouse move
             document.addEventListener('mousemove', (e) => {
                 mouseX = e.clientX;
                 mouseY = e.clientY;
+
+                // Kill any existing tween so we don't stack them
+                if (circle._followTween) circle._followTween.kill();
+
+                // Animate to new position with spring
+                circle._followTween = gsap.to(circle, {
+                    x: mouseX,
+                    y: mouseY,
+                    duration: 0.37,
+                    ease: "elastic.out(0.7, 0.4)"
+                });
             });
 
+            //Scale up/down on mouse enter and leave
+            const scaleUp = () => {
+                gsap.to(circle, {
+                    scale: 1.3,
+                    duration: 0.7,
+                    ease: "elastic.out(1, 0.2)"
+                });
+            };
+            const scaleDown = () => {
+                gsap.to(circle, {
+                    scale: 1,
+                    duration: 0.7,
+                    ease: "elastic.out(1, 0.2)"
+                });
+            };
 
+            //When hovering over hover-text elements, scale up/down and play elastic effect
             hoverTexts.forEach(text => {
                 text.addEventListener('mouseenter', () => {
                     circle.classList.add('hovered');
+                    scaleUp();
                 });
                 text.addEventListener('mouseleave', () => {
                     circle.classList.remove('hovered');
+                    scaleDown();
                 });
             });
+
+            window.addEventListener('mouseout', () => {
+                circle.style.opacity = '0';
+            });
+
+            window.addEventListener('mousemove', () => {
+                circle.style.opacity = '1';
+            });
+
+            // ===================================================================================
+            // Section: Shuffle Texts on Hover
+            // ===================================================================================
 
             //Shuffle given text randomly, keeping punctuation at the end
             function shuffleText(text) {
                 // Split the text into words and handle punctuation
                 const words = text.split(' ').map(word => {
                     // Separate letters and punctuation within each word
-                    const letters = word.replace(/[^a-zA-Z]/g, '');  // Only alphabetic characters
-                    const punctuation = word.replace(/[a-zA-Z]/g, '');  // Only punctuation to leave periods at the end
+                    const letters = word.replace(/[^a-zA-Z0-9@#$%&*/\+=©!]/g, '');  // Only alphabetic characters
+                    const punctuation = word.replace(/[a-zA-Z0-9@#$%&*/\+=©!]/g, '');  // Only punctuation to leave periods at the end
 
                     // Randomly shuffle the letters
                     let shuffledLetters = letters.split('');
@@ -273,7 +316,7 @@ import leostrangman from '../assets/images/leostrangman.jpg';
             }
 
             //For every "glitchable" item, use shuffleText function to loop shuffling the text for a glitch effect
-            glitchables.forEach((el) => {
+            function setupGlitchable(el) {
                 let originalText = el.textContent;
                 let glitchInterval;
 
@@ -294,7 +337,13 @@ import leostrangman from '../assets/images/leostrangman.jpg';
                     clearInterval(glitchInterval);
                     el.textContent = originalText;
                 });
-            });
+            };
+
+            glitchables.forEach(setupGlitchable);
+
+            // ===================================================================================
+            // Section: Hover Effect for hero-content
+            // ===================================================================================
 
             //Variables to enable hover effect on hero-content for readability
             let hoverEnabled = false;
@@ -392,12 +441,30 @@ import leostrangman from '../assets/images/leostrangman.jpg';
                 }
             });
 
+            // ===================================================================================
+            // Section: Accessibility Mode
+            // ===================================================================================
+
             //When clicking the accessibility mode button, update css styles of necessary elements
-            accessibilityButton.addEventListener('click', () => {
+            accessibilityButton.addEventListener('click', () => { enableAccessibility(); });
+            if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { enableAccessibility(); }
+
+            function enableAccessibility() {
+                if (accessToggled) {
+                    scrollTrack.style.animation = 'scroll 20s linear infinite'
+                }
+                else {
+                    scrollTrack.style.animation = 'scroll 60s linear infinite'
+                }
                 accessibilityBackground.classList.toggle('hidden');
                 heroContent.classList.toggle('display-none');
                 heroContentAlt.classList.toggle('display');
-            });
+                accessToggled = !accessToggled;
+            }
+
+            // ===================================================================================
+            // Section: Parallax Scroll Effects
+            // ===================================================================================
 
             //Move hero page elements on scroll with a parallax effect
             document.addEventListener("scroll", () => {
@@ -411,9 +478,98 @@ import leostrangman from '../assets/images/leostrangman.jpg';
                 logo.style.transform = `translateY(${scrollY * -0.2}px)`;
                 logoBackground.style.transform = `translateY(${scrollY * -0.2}px)`;
                 logoHover.style.transform = `translateY(${scrollY * -0.2}px)`;
-
-                updateCirclePosition(mouseX, mouseY);
             });
+
+            // ===================================================================================
+            // Section: Image Pixelation
+            // ===================================================================================
+            document.querySelectorAll('.image-wrapper').forEach(wrapper => {
+                //Set up canvas, images, and constants
+                const pixelCanvas = wrapper.querySelector('.pixel-canvas');
+                const pixelContext = pixelCanvas.getContext('2d');
+                const image = wrapper.querySelector('.source-image img');
+                
+                const startPixelSize = 70;
+                const endPixelSize = 1;
+                const numSteps = 8;
+                const delay = 50;
+
+                let currentStep = 0;
+                let animating = false;
+                let hasAnimated = false;
+
+                function drawPixelated(size) {
+                    pixelCanvas.width = image.naturalWidth;
+                    pixelCanvas.height = image.naturalHeight;
+                    const w = pixelCanvas.width;
+                    const h = pixelCanvas.height;
+
+                    pixelContext.clearRect(0, 0, w, h);
+                    pixelContext.imageSmoothingEnabled = false;
+
+                    pixelContext.drawImage(image, 0, 0, w/size, h/size);
+                    pixelContext.drawImage(pixelCanvas, 0, 0, w/size, h/size, 0, 0, w, h);
+                }
+                function animateDepixelate() {
+                    if (currentStep > numSteps) {
+                        animating = false;
+                        return;
+                    }
+                    const progress = currentStep / numSteps;
+                    const pixelSize = startPixelSize * (1 - progress) + endPixelSize * progress;
+
+                    drawPixelated(pixelSize);
+                    currentStep++;
+                    setTimeout(() => requestAnimationFrame(animateDepixelate), delay);
+                }
+                function startPixelation() {
+                    if (animating || hasAnimated) return;
+                    animating = true;
+                    hasAnimated = true;
+                    currentStep = 0;
+                    drawPixelated(startPixelSize);
+                    requestAnimationFrame(animateDepixelate);
+                    pixelCanvas.style.imageRendering = "auto";
+                }
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            startPixelation();
+                        }
+                    });
+                }, {threshold: 0.6});
+                
+                if (image.complete) {
+                    drawPixelated(startPixelSize);
+                } else {
+                    image.onload = () => drawPixelated(startPixelSize);
+                }
+                observer.observe(pixelCanvas);
+            });
+
+            // ===================================================================================
+            // Section: Navigation Container Scroll
+            // ===================================================================================
+
+            if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+                scrollAnimation();
+            }
+            function scrollAnimation() {
+                scroller.setAttribute('data-animated', true);
+                
+                scrollTrackContent.forEach(item => {
+                    const duplicatedItem = item.cloneNode(true);
+                    duplicatedItem.setAttribute('aria-hidden', true);
+                    duplicatedItem.classList.add('glitchable');
+                    if (duplicatedItem.classList.contains('glitchable')) {
+                        setupGlitchable(duplicatedItem);
+                    }
+                    scrollTrack.appendChild(duplicatedItem);
+                });
+            }
+            
+
         });
     </script>
 
@@ -457,14 +613,14 @@ import leostrangman from '../assets/images/leostrangman.jpg';
 
         /* Styles for mouse circle following the cursor */
         .mouse-circle {
-            position: absolute;
+            position: fixed;
             z-index: 999;
             width: 25px;
             height: 25px;
-            border: 3px solid cyan;
+            border: 2.5px solid #f5e0b4;
             border-radius: 50%;
-            /*transform: translateX(-50%), translateY(-50%), translateZ(0px);*/
-            transition: transform 0.05s, background-color 0.1s, width 0.1s ease, height 0.1s ease;
+            transform: translate(-50%, -50%);
+            transition: transform 0.05s, background-color 0.1s, width 0.1s ease, height 0.1s ease, opacity 0.3s ease;
             background-color: transparent;
             mix-blend-mode: difference;
             pointer-events: none;
@@ -472,7 +628,8 @@ import leostrangman from '../assets/images/leostrangman.jpg';
         .mouse-circle.hovered {
             width: 50px;
             height: 50px;
-            background-color: cyan;
+            border: #f5e0b4;
+            background-color: #f5e0b4;
             mix-blend-mode: difference;
         }
 
@@ -668,14 +825,12 @@ import leostrangman from '../assets/images/leostrangman.jpg';
 
         /* Styles for specificially the logo svg wrapper */
         .logo-wrapper {
-            width: 75px;
-            height: 75px;
             user-select: none;
             cursor: default;
         }
 
         /* Styles for hovered svg version */
-        .icon-hover {
+        .logo-hover {
             position: absolute;
             left: 0;
         }
@@ -716,7 +871,7 @@ import leostrangman from '../assets/images/leostrangman.jpg';
             color: #9ab28a;
         }
 
-        /*Different letter spacing to keep link text the same width */
+        /* Different letter spacing to keep link text the same width */
         .tracking-work {
             letter-spacing: 0.117em;
         }
@@ -725,6 +880,59 @@ import leostrangman from '../assets/images/leostrangman.jpg';
         }
         .tracking-contact {
             letter-spacing: 0.115em;
+        }
+
+        /* Filter to render images pixelated */
+        .pixel-canvas {
+            width: 100%;
+            height: 100%;
+            image-rendering: pixelated;
+            display: block;
+        }
+
+        /* Make source image of pixelated images disappear */
+        .source-image {
+            position: absolute;
+            width: 0px;
+            height: 0px;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Container for scolling text */
+        .scroll-container {
+            color: #593636;
+            overflow: hidden;
+        }
+
+        /* Animated inner content of scroll container */
+        .scroll-track {
+            animation: scroll 20s linear infinite;
+            width: fit-content;
+            display: flex;
+            white-space: nowrap;
+            gap: 15rem;
+        }
+
+        /* Text styles within scroll path */
+        .scroll-text {
+            position: relative;
+            top: 0;
+            left: 0;
+            font-family: 'Nikkei';
+            font-size: 52.7vh;
+            line-height: 1;
+            user-select: none;
+        }
+        .scroll-text:hover {
+            text-decoration: underline overline;
+        }
+
+        /* Animation for scroll container */
+        @keyframes scroll {
+            to {
+                transform: translate(calc(-50% - 7.5rem));
+            }
         }
 
         /*Properties for larger screens */

@@ -16,10 +16,6 @@ Override scroll bar
 
 FIXES:
 Make the name text be in line with the svg properly
-Make Developer text include the circle highlight class
-Fix files in public served at root path
-Change mouse circle color
-Make mouse circle disappear when cursor leaves screen
 
         
 Title color options for exclusion:

@@ -1,5 +1,5 @@
-<svg id="svg" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <symbol id = "icon-amber-supply"  width="75" height="75" viewBox="0 0 75 75">
+<svg id="svg" version="1.1" viewBox="0 0 75 75" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <symbol id = "icon-amber-supply" width="75" height="75">
         <style>
             @font-face {
                 font-family: 'Supply';
@@ -11,7 +11,7 @@
         <rect x="0" y="0" width="75" height="75" fill="none" stroke="rgb(253 230 138)" stroke-width="3"></rect>
         <text x="50%" y="50%" text-anchor="middle" dy=".35em" font-size = "50" font-family = "Supply" fill = "rgb(253 230 138)">LCS</text>
     </symbol>
-    <symbol id = "icon-green-supply"  width="75" height="75" viewBox="0 0 75 75">
+    <symbol id = "icon-green-supply" width="75" height="75">
         <style>
             @font-face {
                 font-family: 'Supply';

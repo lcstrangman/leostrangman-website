@@ -3,13 +3,17 @@ interface Props {
     name: string;
     class?: string;
     ariaLabel?: string;
+    width?: string;
+    height?: string;
+    viewBox?: string;
 }
 
-const { name, ariaLabel, class: propsClass, ...rest } = Astro.props;
+const { name, ariaLabel, class: propsClass, width, height, viewBox, ...rest } = Astro.props;
 
 const computedAriaLabel = ariaLabel ?? undefined;
 const computedArialHidden = computedAriaLabel ? 'false' : 'true';
 const computedFocusable = computedAriaLabel ? 'true' : 'false';
+
 
 const classes = ['c-icon', propsClass];
 
@@ -23,6 +27,10 @@ const link = `/assets/images/sprite.svg#${name}`;
         aria-label={computedAriaLabel}
         aria-hidden={computedArialHidden}
         focusable={computedFocusable}
+        width={width}
+        height={height}
+        viewBox={viewBox}
+        preserveAspectRatio="xMidYMid meet"
     >
         <use href={link}></use>
     </svg>

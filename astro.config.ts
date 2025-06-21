@@ -9,7 +9,7 @@ const isProd = import.meta.env.PROD;
 
 // https://astro.build/config
 export default defineConfig({
-    site: 'https://leostrangman.dev',
+    site: 'https://leostrangman.com',
     vite: {
         css: {
             preprocessorOptions: {
@@ -46,7 +46,7 @@ export default defineConfig({
         enabled: false
     },
     image: {
-        domains: ['leostrangman.dev'],
+        domains: ['leostrangman.com'],
         remotePatterns: [{ protocol: 'https' }]
     }
 });
