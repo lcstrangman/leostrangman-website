@@ -34,7 +34,7 @@ class Lines {
         this.currentScroll = 0;
         this.hoveredIndex = 0;
         this.linesData = [];
-        this.isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        this.isTouchDevice = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
         this.initCanvas();
         this.computeLayout();

@@ -55,7 +55,9 @@ import mghlogo from '../assets/images/mghlogo.png';
         document.addEventListener('DOMContentLoaded', function() {
             // Desktop detection
             const html = document.documentElement;
-            html.classList.add(!('ontouchstart' in window) && !navigator.maxTouchPoints ? 'is-desktop' : 'is-mobile');
+            const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+            const isMobileUA = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            html.classList.add(!isTouch && !isMobileUA ? 'is-desktop' : 'is-mobile');
 
             const bulletBoxes = document.querySelectorAll('.bullet-box');
             const previewImage = document.getElementById('preview-image');
