@@ -5,7 +5,7 @@ import Icon from '@components/Icon/Icon.astro';
 import scenery from '../assets/images/scenery.jpg';
 import leostrangman from '../assets/images/leostrangman.jpg';
 ---
-<Layout title="Leo Strangman." backgroundColor="#e4c787" altColor="#192727">
+<Layout title="Leo Strangman.">
 
     <div class = "mouse-circle"></div>
     <div id="loading-screen">Loading...</div>
@@ -53,19 +53,19 @@ import leostrangman from '../assets/images/leostrangman.jpg';
     </div>
 
     <!-- Div to correctly display parallax effect with background sliding over image -->
-    <div class = "u-z-2 u-relative background-color">
+    <div class = "page-background u-z-2 u-relative">
         <div class="link-box-wrapper">
             <div class="u-w-full u-h-[50vh] link-box u-text-center u-flex u-items-center u-justify-center">
-                <a class = "glitchable link-box-text u-tracking-wide hover-text" href="/projects">PROJECTS</a>
+                <p class = "glitchable link-box-text u-tracking-wide hover-text">PROJECTS</p>
             </div>
             <div class="u-w-full u-mt-12 u-h-[50vh] link-box u-text-center u-flex u-items-center u-justify-center">
-                <a class = "glitchable link-box-text tracking-work hover-text" href="/work">MY WORK</a>
+                <p class = "glitchable link-box-text tracking-work hover-text">MY WORK</p>
             </div>
             <div class="u-w-full u-mt-12 u-h-[50vh] link-box u-text-center u-flex u-items-center u-justify-center">
-                <a class = "glitchable link-box-text tracking-about hover-text" href="/about">ABOUT ME</a>
+                <p class = "glitchable link-box-text tracking-about hover-text">ABOUT ME</p>
             </div>
             <div class="u-w-full u-mt-12 u-h-[50vh] link-box u-text-center u-flex u-items-center u-justify-center">
-                <a class = "glitchable link-box-text tracking-contact hover-text" href="/contact">CONTACT</a>
+                <p class = "glitchable link-box-text tracking-contact hover-text">CONTACT</p>
             </div>
         
             <div class="u-mt-12 u-grid u-grid-cols-2 u-gap-gutter">
@@ -103,23 +103,5 @@ import leostrangman from '../assets/images/leostrangman.jpg';
         </div>
     </div>
 
-    <script type="module" src = "/src/scripts/index-scripts.js"></script>
-    <script is:inline>
-        // Intercept all <a> clicks and scroll to top after navigation
-        document.addEventListener('click', function (e) {
-            const target = e.target.closest('a');
-            if (target && target.href && !target.target && !target.hasAttribute('download')) {
-                if (target.origin === window.location.origin) {
-                    e.preventDefault();
-                    window.location.href = target.href;
-                }
-            }
-        });
-
-        // On popstate (back/forward), let browser restore scroll position (no scrollTo)
-        window.addEventListener('popstate', function () {
-            window.location.reload();
-        });
-    </script>
-
+    <script type="module" src="/src/scripts/index-scripts.js"></script>
 </Layout>

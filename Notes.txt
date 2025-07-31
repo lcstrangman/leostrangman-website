@@ -1,5 +1,3 @@
-
-
 PAGE LOAD:
 When loading any page, give some sort of animation
 Make it be my name/logo and the developer text, maybe location or something
@@ -12,10 +10,26 @@ Hover over images/elements like sayhito-atlas.com
 Increase scroll speed
 Baillat studio hamburger menu
 Override scroll bar
+Change the shape of the circle cursor follower, put a second dot in the middle or something
+Different color scheme for each main page
+
+
+FOR THE OTHER PAGES:
+Horizontal line at top
+Top left has the title of the thing
+Below that is a related image
+To the right of both of those things is a vertical line, making a square on the left for the image to fill
+The right side is a table like thing of bullet points, which act like the baillat studio menu thing, that fill all of the remaining space
 
 
 FIXES:
 Make the name text be in line with the svg properly
+Make the pixellation effect work properly when starting at the same position as the images
+Make the reload when going back to a previous page work properly
+Fix the selection colors of the footer text
+Make canvases react properly to modified browser scaling
+
+Add initialize page logic/loading screen to the layout.astro
 
         
 Title color options for exclusion:

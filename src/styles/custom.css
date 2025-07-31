@@ -1,0 +1,577 @@
+:root {
+    --primary-color: #e4c787;
+    --secondary-color: #192727;
+    --tertiary-color: #593636;
+    --quaternary-color: #9ab28a;
+    --main-font-family: "Supply";
+    --secondary-font-family: "Nikkei";
+}
+
+/* Custom font using free trial license from Pangram Pangram Foundry: https://pangrampangram.com/pages/faq*/
+@font-face {
+    font-family: 'Supply';
+    src: url('/fonts/Supply/PPSupplySans-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Neue-Mono';
+    src: url('/fonts/NeueMono/PPNeueMontrealMono-Book.otf') format('opentype');
+    font-weight: 200;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Nikkei';
+    src: url('/fonts/Nikkei/PPNikkeiLine-Light.otf') format('opentype');
+    font-weight: 200;
+    font-style: normal;
+}
+
+/* Hide horizontal scroll bar, set background color */
+html body {
+    overflow-x: hidden;
+    background-color: var(--background-color, #e4c787);
+}
+
+/* TOGGLED STYLES */
+.display {
+    display: grid !important;
+}
+.display-none {
+    display: none !important;
+}
+.hidden {
+    visibility: hidden !important;
+}
+
+/* Styles for mouse circle following the cursor */
+.mouse-circle {
+    position: fixed;
+    z-index: 999;
+    width: 25px;
+    height: 25px;
+    border: 2.5px solid #f5e0b4;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.05s, background-color 0.1s, width 0.1s ease, height 0.1s ease, opacity 0.3s ease;
+    background-color: transparent;
+    mix-blend-mode: difference;
+    pointer-events: none;
+}
+.mouse-circle.hovered {
+    width: 50px;
+    height: 50px;
+    border: #f5e0b4;
+    background-color: #f5e0b4;
+    mix-blend-mode: difference;
+}
+
+/* Initial loading screen styles */
+#loading-screen {
+    position: fixed;
+    z-index: 9999;
+    display: flex;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    background: black;
+    color: white;
+    font-size: 2rem;   
+}
+
+/* Main hero page styles */
+.hero {
+    position: relative;
+    height: 100vh;
+    background-image: url('assets/images/default.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+}
+
+/* Hero page image styles */
+.hero-canvas {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+}
+
+/* Corner background when accessibility mode is on */
+.accessibility-background {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: calc(11.5rem + 2em);
+    background-color: var(--primary-color);
+    font-size: 16.3vw;
+}
+
+/* Wrapper for the accessibility button */
+.accessibility-wrapper {
+    position: absolute;
+    z-index: 3;
+    bottom: 0;
+    right: 0;
+}
+
+/* Accessibility button styles */
+.accessibility-button {
+    position: relative;
+    z-index: 3;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    font-family: var(--main-font-family);
+    font-size: 3vw;
+    line-height: 1;
+    cursor: pointer;
+}
+.accessibility-button::selection {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+}
+
+/* Styles for hero content at the bottom left of the hero page */
+.hero-content {
+    position: absolute;
+    display: grid;
+    bottom: 20px;
+    left: 20px;
+    font-size: 2rem;
+    mix-blend-mode: normal;
+}
+
+/* Alt hero-content div for accessibility mode */
+.hero-content-alt {
+    position: absolute;
+    display: none;
+    bottom: 20px;
+    left: 20px;
+    font-size: 2rem;
+    mix-blend-mode: normal;
+}
+
+/* Styles for background divs when highlighting the title text */
+.title-name-background, .title-logo-background, .title-role-background {
+    position: absolute;
+    z-index: 1;
+    background-color: transparent;
+    pointer-events: none;
+    
+}
+.title-name-background {
+    width: 889.6px;
+    height: 117.4px;;
+    top: 5.3px;
+    bottom: 0;
+    left: 0;
+}
+.hovered-bg {
+    background-color: var(--primary-color);
+    color: var(--secondary-color) !important;
+}
+.title-logo-background {
+    width: 99px;
+    height: 133px;
+    bottom: 9px;
+    left: 0;
+}
+.title-role-background {
+    width: 155px;
+    height: 133px;
+    bottom: 9px;
+    left: 97.5px;
+}
+
+/* Styles for the name text */
+.title-name-text {
+    position: relative;
+    z-index: 2;
+    font-family: var(--main-font-family);
+    font-size: 17.5vw;
+    line-height: 1;
+}
+.title-name-text::selection {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    mix-blend-mode: normal;
+}
+.title-name-color {
+    color: #FDE484;
+    mix-blend-mode: exclusion;
+}
+.title-name-color-hover {
+    color: var(--secondary-color) !important;
+    mix-blend-mode: normal !important;
+}
+
+/* Alt title-name colors for accessibility mode */
+.title-name-color-alt {
+    color: var(--secondary-color);
+    mix-blend-mode: normal;
+}
+
+/* Styles for both logo-role-wrappers */
+.logo-role-wrapper, .logo-role-wrapper-alt {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    margin-left: 9px;
+    margin-bottom: 9px;
+    font-family: var(--main-font-family);
+    line-height: 1;
+}
+#parallax-title-logo, #parallax-title-role {
+    user-select: none;
+}
+
+/* Styles for the wrapper around the logo svg and role text */
+.logo-role-wrapper {
+    height: 127px;
+    width: 250px;
+    color: var(--primary-color);
+    mix-blend-mode: exclusion;
+}
+.logo-role-wrapper-hover {
+    color: var(--secondary-color);
+    mix-blend-mode: normal;
+}
+.role-color-hover {
+    color: var(--secondary-color) !important;
+    mix-blend-mode: normal !important;
+}
+
+/*Alt version of logo-role-wrapper for accessibility mode */
+.logo-role-wrapper-alt {
+    height: 127px;
+    width: 250px;
+    color: var(--secondary-color);
+    mix-blend-mode: normal;
+}
+
+/* Styles for specificially the logo svg wrapper */
+.logo-wrapper {
+    user-select: none;
+    cursor: default;
+}
+
+/* Styles for hovered svg version */
+.logo-hover {
+    position: absolute;
+    left: 0;
+}
+
+/* Page background, set on a page-by-page basis, automatically updated in footer */
+.background-color {
+    background-color: var(--background-color);
+}
+.alt-color {
+    color: var(--alt-color);
+}
+
+/* Styling for the link box wrapper */
+.link-box-wrapper {
+    width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 25px;
+    box-sizing: border-box;
+    outline: 25px solid transparent;
+}
+
+/* Styling for the link boxes and text */
+.link-box {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    box-sizing: border-box;
+    font-family: var(--secondary-font-family);
+    font-size: 16vw;
+    line-height: 1.2;
+    cursor: pointer;
+    
+}
+.link-box:hover {
+    background-color: var(--quaternary-color);
+    color: var(--tertiary-color);
+    outline: 25px solid var(--secondary-color);
+}
+.link-box-text::selection {
+    background-color: var(--tertiary-color);
+    color: var(--quaternary-color);
+}
+
+/* Different letter spacing to keep link text the same width */
+.tracking-work {
+    letter-spacing: 0.117em;
+}
+.tracking-about {
+    letter-spacing: 0.035em;
+}
+.tracking-contact {
+    letter-spacing: 0.115em;
+}
+
+/* Filter to render images pixelated */
+.pixel-canvas {
+    width: 100%;
+    height: 100%;
+    image-rendering: pixelated;
+    display: block;
+}
+
+/* Make source image of pixelated images disappear */
+.source-image {
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Container for scolling text */
+.scroll-container {
+    color: var(--tertiary-color);
+    overflow: hidden;
+}
+
+/* Animated inner content of scroll container */
+.scroll-track {
+    animation: scroll 30s linear infinite;
+    width: fit-content;
+    display: flex;
+    white-space: nowrap;
+    gap: 15rem;
+}
+
+/* Text styles within scroll path */
+.scroll-text {
+    position: relative;
+    top: 0;
+    left: 0;
+    font-family: var(--secondary-font-family);
+    font-size: 52.7vh;
+    line-height: 1;
+    user-select: none;
+}
+.scroll-text:hover {
+    text-decoration: underline overline;
+}
+
+.line-container {
+    background: var(--quaternary-color);
+    color: var(--tertiary-color);
+    cursor: crosshair;
+    font-family: var(--secondary-font-family);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Animation for scroll container */
+@keyframes scroll {
+    to {
+        transform: translate(calc(-50% - 7.5rem));
+    }
+}
+
+/*Properties for larger screens */
+@media (min-width: 911px) {
+    .accessibility-background {
+        width: 940px;
+        height: 300px;
+    }
+}
+/*Properties for medium + larger screens*/
+@media (min-width: 720px) {
+    .title-name-text {
+        font-size: 4em;
+    }
+    .accessibility-button {
+        font-size: 1.5em;
+    }
+}
+/*Properties for medium screens */
+@media (min-width: 721px) and (max-width: 910px) {
+    .accessibility-background {
+        width: 730px;
+        height: 420px;
+    }
+}
+/*Properties for smaller screens */
+@media (max-width: 720px) {
+    .link-box {
+        height: 30vh;
+    }
+}
+/*Properties for smallest screens */
+@media (max-width: 550px) {}
+
+
+/* CUSTOM STYLES FOR THE WORK PAGE */
+.line-break {
+    display: block;
+    width: 100%;
+    height: 6px;
+    background-color: var(--tertiary-color);
+    margin-top: 10px;
+    line-height: 0;
+    border: none;
+}
+
+.interactive-section {
+    position: relative;
+    background: var(--quaternary-color);
+    color: var(--tertiary-color);
+    cursor: crosshair;
+    font-family: var(--secondary-font-family);
+    overflow: hidden;
+}
+
+.section-title {
+    font-family: monospace;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--tertiary-color);
+    margin: 0.5rem 0;
+}
+
+.section-divider {
+    width: 100%;
+    height: 2px;
+    background-color: var(--tertiary-color);
+}
+
+.content-container {
+    display: flex;
+    height: calc(50vh - 47px);
+    margin-top: 0;
+}
+
+.image-display-area {
+    flex: 1;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1.5rem;
+}
+
+.preview-image {
+    width: 100%;
+    height: 100%;
+    max-height: 250px;
+    background: center/cover no-repeat;
+    border: 2px solid var(--tertiary-color);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.boxes-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.bullet-box {
+    width: 100%;
+    flex: 1;
+    color: var(--tertiary-color);
+    cursor: pointer;
+    text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    position: relative;
+    transition: color 0.1s cubic-bezier(0.215, 0.61, 0.355, 1);
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+.bullet-box + .bullet-box {
+    border-top: 1px solid var(--tertiary-color);
+}
+
+.bullet-box::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    padding: 0;
+    width: calc(100% + 1px);
+    height: 100%;
+    background-color: var(--tertiary-color);
+    z-index: 0;
+    transform: scale3d(1, 0, 1);
+    transform-origin: center bottom;
+    transition: transform 0.15s cubic-bezier(0.215, 0.61, 0.355, 1) 0.15s;
+}
+
+.bullet-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    font-family: var(--secondary-font-family);
+    position: relative;
+    z-index: 1;
+}
+
+.tracking-1 {
+    letter-spacing: 0.174em;
+}
+.tracking-2 {
+    letter-spacing: 0.167em;
+}
+.tracking-3 {
+    letter-spacing: 0.125em;
+}
+.tracking-4 {
+    letter-spacing: 0.188em;
+}
+
+/* Desktop hover effects */
+html.is-desktop .bullet-box:hover,
+html.is-desktop .bullet-box.is-active {
+    color: var(--quaternary-color);
+}
+
+html.is-desktop .bullet-box:hover::before,
+html.is-desktop .bullet-box.is-active::before {
+    transform: scale3d(1, 1, 1);
+    transform-origin: center top;
+    transition-delay: 0s;
+}
+
+/* Text selection styles */
+.section-title::selection {
+    background-color: var(--tertiary-color);
+    color: var(--quaternary-color);
+}
+.bullet-title::selection {
+    background-color: var(--quaternary-color);
+    color: var(--tertiary-color);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .interactive-section {
+        height: 65vh; /* Increased height */
+    }
+
+    .content-container {
+        flex-direction: column;
+    }
+    
+    .image-display-area {
+        min-height: 150px;
+        margin-right: 0;
+        margin-bottom: 1rem;
+    }
+    .section-title {
+        text-align: center; /* Center-align title on mobile */
+    }
+}

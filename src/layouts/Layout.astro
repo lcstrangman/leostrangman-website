@@ -1,5 +1,6 @@
 ---
 import '@styles/main.scss';
+import '@styles/custom.css';
 import { SEO } from 'astro-seo';
 import { defaultSeo } from '@data/seo';
 import { getSeo } from '@scripts/utils/seo';
@@ -7,16 +8,15 @@ import { getSeo } from '@scripts/utils/seo';
 interface Props {
     title: string;
     seo?: Seo;
+    backgroundColor?: string;
+    altColor?: string;
 }
 
-const { title, seo = {} } = Astro.props;
+const { title, seo = {}, backgroundColor = "#e4c787", altColor = "#192727" } = Astro.props;
 
 const seoData = getSeo(seo, defaultSeo, title);
 
 const FONTS: string[] = [
-    '/Supply/PPSupplySans-Regular.woff2',
-    '/NeueMono/PPNeueMontrealMono-Book.otf',
-    '/Nikkei/PPNikkeiLine-Light.otf'
     // 'WebfontRegular.woff2',
     // 'WebfontBold.woff2',
 ];
@@ -47,7 +47,15 @@ const FONTS: string[] = [
             ))
         }
     </head>
-    <body>
+    <body style={`--background-color: ${backgroundColor}; --alt-color: ${altColor}`}>
+        <script is:inline>
+            if (window.performance && window.performance.navigation.type === 1) {
+                // This is a reload, don't scroll
+            } else if (window.history.length > 1 && window.location.hash === "") {
+                // Not a reload, not a hash link, scroll to top
+                window.scrollTo(0, 0);
+            }
+        </script>
         <!--
         <div class="u-container">
             <nav class="u-flex u-gap-gutter u-py-fluid-md">
@@ -65,14 +73,17 @@ const FONTS: string[] = [
             </div>
         </main>
 
-        <footer class="u-container u-flex u-justify-between u-py-fluid-xs">
+        <footer class="u-container u-flex u-justify-between u-py-fluid-xs font-nikkei background-color" style="color: var(--alt-color);">
             <div>
                 &copy;{new Date().getFullYear()}
             </div>
 
-            <nav class="u-flex u-gap-gutter font-supply">
-                <a href="/">Index</a>
-                <a href="/about">About</a>
+            <nav class="u-flex u-gap-gutter font-nikkei">
+                <a class = "glitchable hover-text" href="/">Index</a>
+                <a class = "glitchable hover-text" href="/projects">Projects</a>
+                <a class = "glitchable hover-text" href="/work">My Work</a>
+                <a class = "glitchable hover-text" href="/about">About Me</a>
+                <a class = "glitchable hover-text" href="/contact">Contact</a>
             </nav>
         </footer>
         <script src="../scripts/app.ts"></script>
@@ -86,7 +97,7 @@ const FONTS: string[] = [
             });
         </script>
         <style>
-            .font-supply {
+            .font-nikkei {
                 font-family: "Nikkei";
             }
         </style>
