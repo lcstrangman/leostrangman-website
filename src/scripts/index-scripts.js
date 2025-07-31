@@ -4,7 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 ScrollTrigger.defaults({
-    fastScrollEnd: true,
+    fastScrollEnd: true
 });
 
 //
@@ -16,7 +16,7 @@ class HeroPageController {
         this.mouseX = window.innerWidth / 2;
         this.mouseY = window.innerHeight / 2;
         this.hoverEnabled = false;
-        
+
         this.init();
     }
 
@@ -36,42 +36,42 @@ class HeroPageController {
         // ===================================================================================
         // Section: Initialize Variables
         // ===================================================================================
-        this.canvas = document.getElementById("parallax-canvas");
-        this.hero = document.getElementById("parallax-hero");
-        this.heroContent = document.getElementById("hero-content-primary");
-        this.heroContentAlt = document.getElementById("hero-content-alt");
-        
+        this.canvas = document.getElementById('parallax-canvas');
+        this.hero = document.getElementById('parallax-hero');
+        this.heroContent = document.getElementById('hero-content-primary');
+        this.heroContentAlt = document.getElementById('hero-content-alt');
+
         // Hero content elements
-        this.name = document.getElementById("parallax-title-name");
-        this.background = document.getElementById("parallax-name-background");
-        this.logoBackground = document.getElementById("parallax-logo-background");
-        this.roleBackground = document.getElementById("parallax-role-background");
+        this.name = document.getElementById('parallax-title-name');
+        this.background = document.getElementById('parallax-name-background');
+        this.logoBackground = document.getElementById('parallax-logo-background');
+        this.roleBackground = document.getElementById('parallax-role-background');
         this.logoRoleWrapper = document.getElementById('logo-role-wrapper');
-        this.role = document.getElementById("parallax-title-role");
-        this.logo = document.getElementById("parallax-title-logo");
-        this.logoHover = document.getElementById("parallax-logo-hover");
-        
+        this.role = document.getElementById('parallax-title-role');
+        this.logo = document.getElementById('parallax-title-logo');
+        this.logoHover = document.getElementById('parallax-logo-hover');
+
         // Accessibility elements
         this.accessibilityBackground = document.getElementById('accessibility-background');
         this.accessibilityButton = document.getElementById('parallax-accessibility');
-        
+
         // Scroll elements
         this.scroller = document.querySelector('.scroll-container');
         this.scrollTrack = this.scroller?.querySelector('.scroll-track');
         this.scrollTrackContent = this.scrollTrack ? Array.from(this.scrollTrack.children) : [];
-        
+
         // Other elements
         this.glitchables = document.querySelectorAll('.glitchable');
         this.circle = document.querySelector('.mouse-circle');
         this.hoverTexts = document.querySelectorAll('.hover-text');
-        
+
         this.hoverTargets = [this.name, this.logoRoleWrapper].filter(Boolean);
     }
 
     setupEventListeners() {
         // Remove existing listeners before adding new ones
         this.removeEventListeners();
-        
+
         // Bind methods to preserve 'this' context
         this.handleMouseMove = this.handleMouseMove.bind(this);
         this.handleMouseOut = this.handleMouseOut.bind(this);
@@ -87,7 +87,7 @@ class HeroPageController {
         window.addEventListener('mouseout', this.handleMouseOut);
         document.addEventListener('scroll', this.handleScroll);
         document.addEventListener('selectionchange', this.handleSelectionChange);
-        
+
         if (this.accessibilityButton) {
             this.accessibilityButton.addEventListener('click', this.handleAccessibilityClick);
         }
@@ -98,7 +98,7 @@ class HeroPageController {
         this.handleMediaChange(this.mediaQuery);
 
         // Check for reduced motion preference
-        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             this.enableAccessibility();
         }
     }
@@ -128,7 +128,7 @@ class HeroPageController {
         this.setupGlitchables();
         this.setupImagePixelation();
         this.setupScrollAnimation();
-        
+
         // Initialize hero animation when ready
         if (this.canvas) {
             this.preloadFrames();
@@ -142,41 +142,71 @@ class HeroPageController {
 
     initializeCanvas() {
         if (!this.canvas) return;
-        
-        this.context = this.canvas.getContext("2d");
+
+        this.context = this.canvas.getContext('2d');
         this.canvas.width = 1920;
         this.canvas.height = 1080;
 
         // Set up sprite sheets for hero canvas content
         this.spriteSheet = new Image();
-        this.spriteSheet.src = "/assets/images/sprite_sheet_full.png";
-        this.spriteSheet.decoding = "async";
-        this.spriteSheet.loading = "eager";
+        this.spriteSheet.src = '/assets/images/sprite_sheet_full.png';
+        this.spriteSheet.decoding = 'async';
+        this.spriteSheet.loading = 'eager';
         this.columns = 5;
         this.frameCount = 60;
     }
 
     preloadFrames() {
         if (!this.canvas || !this.spriteSheet) return;
-        
-        const bufferCtx = this.canvas.getContext("2d");
-        
+
+        const bufferCtx = this.canvas.getContext('2d');
+
         for (let i = 0; i < this.frameCount; i++) {
             let col = i % this.columns;
             let row = Math.floor(i / this.columns);
             let sx = col * this.canvas.width;
             let sy = row * this.canvas.height;
 
-            bufferCtx.drawImage(this.spriteSheet, 0, 0, this.canvas.width, this.canvas.height, 0, 0, this.canvas.width, this.canvas.height);
-            bufferCtx.drawImage(this.spriteSheet, sx, sy, this.canvas.width, this.canvas.height, 0, 0, this.canvas.width, this.canvas.height);
+            bufferCtx.drawImage(
+                this.spriteSheet,
+                0,
+                0,
+                this.canvas.width,
+                this.canvas.height,
+                0,
+                0,
+                this.canvas.width,
+                this.canvas.height
+            );
+            bufferCtx.drawImage(
+                this.spriteSheet,
+                sx,
+                sy,
+                this.canvas.width,
+                this.canvas.height,
+                0,
+                0,
+                this.canvas.width,
+                this.canvas.height
+            );
         }
-        
-        bufferCtx.drawImage(this.spriteSheet, 0, 0, this.canvas.width, this.canvas.height, 0, 0, this.canvas.width, this.canvas.height);
+
+        bufferCtx.drawImage(
+            this.spriteSheet,
+            0,
+            0,
+            this.canvas.width,
+            this.canvas.height,
+            0,
+            0,
+            this.canvas.width,
+            this.canvas.height
+        );
     }
 
     startAnimation() {
         if (!this.hero || !this.canvas) return;
-        
+
         // Kill existing animation
         if (this.heroAnimation) {
             this.heroAnimation.kill();
@@ -184,30 +214,40 @@ class HeroPageController {
 
         this.heroAnimation = gsap.to(this.glassrender, {
             frame: this.frameCount - 1,
-            snap: "frame",
-            ease: "none",
+            snap: 'frame',
+            ease: 'none',
             scrollTrigger: {
                 scrub: 0,
-                start: "top top",
+                start: 'top top',
                 end: () => `${this.hero.offsetHeight * 0.8}px`,
-                onRefresh: () => this.render(),
+                onRefresh: () => this.render()
             },
-            onUpdate: () => this.render(),
+            onUpdate: () => this.render()
         });
     }
 
     render() {
         if (!this.context || !this.spriteSheet) return;
-        
+
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         let frameIndex = this.glassrender.frame;
-        
+
         let col = frameIndex % this.columns;
         let row = Math.floor(frameIndex / this.columns);
         let sx = col * this.canvas.width;
         let sy = row * this.canvas.height;
 
-        this.context.drawImage(this.spriteSheet, sx, sy, this.canvas.width, this.canvas.height, 0, 0, this.canvas.width, this.canvas.height);
+        this.context.drawImage(
+            this.spriteSheet,
+            sx,
+            sy,
+            this.canvas.width,
+            this.canvas.height,
+            0,
+            0,
+            this.canvas.width,
+            this.canvas.height
+        );
     }
 
     // ===================================================================================
@@ -217,20 +257,20 @@ class HeroPageController {
         if (!this.circle) return;
 
         // Setup hover text interactions
-        this.hoverTexts.forEach(text => {
+        this.hoverTexts.forEach((text) => {
             const scaleUp = () => {
                 gsap.to(this.circle, {
                     scale: 1.3,
                     duration: 0.7,
-                    ease: "elastic.out(1, 0.2)"
+                    ease: 'elastic.out(1, 0.2)'
                 });
             };
-            
+
             const scaleDown = () => {
                 gsap.to(this.circle, {
                     scale: 1,
                     duration: 0.7,
-                    ease: "elastic.out(1, 0.2)"
+                    ease: 'elastic.out(1, 0.2)'
                 });
             };
 
@@ -238,7 +278,7 @@ class HeroPageController {
                 this.circle.classList.add('hovered');
                 scaleUp();
             });
-            
+
             text.addEventListener('mouseleave', () => {
                 this.circle.classList.remove('hovered');
                 scaleDown();
@@ -248,7 +288,7 @@ class HeroPageController {
 
     handleMouseMove(e) {
         if (!this.circle) return;
-        
+
         this.mouseX = e.clientX;
         this.mouseY = e.clientY;
 
@@ -262,7 +302,7 @@ class HeroPageController {
             x: this.mouseX,
             y: this.mouseY,
             duration: 0.37,
-            ease: "elastic.out(0.7, 0.4)"
+            ease: 'elastic.out(0.7, 0.4)'
         });
     }
 
@@ -276,7 +316,7 @@ class HeroPageController {
     // Section: Shuffle Texts on Hover
     // ===================================================================================
     setupGlitchables() {
-        this.glitchables.forEach(el => this.setupGlitchable(el));
+        this.glitchables.forEach((el) => this.setupGlitchable(el));
     }
 
     setupGlitchable(el) {
@@ -299,12 +339,12 @@ class HeroPageController {
             el.textContent = originalText;
         };
 
-        el.addEventListener("mouseenter", glitchText);
-        el.addEventListener("mouseleave", stopGlitch);
+        el.addEventListener('mouseenter', glitchText);
+        el.addEventListener('mouseleave', stopGlitch);
     }
 
     shuffleText(text) {
-        const words = text.split(' ').map(word => {
+        const words = text.split(' ').map((word) => {
             const letters = word.replace(/[^a-zA-Z0-9@#$%&*/\+=©!-]/g, '');
             const punctuation = word.replace(/[a-zA-Z0-9@#$%&*/\+=©!-]/g, '');
 
@@ -313,10 +353,10 @@ class HeroPageController {
                 const j = Math.floor(Math.random() * (i + 1));
                 [shuffledLetters[i], shuffledLetters[j]] = [shuffledLetters[j], shuffledLetters[i]];
             }
-            
+
             return shuffledLetters.join('') + punctuation;
         });
-        
+
         return words.join(' ');
     }
 
@@ -326,7 +366,7 @@ class HeroPageController {
     enableHoverEffects() {
         if (this.hoverEnabled || !this.hoverTargets.length) return;
 
-        this.hoverTargets.forEach(target => {
+        this.hoverTargets.forEach((target) => {
             target.addEventListener('mouseenter', this.handleMouseEnter);
             target.addEventListener('mouseleave', this.handleMouseLeave);
         });
@@ -336,7 +376,7 @@ class HeroPageController {
     disableHoverEffects() {
         if (!this.hoverEnabled || !this.hoverTargets.length) return;
 
-        this.hoverTargets.forEach(target => {
+        this.hoverTargets.forEach((target) => {
             target.removeEventListener('mouseenter', this.handleMouseEnter);
             target.removeEventListener('mouseleave', this.handleMouseLeave);
         });
@@ -345,7 +385,7 @@ class HeroPageController {
 
     handleMouseEnter() {
         if (!this.background) return;
-        
+
         this.background.classList.add('hovered-bg');
         this.roleBackground?.classList.add('hovered-bg');
         this.logoBackground?.classList.add('hovered-bg');
@@ -359,7 +399,7 @@ class HeroPageController {
 
     handleMouseLeave() {
         if (!this.background) return;
-        
+
         this.background.classList.remove('hovered-bg');
         this.roleBackground?.classList.remove('hovered-bg');
         this.logoBackground?.classList.remove('hovered-bg');
@@ -367,7 +407,7 @@ class HeroPageController {
         this.name?.classList.remove('title-name-color-hover');
         this.role?.classList.remove('role-color-hover');
         this.logoRoleWrapper?.classList.remove('logo-role-wrapper-hover');
-        this.logo?.setAttribute("name", "icon-amber-supply");
+        this.logo?.setAttribute('name', 'icon-amber-supply');
         this.logoHover?.classList.remove('display');
         this.logoHover?.classList.add('display-none');
     }
@@ -382,7 +422,7 @@ class HeroPageController {
 
     handleSelectionChange() {
         if (!this.name) return;
-        
+
         const selection = window.getSelection();
 
         if (!selection || selection.isCollapsed || !selection.rangeCount) {
@@ -418,7 +458,7 @@ class HeroPageController {
                 this.scrollTrack.style.animation = 'scroll 60s linear infinite';
             }
         }
-        
+
         this.accessibilityBackground?.classList.toggle('hidden');
         this.heroContent?.classList.toggle('display-none');
         this.heroContentAlt?.classList.toggle('display');
@@ -430,14 +470,16 @@ class HeroPageController {
     // ===================================================================================
     handleScroll() {
         const scrollY = window.scrollY;
-        
+
         if (this.canvas) this.canvas.style.transform = `translateY(${scrollY * 0.5}px)`;
         if (this.name) this.name.style.transform = `translateY(${scrollY * -0.27}px)`;
         if (this.background) this.background.style.transform = `translateY(${scrollY * -0.27}px)`;
         if (this.role) this.role.style.transform = `translateY(${scrollY * -0.15}px)`;
-        if (this.roleBackground) this.roleBackground.style.transform = `translateY(${scrollY * -0.15}px)`;
+        if (this.roleBackground)
+            this.roleBackground.style.transform = `translateY(${scrollY * -0.15}px)`;
         if (this.logo) this.logo.style.transform = `translateY(${scrollY * -0.2}px)`;
-        if (this.logoBackground) this.logoBackground.style.transform = `translateY(${scrollY * -0.2}px)`;
+        if (this.logoBackground)
+            this.logoBackground.style.transform = `translateY(${scrollY * -0.2}px)`;
         if (this.logoHover) this.logoHover.style.transform = `translateY(${scrollY * -0.2}px)`;
     }
 
@@ -445,13 +487,13 @@ class HeroPageController {
     // Section: Image Pixelation
     // ===================================================================================
     setupImagePixelation() {
-        document.querySelectorAll('.image-wrapper').forEach(wrapper => {
+        document.querySelectorAll('.image-wrapper').forEach((wrapper) => {
             const pixelCanvas = wrapper.querySelector('.pixel-canvas');
             const pixelContext = pixelCanvas?.getContext('2d');
             const image = wrapper.querySelector('.source-image img');
-            
+
             if (!pixelCanvas || !pixelContext || !image) return;
-            
+
             const startPixelSize = 70;
             const endPixelSize = 1;
             const numSteps = 8;
@@ -470,8 +512,8 @@ class HeroPageController {
                 pixelContext.clearRect(0, 0, w, h);
                 pixelContext.imageSmoothingEnabled = false;
 
-                pixelContext.drawImage(image, 0, 0, w/size, h/size);
-                pixelContext.drawImage(pixelCanvas, 0, 0, w/size, h/size, 0, 0, w, h);
+                pixelContext.drawImage(image, 0, 0, w / size, h / size);
+                pixelContext.drawImage(pixelCanvas, 0, 0, w / size, h / size, 0, 0, w, h);
             };
 
             const animateDepixelate = () => {
@@ -494,17 +536,20 @@ class HeroPageController {
                 currentStep = 0;
                 drawPixelated(startPixelSize);
                 requestAnimationFrame(animateDepixelate);
-                pixelCanvas.style.imageRendering = "auto";
+                pixelCanvas.style.imageRendering = 'auto';
             };
 
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        startPixelation();
-                    }
-                });
-            }, {threshold: 0.6});
-            
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            startPixelation();
+                        }
+                    });
+                },
+                { threshold: 0.6 }
+            );
+
             if (image.complete) {
                 drawPixelated(startPixelSize);
             } else {
@@ -519,11 +564,11 @@ class HeroPageController {
     // ===================================================================================
     setupScrollAnimation() {
         if (!this.scroller || !this.scrollTrack) return;
-        
-        if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             this.scroller.setAttribute('data-animated', true);
-            
-            this.scrollTrackContent.forEach(item => {
+
+            this.scrollTrackContent.forEach((item) => {
                 const duplicatedItem = item.cloneNode(true);
                 duplicatedItem.setAttribute('aria-hidden', true);
                 duplicatedItem.classList.add('glitchable');
@@ -540,13 +585,13 @@ class HeroPageController {
         if (this.heroAnimation) {
             this.heroAnimation.kill();
         }
-        
+
         // Kill ScrollTrigger instances
-        ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-        
+        ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+
         // Remove event listeners
         this.removeEventListeners();
-        
+
         this.isInitialized = false;
     }
 
@@ -578,13 +623,13 @@ class LoadingScreen {
 function initializePage() {
     // Show loading screen
     LoadingScreen.show();
-    
+
     // Hide loading screen after delay
     window.addEventListener('load', LoadingScreen.hide);
-    
+
     // Initialize hero page controller
     let heroController;
-    
+
     const init = () => {
         if (heroController) {
             heroController.destroy();
@@ -608,7 +653,7 @@ function initializePage() {
 
     // Handle popstate (back/forward buttons)
     window.addEventListener('popstate', init);
-    
+
     // Cleanup on page unload
     window.addEventListener('beforeunload', () => {
         if (heroController) {

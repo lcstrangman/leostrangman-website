@@ -4,73 +4,90 @@ import Image from '@components/Image/Image.astro';
 import scenery from '../assets/images/scenery.jpg';
 import mghlogo from '../assets/images/mghlogo.png';
 ---
+
 <Layout title="Leo Strangman." backgroundColor="#192727" altColor="#e4c787">
     <div class="mouse-circle"></div>
     <div id="loading-screen">Loading...</div>
-    
-    <div class="u-z-2 u-relative background-color">
+
+    <div class="u-z-2 background-color u-relative">
         <div class="link-box-wrapper">
-            <div class="line-container u-w-full u-h-[50vh] hover-text" id="lines-wrapper"></div>
-            
-            <div class="interactive-section u-w-full u-h-[50vh] u-mt-fluid-xl">
-                <div class="section-title glitchable hover-text">/* MASSACHUSETTS GENERAL HOSPITAL */</div>
+            <div class="line-container hover-text u-h-[50vh] u-w-full" id="lines-wrapper"></div>
+
+            <div class="interactive-section u-mt-fluid-xl u-h-[50vh] u-w-full">
+                <div class="section-title glitchable hover-text">
+                    /* MASSACHUSETTS GENERAL HOSPITAL */
+                </div>
                 <div class="section-divider"></div>
-                
+
                 <div class="content-container">
                     <div class="image-display-area">
                         <div class="preview-image" id="preview-image"></div>
                     </div>
-                    
+
                     <div class="boxes-container">
                         <div class="bullet-box" data-image="bullet1">
-                            <span class="bullet-title glitchable hover-text tracking-1">Front and back-end website development for the Neural Systems Group</span>
+                            <span class="bullet-title glitchable hover-text tracking-1"
+                                >Front and back-end website development for the Neural Systems Group</span
+                            >
                         </div>
                         <div class="bullet-box" data-image="bullet2">
-                            <span class="bullet-title glitchable hover-text tracking-2">Automated data analysis collected with biomedical research equipment</span>
+                            <span class="bullet-title glitchable hover-text tracking-2"
+                                >Automated data analysis collected with biomedical research
+                                equipment</span
+                            >
                         </div>
                         <div class="bullet-box" data-image="bullet3">
-                            <span class="bullet-title glitchable hover-text tracking-3">Supported design of a novel biomedical monitoring and brain imaging system</span>
+                            <span class="bullet-title glitchable hover-text tracking-3"
+                                >Supported design of a novel biomedical monitoring and brain imaging
+                                system</span
+                            >
                         </div>
                         <div class="bullet-box" data-image="bullet4">
-                            <span class="bullet-title glitchable hover-text tracking-4">Aided in redesigning and fabricating housing and sensor components</span>
+                            <span class="bullet-title glitchable hover-text tracking-4"
+                                >Aided in redesigning and fabricating housing and sensor components</span
+                            >
                         </div>
                     </div>
                 </div>
             </div>
-            
-            <div class="scroll-container u-bg-[#9ab28a] u-w-full u-mt-fluid-xl u-h-[50vh]">
+
+            <div class="scroll-container u-mt-fluid-xl u-h-[50vh] u-w-full u-bg-[#9ab28a]">
                 <ul class="scroll-track">
                     <li class="scroll-text hover-text glitchable">©2025</li>
-                    <li class="scroll-text hover-text glitchable">/* Designed and Developed by LCS */</li>
+                    <li class="scroll-text hover-text glitchable">
+                        /* Designed and Developed by LCS */
+                    </li>
                     <li class="scroll-text hover-text glitchable">©2025</li>
                     <li class="scroll-text hover-text glitchable">/* Open to Work */</li>
                 </ul>
             </div>
         </div>
     </div>
-    
+
     <script type="module" src="/src/scripts/index-scripts.js"></script>
     <script type="module" src="/src/scripts/work-scripts.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Desktop detection
             const html = document.documentElement;
             const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-            const isMobileUA = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            const isMobileUA = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+                navigator.userAgent
+            );
             html.classList.add(!isTouch && !isMobileUA ? 'is-desktop' : 'is-mobile');
 
             const bulletBoxes = document.querySelectorAll('.bullet-box');
             const previewImage = document.getElementById('preview-image');
-            
+
             const imageMap = {
-                'bullet1': '/src/assets/images/bullet1.png',
-                'bullet2': '/src/assets/images/bullet2.png',
-                'bullet3': '/src/assets/images/bullet3.png',
-                'bullet4': '/src/assets/images/bullet4.png'
+                bullet1: '/src/assets/images/bullet1.png',
+                bullet2: '/src/assets/images/bullet2.png',
+                bullet3: '/src/assets/images/bullet3.png',
+                bullet4: '/src/assets/images/bullet4.png'
             };
 
-            bulletBoxes.forEach(box => {
-                box.addEventListener('mouseenter', function() {
+            bulletBoxes.forEach((box) => {
+                box.addEventListener('mouseenter', function () {
                     const imageSrc = imageMap[this.getAttribute('data-image')];
                     if (imageSrc) {
                         previewImage.style.backgroundImage = `url(${imageSrc})`;
@@ -78,14 +95,14 @@ import mghlogo from '../assets/images/mghlogo.png';
                         previewImage.classList.add('active');
                     }
                 });
-                
-                box.addEventListener('mouseleave', function() {
+
+                box.addEventListener('mouseleave', function () {
                     previewImage.style.opacity = '0';
                     previewImage.classList.remove('active');
                 });
 
-                box.addEventListener('click', function() {
-                    bulletBoxes.forEach(b => b.classList.remove('is-active'));
+                box.addEventListener('click', function () {
+                    bulletBoxes.forEach((b) => b.classList.remove('is-active'));
                     this.classList.add('is-active');
                 });
             });

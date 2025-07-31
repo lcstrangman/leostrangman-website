@@ -4,34 +4,34 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 ScrollTrigger.defaults({
-    fastScrollEnd: true,
+    fastScrollEnd: true
 });
 
 function getEl<T extends HTMLElement>(id: string): T {
-	const el = document.getElementById(id);
-	if (!el) throw new Error(`Element "${id}" not found`);
-	return el as T;
+    const el = document.getElementById(id);
+    if (!el) throw new Error(`Element "${id}" not found`);
+    return el as T;
 }
 function querySel<T extends HTMLElement>(selector: string): T {
-	const el = document.querySelector(selector);
-	if (!el) throw new Error(`Element "${selector}" not found`);
-	return el as T;
+    const el = document.querySelector(selector);
+    if (!el) throw new Error(`Element "${selector}" not found`);
+    return el as T;
 }
 function querySelAll<T extends HTMLElement>(selector: string): T[] {
-	const nodelist = document.querySelectorAll(selector);
-	if (!nodelist) throw new Error(`Elements "${selector}" not found`);
-	return Array.from(nodelist) as T[];
+    const nodelist = document.querySelectorAll(selector);
+    if (!nodelist) throw new Error(`Elements "${selector}" not found`);
+    return Array.from(nodelist) as T[];
 }
 
 export function initHeroPage(): void {
     //Loading Screen
     window.addEventListener('load', () => {
         setTimeout(() => {
-        const loadingScreen = getEl<HTMLCanvasElement>('loading-screen');
-        const loadingContent = getEl<HTMLCanvasElement>('content');
+            const loadingScreen = getEl<HTMLCanvasElement>('loading-screen');
+            const loadingContent = getEl<HTMLCanvasElement>('content');
 
-        loadingScreen.style.display = 'none';
-        loadingContent.style.display = 'block';
+            loadingScreen.style.display = 'none';
+            loadingContent.style.display = 'block';
         }, 2000); // 2000ms = 2 seconds
     });
 
@@ -39,19 +39,19 @@ export function initHeroPage(): void {
     // Section: Initialize Variables
     // ===================================================================================
     //Load in elements from HTML
-    const canvas = getEl<HTMLCanvasElement>("parallax-canvas");
-    const hero = getEl<HTMLCanvasElement>("parallax-hero");
-    const heroContent = getEl<HTMLCanvasElement>("hero-content-primary");
-    const heroContentAlt = getEl<HTMLCanvasElement>("hero-content-alt");
+    const canvas = getEl<HTMLCanvasElement>('parallax-canvas');
+    const hero = getEl<HTMLCanvasElement>('parallax-hero');
+    const heroContent = getEl<HTMLCanvasElement>('hero-content-primary');
+    const heroContentAlt = getEl<HTMLCanvasElement>('hero-content-alt');
     //Hero content elements
-    const name = getEl<HTMLCanvasElement>("parallax-title-name");
-    const background = getEl<HTMLCanvasElement>("parallax-name-background");
-    const logoBackground = getEl<HTMLCanvasElement>("parallax-logo-background");
-    const roleBackground = getEl<HTMLCanvasElement>("parallax-role-background");
+    const name = getEl<HTMLCanvasElement>('parallax-title-name');
+    const background = getEl<HTMLCanvasElement>('parallax-name-background');
+    const logoBackground = getEl<HTMLCanvasElement>('parallax-logo-background');
+    const roleBackground = getEl<HTMLCanvasElement>('parallax-role-background');
     const logoRoleWrapper = getEl<HTMLCanvasElement>('logo-role-wrapper');
-    const role = getEl<HTMLCanvasElement>("parallax-title-role");
-    const logo = getEl<HTMLCanvasElement>("parallax-title-logo");
-    const logoHover = getEl<HTMLCanvasElement>("parallax-logo-hover");
+    const role = getEl<HTMLCanvasElement>('parallax-title-role');
+    const logo = getEl<HTMLCanvasElement>('parallax-title-logo');
+    const logoHover = getEl<HTMLCanvasElement>('parallax-logo-hover');
     //Accessibility elements
     const accessibilityBackground = getEl<HTMLCanvasElement>('accessibility-background');
     const accessibilityButton = getEl<HTMLCanvasElement>('parallax-accessibility');
@@ -70,16 +70,16 @@ export function initHeroPage(): void {
     // Section: Hero Page Scroll Animation
     // ===================================================================================
     //Initialize canvas
-    const context = canvas.getContext("2d") as CanvasRenderingContext2D || null;
+    const context = (canvas.getContext('2d') as CanvasRenderingContext2D) || null;
     if (!context) return;
     canvas.width = 1920;
     canvas.height = 1080;
 
     //Set up sprite sheets for hero canvas content
     const spriteSheet = new Image();
-    spriteSheet.src = "/assets/images/sprite_sheet_full.png";
-    spriteSheet.decoding = "async";
-    spriteSheet.loading = "eager";
+    spriteSheet.src = '/assets/images/sprite_sheet_full.png';
+    spriteSheet.decoding = 'async';
+    spriteSheet.loading = 'eager';
     const columns = 5;
     const frameCount = 60;
 
@@ -90,7 +90,7 @@ export function initHeroPage(): void {
     };
 
     //Copy of canvas context to preload images to improve performance
-    const bufferCtx = canvas.getContext("2d") as CanvasRenderingContext2D || null;
+    const bufferCtx = (canvas.getContext('2d') as CanvasRenderingContext2D) || null;
     if (!bufferCtx) return;
     //Preload all frames to avoid lag when loading/moving back to the tab after a long time
     function preloadFrames(): void {
@@ -102,11 +102,41 @@ export function initHeroPage(): void {
             let sx = col * canvas.width;
             let sy = row * canvas.height;
 
-            bufferCtx.drawImage(spriteSheet, 0, 0, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
-            bufferCtx.drawImage(spriteSheet, sx, sy, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
+            bufferCtx.drawImage(
+                spriteSheet,
+                0,
+                0,
+                canvas.width,
+                canvas.height,
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            );
+            bufferCtx.drawImage(
+                spriteSheet,
+                sx,
+                sy,
+                canvas.width,
+                canvas.height,
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            );
         }
         //Redraw first frame to start on the correct one
-        bufferCtx.drawImage(spriteSheet, 0, 0, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
+        bufferCtx.drawImage(
+            spriteSheet,
+            0,
+            0,
+            canvas.width,
+            canvas.height,
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
     }
 
     //Variable for running GSAP animation
@@ -116,16 +146,16 @@ export function initHeroPage(): void {
     function startAnimation(): void {
         gsap.to(glassrender, {
             frame: frameCount - 1,
-            snap: "frame",
-            ease: "none",
+            snap: 'frame',
+            ease: 'none',
             scrollTrigger: {
                 scrub: 0,
-                start: "top top",
+                start: 'top top',
                 //Modify to change speed animation plays at
-                end: () => `${hero.offsetHeight*0.8}px`,
+                end: () => `${hero.offsetHeight * 0.8}px`
             },
             //Run custom render function on scroll
-            onUpdate: render,
+            onUpdate: render
         });
     }
 
@@ -134,7 +164,7 @@ export function initHeroPage(): void {
         //Clear canvas, set up frame index
         context.clearRect(0, 0, canvas.width, canvas.height);
         let frameIndex = glassrender.frame;
-        
+
         //Get column, row, and pixel locations from sprite sheet to draw correct image
         let col = frameIndex % columns;
         let row = Math.floor(frameIndex / columns);
@@ -142,7 +172,17 @@ export function initHeroPage(): void {
         let sy = row * canvas.height;
 
         //Draw the current frame
-        context.drawImage(spriteSheet, sx, sy, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
+        context.drawImage(
+            spriteSheet,
+            sx,
+            sy,
+            canvas.width,
+            canvas.height,
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
     }
 
     // ===================================================================================
@@ -165,7 +205,7 @@ export function initHeroPage(): void {
             x: mouseX,
             y: mouseY,
             duration: 0.37,
-            ease: "elastic.out(0.7, 0.4)"
+            ease: 'elastic.out(0.7, 0.4)'
         });
     });
 
@@ -174,19 +214,19 @@ export function initHeroPage(): void {
         gsap.to(circle, {
             scale: 1.3,
             duration: 0.7,
-            ease: "elastic.out(1, 0.2)"
+            ease: 'elastic.out(1, 0.2)'
         });
     };
     const scaleDown = () => {
         gsap.to(circle, {
             scale: 1,
             duration: 0.7,
-            ease: "elastic.out(1, 0.2)"
+            ease: 'elastic.out(1, 0.2)'
         });
     };
 
     //When hovering over hover-text elements, scale up/down and play elastic effect
-    hoverTexts.forEach(text => {
+    hoverTexts.forEach((text) => {
         text.addEventListener('mouseenter', () => {
             circle.classList.add('hovered');
             scaleUp();
@@ -212,10 +252,10 @@ export function initHeroPage(): void {
     //Shuffle given text randomly, keeping punctuation at the end
     function shuffleText(text: string): string {
         // Split the text into words and handle punctuation
-        const words = text.split(' ').map(word => {
+        const words = text.split(' ').map((word) => {
             // Separate letters and punctuation within each word
-            const letters = word.replace(/[^a-zA-Z0-9@#$%&*/\+=©!]/g, '');  // Only alphabetic characters
-            const punctuation = word.replace(/[a-zA-Z0-9@#$%&*/\+=©!]/g, '');  // Only punctuation to leave periods at the end
+            const letters = word.replace(/[^a-zA-Z0-9@#$%&*/\+=©!]/g, ''); // Only alphabetic characters
+            const punctuation = word.replace(/[a-zA-Z0-9@#$%&*/\+=©!]/g, ''); // Only punctuation to leave periods at the end
 
             // Randomly shuffle the letters
             let shuffledLetters = letters.split('');
@@ -246,13 +286,13 @@ export function initHeroPage(): void {
             }, 250);
         }
 
-        el.addEventListener("mouseenter", glitchText);
+        el.addEventListener('mouseenter', glitchText);
 
-        el.addEventListener("mouseleave", () => {
+        el.addEventListener('mouseleave', () => {
             clearInterval(glitchInterval);
             el.textContent = originalText;
         });
-    };
+    }
 
     glitchables.forEach(setupGlitchable);
 
@@ -269,7 +309,7 @@ export function initHeroPage(): void {
     function enableHoverEffects(): void {
         if (hoverEnabled) return;
 
-        hoverTargets.forEach(target => {
+        hoverTargets.forEach((target) => {
             target.addEventListener('mouseenter', handleMouseEnter);
             target.addEventListener('mouseleave', handleMouseLeave);
         });
@@ -281,7 +321,7 @@ export function initHeroPage(): void {
     function disableHoverEffects(): void {
         if (!hoverEnabled) return;
 
-        hoverTargets.forEach(target => {
+        hoverTargets.forEach((target) => {
             target.removeEventListener('mouseenter', handleMouseEnter);
             target.removeEventListener('mouseleave', handleMouseLeave);
         });
@@ -310,7 +350,7 @@ export function initHeroPage(): void {
         name.classList.remove('title-name-color-hover');
         role.classList.remove('role-color-hover');
         logoRoleWrapper.classList.remove('logo-role-wrapper-hover');
-        logo.setAttribute("name", "icon-amber-supply");
+        logo.setAttribute('name', 'icon-amber-supply');
         logoHover.classList.remove('display');
         logoHover.classList.add('display-none');
     }
@@ -361,15 +401,18 @@ export function initHeroPage(): void {
     // ===================================================================================
 
     //When clicking the accessibility mode button, update css styles of necessary elements
-    accessibilityButton.addEventListener('click', () => { enableAccessibility(); });
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { enableAccessibility(); }
+    accessibilityButton.addEventListener('click', () => {
+        enableAccessibility();
+    });
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        enableAccessibility();
+    }
 
     function enableAccessibility(): void {
         if (accessToggled) {
-            scrollTrack.style.animation = 'scroll 20s linear infinite'
-        }
-        else {
-            scrollTrack.style.animation = 'scroll 60s linear infinite'
+            scrollTrack.style.animation = 'scroll 20s linear infinite';
+        } else {
+            scrollTrack.style.animation = 'scroll 60s linear infinite';
         }
         accessibilityBackground.classList.toggle('hidden');
         heroContent.classList.toggle('display-none');
@@ -382,9 +425,9 @@ export function initHeroPage(): void {
     // ===================================================================================
 
     //Move hero page elements on scroll with a parallax effect
-    document.addEventListener("scroll", () => {
+    document.addEventListener('scroll', () => {
         const scrollY = window.scrollY;
-        
+
         canvas.style.transform = `translateY(${scrollY * 0.5}px)`;
         name.style.transform = `translateY(${scrollY * -0.27}px)`;
         background.style.transform = `translateY(${scrollY * -0.27}px)`;
@@ -398,15 +441,15 @@ export function initHeroPage(): void {
     // ===================================================================================
     // Section: Image Pixelation
     // ===================================================================================
-    document.querySelectorAll('.image-wrapper').forEach(wrapper => {
+    document.querySelectorAll('.image-wrapper').forEach((wrapper) => {
         //Set up canvas, images, and constants
-        const pixelCanvas = wrapper.querySelector('.pixel-canvas') as HTMLCanvasElement || null;
+        const pixelCanvas = (wrapper.querySelector('.pixel-canvas') as HTMLCanvasElement) || null;
         if (!pixelCanvas) return;
-        const pixelContext = pixelCanvas.getContext('2d') as CanvasRenderingContext2D || null;
+        const pixelContext = (pixelCanvas.getContext('2d') as CanvasRenderingContext2D) || null;
         if (!pixelContext) return;
-        const image = wrapper.querySelector('.source-image img') as HTMLImageElement || null;
-        if (!image) return
-        
+        const image = (wrapper.querySelector('.source-image img') as HTMLImageElement) || null;
+        if (!image) return;
+
         const startPixelSize = 70;
         const endPixelSize = 1;
         const numSteps = 8;
@@ -425,8 +468,8 @@ export function initHeroPage(): void {
             pixelContext.clearRect(0, 0, w, h);
             pixelContext.imageSmoothingEnabled = false;
 
-            pixelContext.drawImage(image, 0, 0, w/size, h/size);
-            pixelContext.drawImage(pixelCanvas, 0, 0, w/size, h/size, 0, 0, w, h);
+            pixelContext.drawImage(image, 0, 0, w / size, h / size);
+            pixelContext.drawImage(pixelCanvas, 0, 0, w / size, h / size, 0, 0, w, h);
         }
         function animateDepixelate(): void {
             if (currentStep > numSteps) {
@@ -447,17 +490,20 @@ export function initHeroPage(): void {
             currentStep = 0;
             drawPixelated(startPixelSize);
             requestAnimationFrame(animateDepixelate);
-            pixelCanvas.style.imageRendering = "auto";
+            pixelCanvas.style.imageRendering = 'auto';
         }
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    startPixelation();
-                }
-            });
-        }, {threshold: 0.6});
-        
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        startPixelation();
+                    }
+                });
+            },
+            { threshold: 0.6 }
+        );
+
         if (image.complete) {
             drawPixelated(startPixelSize);
         } else {
@@ -470,13 +516,13 @@ export function initHeroPage(): void {
     // Section: Navigation Container Scroll
     // ===================================================================================
 
-    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         scrollAnimation();
     }
     function scrollAnimation(): void {
         scroller.setAttribute('data-animated', 'true');
-        
-        scrollTrackContent.forEach(item => {
+
+        scrollTrackContent.forEach((item) => {
             const duplicatedItem = item.cloneNode(true) as HTMLElement;
             duplicatedItem.setAttribute('aria-hidden', 'true');
             duplicatedItem.classList.add('glitchable');
@@ -487,7 +533,3 @@ export function initHeroPage(): void {
         });
     }
 }
-
-
-    
-

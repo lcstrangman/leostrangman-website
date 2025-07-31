@@ -12,7 +12,7 @@ export default {
     theme: {
         extend: {
             backdropFilter: ['responsive', 'hover', 'focus'],
-            backdropInvert: {25: '.25', 75: '.75'}, 
+            backdropInvert: { 25: '.25', 75: '.75' },
             fontFamily: {
                 serif: ['Times New Roman', ...defaultTheme.fontFamily.serif],
                 sans: ['Arial', ...defaultTheme.fontFamily.sans]

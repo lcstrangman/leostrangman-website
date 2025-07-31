@@ -3,8 +3,8 @@
     --secondary-color: #192727;
     --tertiary-color: #593636;
     --quaternary-color: #9ab28a;
-    --main-font-family: "Supply";
-    --secondary-font-family: "Nikkei";
+    --main-font-family: 'Supply';
+    --secondary-font-family: 'Nikkei';
 }
 
 /* Custom font using free trial license from Pangram Pangram Foundry: https://pangrampangram.com/pages/faq*/
@@ -53,7 +53,12 @@ html body {
     border: 2.5px solid #f5e0b4;
     border-radius: 50%;
     transform: translate(-50%, -50%);
-    transition: transform 0.05s, background-color 0.1s, width 0.1s ease, height 0.1s ease, opacity 0.3s ease;
+    transition:
+        transform 0.05s,
+        background-color 0.1s,
+        width 0.1s ease,
+        height 0.1s ease,
+        opacity 0.3s ease;
     background-color: transparent;
     mix-blend-mode: difference;
     pointer-events: none;
@@ -79,7 +84,7 @@ html body {
     justify-content: center;
     background: black;
     color: white;
-    font-size: 2rem;   
+    font-size: 2rem;
 }
 
 /* Main hero page styles */
@@ -157,16 +162,17 @@ html body {
 }
 
 /* Styles for background divs when highlighting the title text */
-.title-name-background, .title-logo-background, .title-role-background {
+.title-name-background,
+.title-logo-background,
+.title-role-background {
     position: absolute;
     z-index: 1;
     background-color: transparent;
     pointer-events: none;
-    
 }
 .title-name-background {
     width: 889.6px;
-    height: 117.4px;;
+    height: 117.4px;
     top: 5.3px;
     bottom: 0;
     left: 0;
@@ -202,7 +208,7 @@ html body {
     mix-blend-mode: normal;
 }
 .title-name-color {
-    color: #FDE484;
+    color: #fde484;
     mix-blend-mode: exclusion;
 }
 .title-name-color-hover {
@@ -217,7 +223,8 @@ html body {
 }
 
 /* Styles for both logo-role-wrappers */
-.logo-role-wrapper, .logo-role-wrapper-alt {
+.logo-role-wrapper,
+.logo-role-wrapper-alt {
     position: relative;
     z-index: 2;
     display: flex;
@@ -228,7 +235,8 @@ html body {
     font-family: var(--main-font-family);
     line-height: 1;
 }
-#parallax-title-logo, #parallax-title-role {
+#parallax-title-logo,
+#parallax-title-role {
     user-select: none;
 }
 
@@ -295,7 +303,6 @@ html body {
     font-size: 16vw;
     line-height: 1.2;
     cursor: pointer;
-    
 }
 .link-box:hover {
     background-color: var(--quaternary-color);
@@ -410,8 +417,8 @@ html body {
     }
 }
 /*Properties for smallest screens */
-@media (max-width: 550px) {}
-
+@media (max-width: 550px) {
+}
 
 /* CUSTOM STYLES FOR THE WORK PAGE */
 .line-break {
@@ -498,7 +505,7 @@ html body {
 }
 
 .bullet-box::before {
-    content: "";
+    content: '';
     position: absolute;
     inset: 0;
     margin: 0;
@@ -565,7 +572,7 @@ html.is-desktop .bullet-box.is-active::before {
     .content-container {
         flex-direction: column;
     }
-    
+
     .image-display-area {
         min-height: 150px;
         margin-right: 0;

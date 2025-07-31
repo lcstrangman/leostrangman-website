@@ -3,11 +3,11 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 ScrollTrigger.defaults({
-    fastScrollEnd: true,
+    fastScrollEnd: true
 });
 
 class Lines {
-    static CANVAS_CLASS = "c-lines_canvas";
+    static CANVAS_CLASS = 'c-lines_canvas';
     static LINES_COUNT = 14;
     static LINES_GUTTER_DIVIDER = 4.5 / 390;
     static LINES_IDLE_DIVIDER_FIRST = 12 / 22;
@@ -34,7 +34,9 @@ class Lines {
         this.currentScroll = 0;
         this.hoveredIndex = 0;
         this.linesData = [];
-        this.isTouchDevice = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        this.isTouchDevice = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+            navigator.userAgent
+        );
 
         this.initCanvas();
         this.computeLayout();
@@ -44,17 +46,17 @@ class Lines {
     }
 
     initCanvas() {
-        this.$canvas = document.createElement("canvas");
+        this.$canvas = document.createElement('canvas');
         this.$canvas.className = Lines.CANVAS_CLASS;
-        this.ctx = this.$canvas.getContext("2d");
+        this.ctx = this.$canvas.getContext('2d');
         this.el.appendChild(this.$canvas);
         this.updateSize();
     }
 
     bindEvents() {
-        window.addEventListener("resize", () => this.updateSize());
+        window.addEventListener('resize', () => this.updateSize());
         if (!this.isTouchDevice) {
-            this.el.addEventListener("mousemove", (e) => {
+            this.el.addEventListener('mousemove', (e) => {
                 this.mouseData.rawX = e.clientX;
                 this.mouseData.rawY = e.clientY;
             });
@@ -64,8 +66,8 @@ class Lines {
     updateSize() {
         this.width = this.el.offsetWidth;
         this.height = this.el.offsetHeight;
-        this.canvasWidth = Math.ceil(this.dpr * this.width / 4.0) * 4.0;
-        this.canvasHeight = Math.ceil(this.dpr * this.height / 4.0) * 4.0;
+        this.canvasWidth = Math.ceil((this.dpr * this.width) / 4.0) * 4.0;
+        this.canvasHeight = Math.ceil((this.dpr * this.height) / 4.0) * 4.0;
         this.$canvas.width = this.canvasWidth;
         this.$canvas.height = this.canvasHeight;
         this.$canvas.style.width = `${this.width}px`;
@@ -90,9 +92,21 @@ class Lines {
         const lineCount = Lines.LINES_COUNT;
         const gutterSize = this.canvasHeight * Lines.LINES_GUTTER_DIVIDER;
         for (let i = 0; i < lineCount; i++) {
-            const idleDivider = gsap.utils.mapRange(0, lineCount, Lines.LINES_IDLE_DIVIDER_FIRST, Lines.LINES_IDLE_DIVIDER_LAST, i);
-            const interactiveDivider = gsap.utils.mapRange(0, lineCount, Lines.LINES_INTERACTIVE_DIVIDER_FIRST, Lines.LINES_INTERACTIVE_DIVIDER_LAST, i);
-            const y = (this.canvasHeight + gutterSize) / lineCount * i;
+            const idleDivider = gsap.utils.mapRange(
+                0,
+                lineCount,
+                Lines.LINES_IDLE_DIVIDER_FIRST,
+                Lines.LINES_IDLE_DIVIDER_LAST,
+                i
+            );
+            const interactiveDivider = gsap.utils.mapRange(
+                0,
+                lineCount,
+                Lines.LINES_INTERACTIVE_DIVIDER_FIRST,
+                Lines.LINES_INTERACTIVE_DIVIDER_LAST,
+                i
+            );
+            const y = ((this.canvasHeight + gutterSize) / lineCount) * i;
             const height = this.canvasHeight / lineCount - gutterSize;
             const lineX = 0;
             const lineY = y;
@@ -102,7 +116,11 @@ class Lines {
             const idleHeight = lineHeight * idleDivider;
             const interactiveLineY = idleLineY - lineHeight * interactiveDivider;
 
-            this.maxOffset = lineWidth * Lines.LINES_INTERACTIVE_ANGLE_DIVIDER * (lineCount - 1) * Lines.MAX_OFFSET_RATIO;
+            this.maxOffset =
+                lineWidth *
+                Lines.LINES_INTERACTIVE_ANGLE_DIVIDER *
+                (lineCount - 1) *
+                Lines.MAX_OFFSET_RATIO;
 
             this.linesData.push({
                 index: i,
@@ -177,9 +195,12 @@ class Lines {
         } = line;
 
         // Smooth animation offset
-        this.smoothOffsetArray[index] += 
+        this.smoothOffsetArray[index] +=
             (this.offsetArray[index] - this.smoothOffsetArray[index]) * Lines.SMOOTH_LERP;
-        const angleX = lineX + lineWidth * (1 - Lines.LINES_INTERACTIVE_ANGLE_DIVIDER) - this.smoothOffsetArray[index];
+        const angleX =
+            lineX +
+            lineWidth * (1 - Lines.LINES_INTERACTIVE_ANGLE_DIVIDER) -
+            this.smoothOffsetArray[index];
 
         // Save context state
         this.ctx.save();
@@ -191,7 +212,7 @@ class Lines {
         this.ctx.clip();
 
         // Draw idle rectangle
-        this.ctx.fillStyle = "#593636";
+        this.ctx.fillStyle = '#593636';
         this.ctx.fillRect(lineX, idleLineY, lineWidth, idleHeight);
 
         // Draw upper interactive polygon
@@ -201,16 +222,15 @@ class Lines {
         this.ctx.lineTo(lineX + lineWidth - this.smoothOffsetArray[index], idleLineY + 1);
         this.ctx.lineTo(lineX, idleLineY + 1);
         this.ctx.closePath();
-        this.ctx.fillStyle = "#593636";
+        this.ctx.fillStyle = '#593636';
         this.ctx.fill();
 
         // TEXT: Draw clipped "MY WORK" line aligned to bottom of idle rect
-        this.ctx.font = "70px Nikkei";
-        this.ctx.textBaseline = "bottom";
-        this.ctx.fillStyle = "#9ab28a";
+        this.ctx.font = '70px Nikkei';
+        this.ctx.textBaseline = 'bottom';
+        this.ctx.fillStyle = '#9ab28a';
 
-
-        const text = "MY WORK ";
+        const text = 'MY WORK ';
         let textX = lineX;
         const textY = idleLineY + idleHeight - 2 + 15;
 
@@ -239,7 +259,7 @@ class Lines {
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    const wrapper = document.getElementById("lines-wrapper");
+    const wrapper = document.getElementById('lines-wrapper');
     if (wrapper) {
         new Lines(wrapper);
     }
