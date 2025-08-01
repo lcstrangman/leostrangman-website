@@ -10,8 +10,9 @@ Hover over images/elements like sayhito-atlas.com
 Increase scroll speed
 Baillat studio hamburger menu
 Override scroll bar
-Change the shape of the circle cursor follower, put a second dot in the middle or something
+Change the shape of the circle cursor follower, put a second dot in the middle or something 
 Different color scheme for each main page
+LCS svg as a sort of cursor follower on images/videos or something like that maybe
 
 
 FOR THE OTHER PAGES:
@@ -30,6 +31,8 @@ Fix the selection colors of the footer text
 Make canvases react properly to modified browser scaling
 
 Add initialize page logic/loading screen to the layout.astro
+
+Put scroll text in the footer
 
         
 Title color options for exclusion:

@@ -1,71 +1,64 @@
 ---
-import Layout from '@layouts/Layout.astro';
-import Image from '@components/Image/Image.astro';
-import Wysiwyg from '../components/Wysiwyg/Wysiwyg.astro';
+import Layout from '../layouts/Layout.astro';
 ---
+<Layout title="Leo Strangman." 
+        primaryColor="#593636" 
+        primaryContrastColor="#e4c787" 
+        secondaryColor="#F2E2C0" 
+        secondaryContrastColor="#945442" 
+        tertiaryColor="#9ab28a" 
+        tertiaryContrastColor="#192727" 
+        quaternaryColor="#9ab28a" 
+        quaternaryContrastColor="#593636" 
+        pageTitle = "ABOUT ME">
+    <div class="mouse-circle"></div>
+    <div id="loading-screen">Loading...</div>
 
-<Layout title="About">
-    <header class="u-container">
-        <h1 class="u-heading-h1">About</h1>
-    </header>
+    <div class="u-z-2 background-color u-relative">
+        <div class="link-box-wrapper">
+            <div class="line-container hover-text u-h-[50vh] u-w-full" id="lines-wrapper"></div>
 
-    <div class="w-full u-mt-fluid-xl u-h-[20vh] u-bg-black"></div>
-
-    <div class="u-container u-mt-fluid-xl">
-        <div>
-            <Image
-                src={import('@images/printer.jpg')}
-                alt="Placeholder alt"
-                caption="Static image & Loading eager"
-                loading="eager"
-                width={500}
-                height={200}
-            />
-        </div>
-        <div class="u-grid u-grid-cols-2 u-gap-gutter">
-            <div>
-                <Image
-                    src="https://locomotive.ca/uploads/careers/pltropics-2000w.jpg"
-                    alt="Placeholder alt"
-                    caption="Loading lazy native"
-                    loading="lazy"
-                    width={500}
-                    height={500}
-                />
+            <div class="interactive-section u-mt-fluid-xl u-h-[50vh] u-w-full">
+                <div class="section-title glitchable hover-text">/* leostrangman.com */</div>
+                <div class="section-divider"></div>
+                <div class="content-container">
+                    <div class="image-display-area">
+                        <div class="preview-image" id="preview-image"></div>
+                    </div>
+                    <div class="boxes-container" data-prefix = "/about-">
+                        <div class="bullet-box" data-image="bullet1">
+                            <span class="bullet-title glitchable hover-text tracking-about-1">ABOUT</span>
+                        </div>
+                        <div class="bullet-box" data-image="bullet2">
+                            <span class="bullet-title glitchable hover-text tracking-about-2">ABOUT</span>
+                        </div>
+                        <div class="bullet-box" data-image="bullet3">
+                            <span class="bullet-title glitchable hover-text tracking-about-3">ABOUT</span>
+                        </div>
+                        <div class="bullet-box" data-image="bullet4">
+                            <span class="bullet-title glitchable hover-text tracking-about-4">ABOUT</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div>
-                <Image
-                    src="https://locomotive.ca/uploads/careers/fullscreen-image-2000w.jpg"
-                    alt="Placeholder alt"
-                    caption="Loading lazy native + locomotive-scroll inview anim"
-                    loading="lazy"
-                    width={500}
-                    height={500}
-                    data-scroll
-                    data-scroll-repeat
-                />
-            </div>
-        </div>
-        <div class="u-grid u-grid-cols-12 u-gap-gutter">
-            <div class="u-col-span-full u-text-body md:u-col-span-6">
-                <Wysiwyg>
-                    <Fragment
-                        set:html={`<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque quam, nam omnis sunt laudantium tenetur obcaecati? Inventore eos vitae id repellat cum possimus voluptates nam voluptatum, assumenda, atque nesciunt debitis?</p>`}
-                    />
-                </Wysiwyg>
+            <div class="resume-box-wrapper u-mt-fluid-xl u-h-[50vh] u-w-full">
+                <div class="u-w-full u-h-[50vh] resume-box u-text-center u-flex u-items-center u-justify-center">
+                    <a class = "glitchable resume-box-text u-tracking-wide hover-text" href="/">RESUME</a>
+                </div>
             </div>
 
-            <div class="u-col-span-full u-text-body md:u-col-span-6">
-                <Wysiwyg>
-                    <Fragment
-                        set:html={`<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque quam, nam omnis sunt laudantium tenetur obcaecati? Inventore eos vitae id repellat cum possimus voluptates nam voluptatum, assumenda, atque nesciunt debitis?</p>`}
-                    />
-                </Wysiwyg>
+            <div class="scroll-container u-mt-fluid-xl u-h-[50vh] u-w-full">
+                <ul class="scroll-track">
+                    <li class="scroll-text hover-text glitchable">©2025</li>
+                    <li class="scroll-text hover-text glitchable">/* Designed and Developed by LCS */</li>
+                    <li class="scroll-text hover-text glitchable">©2025</li>
+                    <li class="scroll-text hover-text glitchable">/* Open to Work */</li>
+                </ul>
             </div>
         </div>
-
-        <!-- Placeholder -->
-        <div class="w-full u-mt-fluid-xl u-h-[50vh] u-bg-black u-opacity-50"></div>
-        <div class="w-full u-mt-fluid-xl u-h-[50vh] u-bg-primary"></div>
     </div>
+
+    <script type="module" src="/src/scripts/index-scripts.js"></script>
+    <script type="module" src="/src/scripts/line-canvas.js"></script>
+    <script type="module" src="/src/scripts/interactive-box-scripts.js"></script>
 </Layout>

@@ -1,164 +1,64 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Image from '@components/Image/Image.astro';
-import Icon from '@components/Icon/Icon.astro';
-import scenery from '../assets/images/scenery.jpg';
-import leostrangman from '../assets/images/leostrangman.jpg';
 ---
-
-<Layout title="Leo Strangman.">
+<Layout title="Leo Strangman." 
+        primaryColor="#2a2d17" 
+        primaryContrastColor="#e4c787" 
+        secondaryColor="#e4c787" 
+        secondaryContrastColor="#192727" 
+        tertiaryColor="#F2E2C0" 
+        tertiaryContrastColor="#945442" 
+        quaternaryColor="#9ab28a" 
+        quaternaryContrastColor="#593636" 
+        pageTitle = "ABOUT ME">
     <div class="mouse-circle"></div>
     <div id="loading-screen">Loading...</div>
 
-    <!-- Hero Section Container -->
-    <div class="hero" id="parallax-hero">
-        <!-- Fullscreen background image as canvas -->
-        <canvas class="hero-canvas" id="parallax-canvas"></canvas>
+    <div class="u-z-2 background-color u-relative">
+        <div class="link-box-wrapper">
+            <div class="line-container hover-text u-h-[50vh] u-w-full" id="lines-wrapper"></div>
 
-        <div class="accessibility-background hidden" id="accessibility-background"></div>
-        <div class="accessibility-wrapper" id="parallax-accessibility">
-            <div
-                class="accessibility-button glitchable hover-text"
-                aria-label="Accessibility Options"
-            >
-                Accessible Mode
+            <div class="interactive-section u-mt-fluid-xl u-h-[50vh] u-w-full">
+                <div class="section-title glitchable hover-text">/* leostrangman.com */</div>
+                <div class="section-divider"></div>
+                <div class="content-container">
+                    <div class="image-display-area">
+                        <div class="preview-image" id="preview-image"></div>
+                    </div>
+                    <div class="boxes-container" data-prefix = "/contact-">
+                        <div class="bullet-box" data-image="bullet1">
+                            <span class="bullet-title glitchable hover-text tracking-contact-1">ABOUT</span>
+                        </div>
+                        <div class="bullet-box" data-image="bullet2">
+                            <span class="bullet-title glitchable hover-text tracking-contact-2">ABOUT</span>
+                        </div>
+                        <div class="bullet-box" data-image="bullet3">
+                            <span class="bullet-title glitchable hover-text tracking-contact-3">ABOUT</span>
+                        </div>
+                        <div class="bullet-box" data-image="bullet4">
+                            <span class="bullet-title glitchable hover-text tracking-contact-4">ABOUT</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="resume-box-wrapper u-mt-fluid-xl u-h-[50vh] u-w-full">
+                <div class="u-w-full u-h-[50vh] resume-box u-text-center u-flex u-items-center u-justify-center">
+                    <a class = "glitchable resume-box-text u-tracking-wide hover-text" href="/">RESUME</a>
+                </div>
+            </div>
+
+            <div class="scroll-container u-mt-fluid-xl u-h-[50vh] u-w-full">
+                <ul class="scroll-track">
+                    <li class="scroll-text hover-text glitchable">©2025</li>
+                    <li class="scroll-text hover-text glitchable">/* Designed and Developed by LCS */</li>
+                    <li class="scroll-text hover-text glitchable">©2025</li>
+                    <li class="scroll-text hover-text glitchable">/* Open to Work */</li>
+                </ul>
             </div>
         </div>
-        <!-- Text/svg logo in hero section -->
-        <div class="hero-content" id="hero-content-primary">
-            <!-- Name text -->
-            <div class="title-name-background" id="parallax-name-background"></div>
-            <div class="title-logo-background" id="parallax-logo-background"></div>
-            <div class="title-role-background" id="parallax-role-background"></div>
-            <h1
-                class="title-name-text title-name-color glitchable hover-text"
-                id="parallax-title-name"
-            >
-                Leo Strangman.
-            </h1>
-            <!-- Secondary heading text/svg -->
-            <div class="logo-role-wrapper" id="logo-role-wrapper">
-                <!-- Wrapper for main logo svg -->
-                <div class="logo-wrapper" id="parallax-title-logo">
-                    <Icon class="hover-text" name="icon-amber-supply" />
-                    <!-- Wrapper for secondary logo svg that shows on hover -->
-                    <div class="logo-wrapper logo-hover u-hidden" id="parallax-logo-hover">
-                        <Icon
-                            class="hover-text"
-                            name="icon-green-supply"
-                            width="75"
-                            height="75"
-                            viewBox="0, 0, 75, 75"
-                        />
-                        <h2
-                            class="title-role-text glitchable hover-text u-mt-1.5"
-                            id="parallax-title-role"
-                        >
-                            Developer
-                        </h2>
-                    </div>
-                </div>
-                <!-- Alternate hero-content div for when the accessibility mode is selected -->
-                <div class="hero-content-alt" id="hero-content-alt">
-                    <h1
-                        class="title-name-text title-name-color-alt glitchable hover-text"
-                        id="parallax-title-name"
-                    >
-                        Leo Strangman.
-                    </h1>
-                    <!-- Secondary heading text/svg -->
-                    <div class="logo-role-wrapper-alt">
-                        <div class="logo-wrapper" id="parallax-title-logo">
-                            <Icon
-                                class="hover-text"
-                                name="icon-green-supply"
-                                width="75"
-                                height="75"
-                                viewBox="0, 0, 75, 75"
-                            />
-                            <h2
-                                class="title-role-text glitchable hover-text u-mt-1.5"
-                                id="parallax-title-role"
-                            >
-                                Developer
-                            </h2>
-                        </div>
-                    </div>
-                </div>
+    </div>
 
-                <!-- Div to correctly display parallax effect with background sliding over image -->
-                <div class="page-background u-z-2 u-relative">
-                    <div class="link-box-wrapper">
-                        <div
-                            class="link-box u-flex u-h-[50vh] u-w-full u-items-center u-justify-center u-text-center"
-                        >
-                            <p class="glitchable link-box-text hover-text u-tracking-wide">
-                                PROJECTS
-                            </p>
-                        </div>
-                        <div
-                            class="link-box u-mt-12 u-flex u-h-[50vh] u-w-full u-items-center u-justify-center u-text-center"
-                        >
-                            <p class="glitchable link-box-text tracking-work hover-text">MY WORK</p>
-                        </div>
-                        <div
-                            class="link-box u-mt-12 u-flex u-h-[50vh] u-w-full u-items-center u-justify-center u-text-center"
-                        >
-                            <p class="glitchable link-box-text tracking-about hover-text">
-                                ABOUT ME
-                            </p>
-                        </div>
-                        <div
-                            class="link-box u-mt-12 u-flex u-h-[50vh] u-w-full u-items-center u-justify-center u-text-center"
-                        >
-                            <p class="glitchable link-box-text tracking-contact hover-text">
-                                CONTACT
-                            </p>
-                        </div>
-
-                        <div class="u-mt-12 u-grid u-grid-cols-2 u-gap-gutter">
-                            <div class="image-wrapper u-h-full u-w-full">
-                                <canvas class="pixel-canvas"></canvas>
-                                <Image
-                                    class="source-image"
-                                    src={scenery}
-                                    alt="Switzerland Scenery"
-                                    caption=""
-                                    width={500}
-                                    height={700}
-                                />
-                            </div>
-                            <div class="image-wrapper u-h-full u-w-full">
-                                <canvas class="pixel-canvas"></canvas>
-                                <Image
-                                    class="source-image"
-                                    src={leostrangman}
-                                    alt="Leo Strangman"
-                                    caption=""
-                                    width={500}
-                                    height={700}
-                                />
-                            </div>
-                        </div>
-                        <div
-                            class="scroll-container u-mt-fluid-xl u-h-[50vh] u-w-full u-bg-[#9ab28a]"
-                        >
-                            <ul class="scroll-track">
-                                <li class="scroll-text hover-text glitchable">©2025</li>
-                                <li class="scroll-text hover-text glitchable">
-                                    /* Designed and Developed by LCS */
-                                </li>
-                                <li class="scroll-text hover-text glitchable">©2025</li>
-                                <li class="scroll-text hover-text glitchable">
-                                    /* Open to Work */
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <script type="module" src="/src/scripts/index-scripts.js"></script>
-            </div>
-        </div>
-    </div></Layout
->
+    <script type="module" src="/src/scripts/index-scripts.js"></script>
+    <script type="module" src="/src/scripts/line-canvas.js"></script>
+    <script type="module" src="/src/scripts/interactive-box-scripts.js"></script>
+</Layout>

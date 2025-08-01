@@ -1,10 +1,6 @@
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
-ScrollTrigger.defaults({
-    fastScrollEnd: true
-});
+import '@styles/main.scss';
+import '@styles/custom.css';
 
 class Lines {
     static CANVAS_CLASS = 'c-lines_canvas';
@@ -17,6 +13,12 @@ class Lines {
     static LINES_INTERACTIVE_ANGLE_DIVIDER = 100 / 1408;
     static MAX_OFFSET_RATIO = 0.8;
     static SMOOTH_LERP = 0.15;
+    primaryColor = getComputedStyle(document.body).getPropertyValue('--primary-color').trim();
+    primaryContrastColor = getComputedStyle(document.body).getPropertyValue('--primary-contrast-color').trim();
+    secondaryColor = getComputedStyle(document.body).getPropertyValue('--secondary-color').trim();
+    secondaryContrastColor = getComputedStyle(document.body).getPropertyValue('--secondary-contrast-color').trim();
+    pageTitle = getComputedStyle(document.body).getPropertyValue('--page-title').trim();
+
 
     constructor(wrapperEl) {
         this.el = wrapperEl;
@@ -92,21 +94,24 @@ class Lines {
         const lineCount = Lines.LINES_COUNT;
         const gutterSize = this.canvasHeight * Lines.LINES_GUTTER_DIVIDER;
         for (let i = 0; i < lineCount; i++) {
+            // Invert the index so that the longest line is at the top
+            const invertedIndex = lineCount - 1 - i;
+
             const idleDivider = gsap.utils.mapRange(
                 0,
-                lineCount,
+                lineCount - 1,
                 Lines.LINES_IDLE_DIVIDER_FIRST,
                 Lines.LINES_IDLE_DIVIDER_LAST,
-                i
+                invertedIndex
             );
             const interactiveDivider = gsap.utils.mapRange(
                 0,
-                lineCount,
+                lineCount - 1,
                 Lines.LINES_INTERACTIVE_DIVIDER_FIRST,
                 Lines.LINES_INTERACTIVE_DIVIDER_LAST,
-                i
+                invertedIndex
             );
-            const y = ((this.canvasHeight + gutterSize) / lineCount) * i;
+            const y = ((this.canvasHeight + gutterSize) / lineCount) * invertedIndex;
             const height = this.canvasHeight / lineCount - gutterSize;
             const lineX = 0;
             const lineY = y;
@@ -115,6 +120,7 @@ class Lines {
             const idleLineY = lineY + lineHeight * (1 - idleDivider);
             const idleHeight = lineHeight * idleDivider;
             const interactiveLineY = idleLineY - lineHeight * interactiveDivider;
+
 
             this.maxOffset =
                 lineWidth *
@@ -212,7 +218,7 @@ class Lines {
         this.ctx.clip();
 
         // Draw idle rectangle
-        this.ctx.fillStyle = '#593636';
+        this.ctx.fillStyle = this.secondaryContrastColor;
         this.ctx.fillRect(lineX, idleLineY, lineWidth, idleHeight);
 
         // Draw upper interactive polygon
@@ -222,15 +228,15 @@ class Lines {
         this.ctx.lineTo(lineX + lineWidth - this.smoothOffsetArray[index], idleLineY + 1);
         this.ctx.lineTo(lineX, idleLineY + 1);
         this.ctx.closePath();
-        this.ctx.fillStyle = '#593636';
+        this.ctx.fillStyle = this.secondaryContrastColor;
         this.ctx.fill();
 
         // TEXT: Draw clipped "MY WORK" line aligned to bottom of idle rect
         this.ctx.font = '70px Nikkei';
         this.ctx.textBaseline = 'bottom';
-        this.ctx.fillStyle = '#9ab28a';
+        this.ctx.fillStyle = this.secondaryColor;
 
-        const text = 'MY WORK ';
+        const text = this.pageTitle + ' ';
         let textX = lineX;
         const textY = idleLineY + idleHeight - 2 + 15;
 

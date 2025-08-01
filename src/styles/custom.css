@@ -1,10 +1,25 @@
 :root {
+    /* Color hierarchy is changed based on each individual page */
+    /* Main background color */
     --primary-color: #e4c787;
-    --secondary-color: #192727;
-    --tertiary-color: #593636;
-    --quaternary-color: #9ab28a;
-    --main-font-family: 'Supply';
-    --secondary-font-family: 'Nikkei';
+    /* Contrast color for primary */
+    --primary-contrast-color: #192727;
+    /* Background color for elements on top of background */
+    --secondary-color: #9ab28a;
+    /* Contrast color for secondary */
+    --secondary-contrast-color: #593636;
+    /* Tertiary color option */
+    --tertiary-color: #bbb387;
+    /* Contrast for tertiary */
+    --tertiary-contrast-color: #313804;
+    /*Quaternary color option */
+    --quaternary-color: #c4a8b8;
+    /* Contrast for quaternary */
+    --quaternary-contrast-color: #3a2d2d;
+
+    --main-font-family: "Supply";
+    --secondary-font-family: "Nikkei";
+    --page-title: "INDEX";
 }
 
 /* Custom font using free trial license from Pangram Pangram Foundry: https://pangrampangram.com/pages/faq*/
@@ -30,7 +45,7 @@
 /* Hide horizontal scroll bar, set background color */
 html body {
     overflow-x: hidden;
-    background-color: var(--background-color, #e4c787);
+    background-color: var(--primary-color, #e4c787);
 }
 
 /* TOGGLED STYLES */
@@ -53,12 +68,7 @@ html body {
     border: 2.5px solid #f5e0b4;
     border-radius: 50%;
     transform: translate(-50%, -50%);
-    transition:
-        transform 0.05s,
-        background-color 0.1s,
-        width 0.1s ease,
-        height 0.1s ease,
-        opacity 0.3s ease;
+    transition: transform 0.05s, background-color 0.1s, width 0.1s ease, height 0.1s ease, opacity 0.3s ease;
     background-color: transparent;
     mix-blend-mode: difference;
     pointer-events: none;
@@ -84,7 +94,7 @@ html body {
     justify-content: center;
     background: black;
     color: white;
-    font-size: 2rem;
+    font-size: 2rem;   
 }
 
 /* Main hero page styles */
@@ -130,15 +140,15 @@ html body {
     position: relative;
     z-index: 3;
     background-color: var(--primary-color);
-    color: var(--secondary-color);
+    color: var(--primary-contrast-color);
     font-family: var(--main-font-family);
     font-size: 3vw;
     line-height: 1;
     cursor: pointer;
 }
 .accessibility-button::selection {
-    background-color: var(--primary-color);
-    color: var(--secondary-color);
+    background-color: var(--primary-contrast-color);
+    color: var(--primary-color);
 }
 
 /* Styles for hero content at the bottom left of the hero page */
@@ -162,24 +172,23 @@ html body {
 }
 
 /* Styles for background divs when highlighting the title text */
-.title-name-background,
-.title-logo-background,
-.title-role-background {
+.title-name-background, .title-logo-background, .title-role-background {
     position: absolute;
     z-index: 1;
     background-color: transparent;
     pointer-events: none;
+    
 }
 .title-name-background {
     width: 889.6px;
-    height: 117.4px;
+    height: 117.4px;;
     top: 5.3px;
     bottom: 0;
     left: 0;
 }
 .hovered-bg {
     background-color: var(--primary-color);
-    color: var(--secondary-color) !important;
+    color: var(--primary-contrast-color) !important;
 }
 .title-logo-background {
     width: 99px;
@@ -203,28 +212,27 @@ html body {
     line-height: 1;
 }
 .title-name-text::selection {
-    background-color: var(--secondary-color);
+    background-color: var(--primary-contrast-color);
     color: var(--primary-color);
     mix-blend-mode: normal;
 }
 .title-name-color {
-    color: #fde484;
+    color: #FDE484;
     mix-blend-mode: exclusion;
 }
 .title-name-color-hover {
-    color: var(--secondary-color) !important;
+    color: var(--primary-contrast-color) !important;
     mix-blend-mode: normal !important;
 }
 
 /* Alt title-name colors for accessibility mode */
 .title-name-color-alt {
-    color: var(--secondary-color);
+    color: var(--primary-contrast-color);
     mix-blend-mode: normal;
 }
 
 /* Styles for both logo-role-wrappers */
-.logo-role-wrapper,
-.logo-role-wrapper-alt {
+.logo-role-wrapper, .logo-role-wrapper-alt {
     position: relative;
     z-index: 2;
     display: flex;
@@ -235,8 +243,7 @@ html body {
     font-family: var(--main-font-family);
     line-height: 1;
 }
-#parallax-title-logo,
-#parallax-title-role {
+#parallax-title-logo, #parallax-title-role {
     user-select: none;
 }
 
@@ -248,11 +255,11 @@ html body {
     mix-blend-mode: exclusion;
 }
 .logo-role-wrapper-hover {
-    color: var(--secondary-color);
+    color: var(--primary-contrast-color);
     mix-blend-mode: normal;
 }
 .role-color-hover {
-    color: var(--secondary-color) !important;
+    color: var(--primary-contrast-color) !important;
     mix-blend-mode: normal !important;
 }
 
@@ -260,7 +267,7 @@ html body {
 .logo-role-wrapper-alt {
     height: 127px;
     width: 250px;
-    color: var(--secondary-color);
+    color: var(--primary-contrast-color);
     mix-blend-mode: normal;
 }
 
@@ -278,7 +285,7 @@ html body {
 
 /* Page background, set on a page-by-page basis, automatically updated in footer */
 .background-color {
-    background-color: var(--background-color);
+    background-color: var(--primary-color);
 }
 .alt-color {
     color: var(--alt-color);
@@ -296,7 +303,7 @@ html body {
 
 /* Styling for the link boxes and text */
 .link-box {
-    background-color: var(--secondary-color);
+    background-color: var(--primary-contrast-color);
     color: var(--primary-color);
     box-sizing: border-box;
     font-family: var(--secondary-font-family);
@@ -305,13 +312,13 @@ html body {
     cursor: pointer;
 }
 .link-box:hover {
-    background-color: var(--quaternary-color);
-    color: var(--tertiary-color);
-    outline: 25px solid var(--secondary-color);
+    background-color: var(--secondary-color);
+    color: var(--secondary-contrast-color);
+    outline: 25px solid var(--primary-contrast-color);
 }
 .link-box-text::selection {
-    background-color: var(--tertiary-color);
-    color: var(--quaternary-color);
+    background-color: var(--secondary-contrast-color);
+    color: var(--secondary-color);
 }
 
 /* Different letter spacing to keep link text the same width */
@@ -344,7 +351,8 @@ html body {
 
 /* Container for scolling text */
 .scroll-container {
-    color: var(--tertiary-color);
+    background-color: var(--secondary-color);
+    color: var(--secondary-contrast-color);
     overflow: hidden;
 }
 
@@ -369,15 +377,6 @@ html body {
 }
 .scroll-text:hover {
     text-decoration: underline overline;
-}
-
-.line-container {
-    background: var(--quaternary-color);
-    color: var(--tertiary-color);
-    cursor: crosshair;
-    font-family: var(--secondary-font-family);
-    position: relative;
-    overflow: hidden;
 }
 
 /* Animation for scroll container */
@@ -417,24 +416,23 @@ html body {
     }
 }
 /*Properties for smallest screens */
-@media (max-width: 550px) {
-}
+@media (max-width: 550px) {}
+
 
 /* CUSTOM STYLES FOR THE WORK PAGE */
-.line-break {
-    display: block;
-    width: 100%;
-    height: 6px;
-    background-color: var(--tertiary-color);
-    margin-top: 10px;
-    line-height: 0;
-    border: none;
+.line-container {
+    background: var(--secondary-color);
+    color: var(--secondary-contrast-color);
+    cursor: crosshair;
+    font-family: var(--secondary-font-family);
+    position: relative;
+    overflow: hidden;
 }
 
 .interactive-section {
     position: relative;
-    background: var(--quaternary-color);
-    color: var(--tertiary-color);
+    background: var(--secondary-color);
+    color: var(--secondary-contrast-color);
     cursor: crosshair;
     font-family: var(--secondary-font-family);
     overflow: hidden;
@@ -444,14 +442,14 @@ html body {
     font-family: monospace;
     font-size: 1.2rem;
     font-weight: bold;
-    color: var(--tertiary-color);
+    color: var(--secondary-contrast-color);
     margin: 0.5rem 0;
 }
 
 .section-divider {
     width: 100%;
     height: 2px;
-    background-color: var(--tertiary-color);
+    background-color: var(--secondary-contrast-color);
 }
 
 .content-container {
@@ -474,9 +472,8 @@ html body {
     height: 100%;
     max-height: 250px;
     background: center/cover no-repeat;
-    border: 2px solid var(--tertiary-color);
+    border: 2px solid var(--secondary-contrast-color);
     opacity: 0;
-    transition: opacity 0.3s ease-in-out;
 }
 
 .boxes-container {
@@ -488,7 +485,7 @@ html body {
 .bullet-box {
     width: 100%;
     flex: 1;
-    color: var(--tertiary-color);
+    color: var(--secondary-contrast-color);
     cursor: pointer;
     text-align: right;
     display: flex;
@@ -501,18 +498,18 @@ html body {
     border: none;
 }
 .bullet-box + .bullet-box {
-    border-top: 1px solid var(--tertiary-color);
+    border-top: 1px solid var(--secondary-contrast-color);
 }
 
 .bullet-box::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
     margin: 0;
     padding: 0;
     width: calc(100% + 1px);
     height: 100%;
-    background-color: var(--tertiary-color);
+    background-color: var(--secondary-contrast-color);
     z-index: 0;
     transform: scale3d(1, 0, 1);
     transform-origin: center bottom;
@@ -527,23 +524,71 @@ html body {
     z-index: 1;
 }
 
-.tracking-1 {
+.tracking-work-1 {
     letter-spacing: 0.174em;
 }
-.tracking-2 {
+.tracking-work-2 {
     letter-spacing: 0.167em;
 }
-.tracking-3 {
+.tracking-work-3 {
     letter-spacing: 0.125em;
 }
-.tracking-4 {
+.tracking-work-4 {
     letter-spacing: 0.188em;
+}
+.tracking-projects-1 {
+    letter-spacing: 0.408em;
+}
+.tracking-projects-2 {
+    letter-spacing: 0.290em;
+}
+.tracking-projects-3 {
+    letter-spacing: 0.266em;
+}
+.tracking-projects-4 {
+    letter-spacing: 0.242em;
+}
+.tracking-projects-5 {
+    letter-spacing: 0.138em;
+}
+.tracking-projects-6 {
+    letter-spacing: 0.113em;
+}
+.tracking-projects-7 {
+    letter-spacing: 0.042em;
+}
+.tracking-projects-8 {
+    letter-spacing: 0.073em;
+}
+.tracking-projects-9 {
+    letter-spacing: 0.393em;
+}
+.tracking-projects-10 {
+    letter-spacing: 0.249em;
+}
+.tracking-projects-11 {
+    letter-spacing: 0.216em;
+}
+.tracking-projects-12 {
+    letter-spacing: 0.168em;
+}
+.tracking-projects-13 {
+    letter-spacing: 0.139em;
+}
+.tracking-projects-14 {
+    letter-spacing: 0.338em;
+}
+.tracking-projects-15 {
+    letter-spacing: 0.333em;
+}
+.tracking-projects-16 {
+    letter-spacing: 0.338em;
 }
 
 /* Desktop hover effects */
 html.is-desktop .bullet-box:hover,
 html.is-desktop .bullet-box.is-active {
-    color: var(--quaternary-color);
+    color: var(--secondary-color);
 }
 
 html.is-desktop .bullet-box:hover::before,
@@ -555,24 +600,49 @@ html.is-desktop .bullet-box.is-active::before {
 
 /* Text selection styles */
 .section-title::selection {
-    background-color: var(--tertiary-color);
-    color: var(--quaternary-color);
+    background-color: var(--secondary-contrast-color);
+    color: var(--secondary-color);
 }
 .bullet-title::selection {
-    background-color: var(--quaternary-color);
+    background-color: var(--secondary-color);
+    color: var(--secondary-contrast-color);
+}
+
+.resume-box-wrapper {
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+    outline: 25px solid transparent;
+}
+.resume-box {
+    background-color: var(--secondary-color);
+    color: var(--secondary-contrast-color);
+    box-sizing: border-box;
+    font-family: var(--secondary-font-family);
+    font-size: 16vw;
+    line-height: 1.2;
+    cursor: pointer;
+}
+.resume-box:hover {
+    background-color: var(--tertiary-color);
+    color: var(--tertiary-contrast-color);
+    outline: 25px solid var(--tertiary-contrast-color);
+}
+.resume-box-text::selection {
+    background-color: var(--tertiary-contrast-color);
     color: var(--tertiary-color);
 }
 
 /* Mobile responsive */
 @media (max-width: 768px) {
     .interactive-section {
-        height: 65vh; /* Increased height */
+        height: 60vh; /* Increased height */
     }
 
     .content-container {
         flex-direction: column;
     }
-
+    
     .image-display-area {
         min-height: 150px;
         margin-right: 0;
