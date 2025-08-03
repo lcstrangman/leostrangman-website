@@ -17,7 +17,27 @@ import leostrangman from '../assets/images/leostrangman.jpg';
         pageTitle = "INDEX">
 
     <div class = "mouse-circle"></div>
-    <div id="loading-screen">Loading...</div>
+    <!-- Initial screen (only icon centered) -->
+    <div id="initial-screen">
+        <div class="icon-wrapper">
+            <Icon class="hover-text" name="icon-amber-supply" />
+        </div>
+    </div>
+
+    <!-- Loading screen (icon + name + note) -->
+    <div id="loading-screen">
+        <div class="loading-content">
+            <div class="logo-name u-flex u-flex-row">
+                <Icon class="hover-text" name="icon-amber-supply" />
+                <span class="loading-name-text">Leo Strangman</span>
+            </div>
+            <p class="loading-note">For the full animated experience, use a desktop browser</p>
+        </div>
+    </div>
+
+    <!-- Pixel transition overlay -->
+    <div id="pixel-transition"></div>
+    
 
     <!-- Hero Section Container -->
     <div class="hero" id="parallax-hero">
@@ -112,7 +132,8 @@ import leostrangman from '../assets/images/leostrangman.jpg';
         </div>
     </div>
 
-    <script type="module" src = "/src/scripts/index-scripts.js"></script>
+    <script type="module" is:inline src = "/src/scripts/index-scripts.js"></script>
+    <script type="module" is:inline src = "/src/scripts/loading-screen.js"></script>
     <script is:inline>
         // Intercept all <a> clicks and scroll to top after navigation
         document.addEventListener('click', function (e) {

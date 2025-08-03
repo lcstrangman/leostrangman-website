@@ -8,8 +8,8 @@
                 font-style: normal;
             }
         </style>
-        <rect x="0" y="0" width="75" height="75" fill="none" stroke="rgb(253 230 138)" stroke-width="3"></rect>
-        <text x="50%" y="50%" text-anchor="middle" dy=".35em" font-size = "50" font-family = "Supply" fill = "rgb(253 230 138)">LCS</text>
+        <rect x="0" y="0" width="75" height="75" fill="none" stroke="rgb(228 199 135)" stroke-width="3"></rect>
+        <text x="50%" y="50%" text-anchor="middle" dy=".35em" font-size = "50" font-family = "Supply" fill = "rgb(228 199 135)">LCS</text>
     </symbol>
     <symbol id = "icon-green-supply" width="75" height="75">
         <style>

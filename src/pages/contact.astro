@@ -10,40 +10,38 @@ import Layout from '../layouts/Layout.astro';
         tertiaryContrastColor="#945442" 
         quaternaryColor="#9ab28a" 
         quaternaryContrastColor="#593636" 
-        pageTitle = "ABOUT ME">
+        pageTitle = "CONTACT">
     <div class="mouse-circle"></div>
-    <div id="loading-screen">Loading...</div>
 
     <div class="u-z-2 background-color u-relative">
         <div class="link-box-wrapper">
             <div class="line-container hover-text u-h-[50vh] u-w-full" id="lines-wrapper"></div>
 
-            <div class="interactive-section u-mt-fluid-xl u-h-[50vh] u-w-full">
-                <div class="section-title glitchable hover-text">/* leostrangman.com */</div>
-                <div class="section-divider"></div>
-                <div class="content-container">
-                    <div class="image-display-area">
-                        <div class="preview-image" id="preview-image"></div>
-                    </div>
-                    <div class="boxes-container" data-prefix = "/contact-">
-                        <div class="bullet-box" data-image="bullet1">
-                            <span class="bullet-title glitchable hover-text tracking-contact-1">ABOUT</span>
-                        </div>
-                        <div class="bullet-box" data-image="bullet2">
-                            <span class="bullet-title glitchable hover-text tracking-contact-2">ABOUT</span>
-                        </div>
-                        <div class="bullet-box" data-image="bullet3">
-                            <span class="bullet-title glitchable hover-text tracking-contact-3">ABOUT</span>
-                        </div>
-                        <div class="bullet-box" data-image="bullet4">
-                            <span class="bullet-title glitchable hover-text tracking-contact-4">ABOUT</span>
-                        </div>
-                    </div>
+            <div class="u-mt-12 u-grid u-grid-cols-1 u-gap-gutter">
+                <div class="u-w-full contact-box u-text-center u-flex u-flex-col u-items-center u-justify-center">
+                    <div class = "glitchable contact-box-text u-tracking-wide hover-text">Worcester, MA</div>
+                    <div class = "glitchable contact-box-title-subtext u-tracking-wide hover-text">Open to Remote Work</div>
                 </div>
             </div>
-            <div class="resume-box-wrapper u-mt-fluid-xl u-h-[50vh] u-w-full">
-                <div class="u-w-full u-h-[50vh] resume-box u-text-center u-flex u-items-center u-justify-center">
-                    <a class = "glitchable resume-box-text u-tracking-wide hover-text" href="/">RESUME</a>
+
+            <div class="u-mt-12 u-grid u-grid-cols-2 u-gap-gutter">
+                <div class="u-w-full contact-box u-text-center u-flex u-flex-col u-items-center u-justify-center">
+                    <a class = "glitchable contact-box-text u-tracking-wide hover-text" target="_blank" rel="noopener noreferrer" href="mailto:lcstrangman@gmail.com">Email</a>
+                    <div class = "glitchable contact-box-subtext u-tracking-wide hover-text">lcstrangman@gmail.com</div>
+                </div>
+                <div class="u-w-full contact-box u-text-center u-flex u-flex-col u-items-center u-justify-center">
+                    <a class = "glitchable contact-box-text tracking-work hover-text" target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/leostrangman/">LinkedIn</a>
+                    <div class = "glitchable contact-box-subtext u-tracking-wide hover-text">/in/leostrangman</div>
+                </div>
+            </div>
+            <div class="u-mt-12 u-grid u-grid-cols-2 u-gap-gutter">
+                <div class="u-w-full contact-box u-text-center u-flex u-flex-col u-items-center u-justify-center">
+                    <a class = "glitchable contact-box-text u-tracking-wide hover-text" target="_blank" rel="noopener noreferrer" href="https://github.com/leostrangman/">GitHub</a>
+                    <div class = "glitchable contact-box-subtext u-tracking-wide hover-text">/lcstrangman</div>
+                </div>
+                <div class="u-w-full contact-box u-text-center u-flex u-flex-col u-items-center u-justify-center">
+                    <a class = "glitchable contact-box-text tracking-work hover-text" href="/resume">Resume</a>
+                    <div class = "glitchable contact-box-subtext u-tracking-wide hover-text">/resume</div>
                 </div>
             </div>
 
@@ -58,7 +56,7 @@ import Layout from '../layouts/Layout.astro';
         </div>
     </div>
 
-    <script type="module" src="/src/scripts/index-scripts.js"></script>
-    <script type="module" src="/src/scripts/line-canvas.js"></script>
-    <script type="module" src="/src/scripts/interactive-box-scripts.js"></script>
+    <script type="module" is:inline src="/src/scripts/index-scripts.js"></script>
+    <script type="module" is:inline src="/src/scripts/line-canvas.js"></script>
+    <script type="module" is:inline src="/src/scripts/interactive-box-scripts.js"></script>
 </Layout>

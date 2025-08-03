@@ -11,27 +11,18 @@ Increase scroll speed
 Baillat studio hamburger menu
 Override scroll bar
 Change the shape of the circle cursor follower, put a second dot in the middle or something 
-Different color scheme for each main page
 LCS svg as a sort of cursor follower on images/videos or something like that maybe
+Email contact form
 
-
-FOR THE OTHER PAGES:
-Horizontal line at top
-Top left has the title of the thing
-Below that is a related image
-To the right of both of those things is a vertical line, making a square on the left for the image to fill
-The right side is a table like thing of bullet points, which act like the baillat studio menu thing, that fill all of the remaining space
-
+Short loading screen, just the SVG but with a glitch effect on the letters
 
 FIXES:
 Make the name text be in line with the svg properly
 Make the pixellation effect work properly when starting at the same position as the images
 Make the reload when going back to a previous page work properly
-Fix the selection colors of the footer text
 Make canvases react properly to modified browser scaling
 
 Add initialize page logic/loading screen to the layout.astro
-
 Put scroll text in the footer
 
         

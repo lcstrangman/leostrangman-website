@@ -13,7 +13,6 @@ import Layout from '../layouts/Layout.astro';
         quaternaryContrastColor="#3a2d2d" 
         pageTitle = "MY WORK">
     <div class="mouse-circle"></div>
-    <div id="loading-screen">Loading...</div>
 
     <div class="u-z-2 background-color u-relative">
         <div class="link-box-wrapper">
@@ -46,7 +45,7 @@ import Layout from '../layouts/Layout.astro';
             </div>
             <div class="resume-box-wrapper u-mt-fluid-xl u-h-[50vh] u-w-full">
                 <div class="u-w-full u-h-[50vh] resume-box u-text-center u-flex u-items-center u-justify-center">
-                    <a class = "glitchable resume-box-text u-tracking-wide hover-text" href="/">RESUME</a>
+                    <a class = "glitchable resume-box-text u-tracking-wide hover-text" href="/resme">RESUME</a>
                 </div>
             </div>
 
@@ -61,7 +60,7 @@ import Layout from '../layouts/Layout.astro';
         </div>
     </div>
 
-    <script type="module" src="/src/scripts/index-scripts.js"></script>
-    <script type="module" src="/src/scripts/line-canvas.js"></script>
-    <script type="module" src="/src/scripts/interactive-box-scripts.js"></script>
+    <script type="module" is:inline src="/src/scripts/index-scripts.js"></script>
+    <script type="module" is:inline src="/src/scripts/line-canvas.js"></script>
+    <script type="module" is:inline src="/src/scripts/interactive-box-scripts.js"></script>
 </Layout>

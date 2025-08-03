@@ -1,0 +1,56 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Image from '@components/Image/Image.astro';
+import resume from '../assets/images/resume.png';
+---
+<Layout title="Leo Strangman." 
+        primaryColor="#bbb387" 
+        primaryContrastColor="#192727" 
+        secondaryColor="#192727" 
+        secondaryContrastColor="#A2B690" 
+        tertiaryColor="#e4c787" 
+        tertiaryContrastColor="#593636" 
+        quaternaryColor="#9ab28a" 
+        quaternaryContrastColor="#593636" 
+        pageTitle = "RESUME">
+    <div class="mouse-circle"></div>
+
+    <div class="u-z-2 background-color u-relative">
+        <div class="link-box-wrapper">
+            <div class="line-container hover-text u-h-[50vh] u-w-full" id="lines-wrapper"></div>
+
+            <div class="u-mt-12 u-grid u-grid-cols-1 u-gap-gutter">
+                <div class = "image-wrapper u-w-full u-h-full resume-background">
+                    <canvas class = "pixel-canvas"></canvas>
+                    <Image
+                        class = "source-image"
+                        src= {resume}
+                        alt = "Switzerland Scenery"
+                        caption=""
+                        width={500}
+                        height={1000}
+                    />
+                </div>
+            </div>
+
+            <div class="resume-box-wrapper u-mt-fluid-xl u-h-[50vh] u-w-full">
+                <div class="u-w-full u-h-[50vh] resume-box u-text-center u-flex u-items-center u-justify-center">
+                    <a class = "glitchable resume-box-text u-tracking-wide hover-text" target="_blank" rel="noopener noreferrer" href="/src/assets/pdfs/resume.pdf">DOWNLOAD</a>
+                </div>
+            </div>
+
+            <div class="scroll-container u-mt-fluid-xl u-h-[50vh] u-w-full">
+                <ul class="scroll-track">
+                    <li class="scroll-text hover-text glitchable">©2025</li>
+                    <li class="scroll-text hover-text glitchable">/* Designed and Developed by LCS */</li>
+                    <li class="scroll-text hover-text glitchable">©2025</li>
+                    <li class="scroll-text hover-text glitchable">/* Open to Work */</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" is:inline src="/src/scripts/index-scripts.js"></script>
+    <script type="module" is:inline src="/src/scripts/line-canvas.js"></script>
+    <script type="module" is:inline src="/src/scripts/interactive-box-scripts.js"></script>
+</Layout>

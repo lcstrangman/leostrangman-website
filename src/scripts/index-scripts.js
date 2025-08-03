@@ -59,6 +59,9 @@ class HeroPageController {
         this.scroller = document.querySelector('.scroll-container');
         this.scrollTrack = this.scroller?.querySelector('.scroll-track');
         this.scrollTrackContent = this.scrollTrack ? Array.from(this.scrollTrack.children) : [];
+        this.scrollerManual = document.querySelector('.scroll-container-manual');
+        this.scrollTrackManual = this.scrollerManual?.querySelector('.scroll-track-manual');
+        this.scrollTrackContentManual = this.scrollTrackManual ? Array.from(this.scrollTrackManual.children) : [];
         
         // Other elements
         this.glitchables = document.querySelectorAll('.glitchable');
@@ -128,6 +131,7 @@ class HeroPageController {
         this.setupGlitchables();
         this.setupImagePixelation();
         this.setupScrollAnimation();
+        this.setupScrollAnimationManual();
         
         // Initialize hero animation when ready
         if (this.canvas) {
@@ -445,72 +449,114 @@ class HeroPageController {
     // Section: Image Pixelation
     // ===================================================================================
     setupImagePixelation() {
-        document.querySelectorAll('.image-wrapper').forEach(wrapper => {
+        document.querySelectorAll('.image-wrapper').forEach((wrapper, index) => {
             const pixelCanvas = wrapper.querySelector('.pixel-canvas');
             const pixelContext = pixelCanvas?.getContext('2d');
             const image = wrapper.querySelector('.source-image img');
             
-            if (!pixelCanvas || !pixelContext || !image) return;
+            if (!pixelCanvas || !pixelContext || !image) { return; }
             
             const startPixelSize = 70;
             const endPixelSize = 1;
             const numSteps = 8;
             const delay = 50;
-
             let currentStep = 0;
             let animating = false;
             let hasAnimated = false;
-
+            
             const drawPixelated = (size) => {
-                pixelCanvas.width = image.naturalWidth;
-                pixelCanvas.height = image.naturalHeight;
-                const w = pixelCanvas.width;
-                const h = pixelCanvas.height;
+                if (!image.naturalWidth || !image.naturalHeight) return;
 
+                const w = image.naturalWidth;
+                const h = image.naturalHeight;
+                pixelCanvas.width = w;
+                pixelCanvas.height = h;
                 pixelContext.clearRect(0, 0, w, h);
                 pixelContext.imageSmoothingEnabled = false;
 
-                pixelContext.drawImage(image, 0, 0, w/size, h/size);
-                pixelContext.drawImage(pixelCanvas, 0, 0, w/size, h/size, 0, 0, w, h);
+                // Create a temporary offscreen canvas
+                const offCanvas = document.createElement('canvas');
+                const offCtx = offCanvas.getContext('2d');
+                const scaledW = Math.max(1, Math.floor(w / size));
+                const scaledH = Math.max(1, Math.floor(h / size));
+                offCanvas.width = scaledW;
+                offCanvas.height = scaledH;
+
+                // Draw scaled-down version to offscreen canvas
+                offCtx.imageSmoothingEnabled = false;
+                offCtx.drawImage(image, 0, 0, scaledW, scaledH);
+
+                // Draw scaled-up version from offscreen canvas to main canvas
+                pixelContext.drawImage(offCanvas, 0, 0, scaledW, scaledH, 0, 0, w, h);
             };
 
+            
             const animateDepixelate = () => {
                 if (currentStep > numSteps) {
                     animating = false;
                     return;
                 }
+                
                 const progress = currentStep / numSteps;
                 const pixelSize = startPixelSize * (1 - progress) + endPixelSize * progress;
-
                 drawPixelated(pixelSize);
                 currentStep++;
                 setTimeout(() => requestAnimationFrame(animateDepixelate), delay);
             };
-
+            
             const startPixelation = () => {
-                if (animating || hasAnimated) return;
+                if (animating || hasAnimated) { return; }
+                
                 animating = true;
                 hasAnimated = true;
                 currentStep = 0;
+                
                 drawPixelated(startPixelSize);
-                requestAnimationFrame(animateDepixelate);
+                setTimeout(() => {
+                    requestAnimationFrame(animateDepixelate);
+                }, 100); // Small delay to ensure initial pixelation is visible
+                
                 pixelCanvas.style.imageRendering = "auto";
             };
-
+            
+            // Enhanced intersection observer
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         startPixelation();
                     }
                 });
-            }, {threshold: 0.6});
+            }, { 
+                threshold: 0.3, // Lower threshold for testing
+                rootMargin: '50px' // Add some margin
+            });
             
-            if (image.complete) {
-                drawPixelated(startPixelSize);
+            // Ensure image is loaded before setting up
+            const setupCanvas = () => {
+                if (image.naturalWidth && image.naturalHeight) {
+                    drawPixelated(startPixelSize);
+                    observer.observe(pixelCanvas);
+                }
+            };
+            
+            if (image.complete && image.naturalWidth) {
+                setupCanvas();
             } else {
-                image.onload = () => drawPixelated(startPixelSize);
+                image.addEventListener('load', setupCanvas);
+                // Fallback - force load after timeout
+                setTimeout(() => {
+                    if (!image.complete) {
+                        setupCanvas();
+                    }
+                }, 1000);
             }
-            observer.observe(pixelCanvas);
+            
+            // Debug: Test animation manually after 3 seconds
+            setTimeout(() => {
+                if (!hasAnimated) {
+                    startPixelation();
+                }
+            }, 3000);
         });
     }
 
@@ -535,6 +581,38 @@ class HeroPageController {
         }
     }
 
+    setupScrollAnimationManual() {
+        if (!this.scrollTrackManual || !this.scrollerManual) return;
+    
+        // Calculate the total width to scroll
+        const scrollWidth = this.scrollTrackManual.scrollWidth;
+        const containerWidth = this.scrollerManual.offsetWidth;
+        const maxScroll = scrollWidth - containerWidth;
+    
+        // Keep text at start position initially
+        gsap.set(this.scrollTrackManual, { x: 0 });
+        
+        // Create the scroll animation using the timeline properly
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: this.scrollerManual,
+                start: "center center", // Start when container is centered
+                end: `+=${maxScroll + window.innerHeight}`, // End after scrolling through all text + extra space
+                scrub: 1,
+                pin: ".link-box-wrapper", // Pin the parent wrapper instead of just the scroll container
+                anticipatePin: 1,
+                invalidateOnRefresh: true
+            }
+        });
+        
+        // Add the horizontal scroll animation to the timeline
+        tl.to(this.scrollTrackManual, {
+            x: -maxScroll,
+            ease: "none"
+        });
+    }
+
+
     cleanup() {
         // Kill GSAP animations
         if (this.heroAnimation) {
@@ -555,33 +633,8 @@ class HeroPageController {
     }
 }
 
-// Loading Screen Handler
-class LoadingScreen {
-    static show() {
-        const loadingScreen = document.getElementById('loading-screen');
-        if (loadingScreen) {
-            loadingScreen.style.display = 'flex';
-        }
-    }
-
-    static hide() {
-        const loadingScreen = document.getElementById('loading-screen');
-        if (loadingScreen) {
-            setTimeout(() => {
-                loadingScreen.style.display = 'none';
-            }, 2000);
-        }
-    }
-}
-
 // Main initialization function
 function initializePage() {
-    // Show loading screen
-    LoadingScreen.show();
-    
-    // Hide loading screen after delay
-    window.addEventListener('load', LoadingScreen.hide);
-    
     // Initialize hero page controller
     let heroController;
     
@@ -614,6 +667,10 @@ function initializePage() {
         if (heroController) {
             heroController.destroy();
         }
+    });
+
+    window.addEventListener('resize', () => {
+        ScrollTrigger.refresh();
     });
 }
 
