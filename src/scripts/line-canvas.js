@@ -36,9 +36,7 @@ class Lines {
         this.currentScroll = 0;
         this.hoveredIndex = 0;
         this.linesData = [];
-        this.isTouchDevice = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-            navigator.userAgent
-        );
+        this.isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0);
 
         this.initCanvas();
         this.computeLayout();
@@ -231,14 +229,17 @@ class Lines {
         this.ctx.fillStyle = this.secondaryContrastColor;
         this.ctx.fill();
 
-        // TEXT: Draw clipped "MY WORK" line aligned to bottom of idle rect
-        this.ctx.font = '70px Nikkei';
+        this.ctx.font = '8vh Nikkei';
         this.ctx.textBaseline = 'bottom';
         this.ctx.fillStyle = this.secondaryColor;
 
         const text = this.pageTitle + ' ';
         let textX = lineX;
-        const textY = idleLineY + idleHeight - 2 + 15;
+        let offsetText = 15;
+        if (window.innerHeight < 600) {
+            offsetText = 10;
+        }
+        const textY = idleLineY + idleHeight - 2 + offsetText;
 
         // Repeat text across the line width
         while (textX < lineX + lineWidth) {

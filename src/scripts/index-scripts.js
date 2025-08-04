@@ -449,114 +449,78 @@ class HeroPageController {
     // Section: Image Pixelation
     // ===================================================================================
     setupImagePixelation() {
-        document.querySelectorAll('.image-wrapper').forEach((wrapper, index) => {
+        document.querySelectorAll('.image-wrapper').forEach(wrapper => {
             const pixelCanvas = wrapper.querySelector('.pixel-canvas');
             const pixelContext = pixelCanvas?.getContext('2d');
             const image = wrapper.querySelector('.source-image img');
             
-            if (!pixelCanvas || !pixelContext || !image) { return; }
+            if (!pixelCanvas || !pixelContext || !image) return;
             
             const startPixelSize = 70;
             const endPixelSize = 1;
-            const numSteps = 8;
-            const delay = 50;
+            const numSteps = 5;
+            const delay = 80;
+
+            let threshold = 0.6;
+            if (image.naturalHeight && window.innerHeight) {
+                // If image is taller than viewport, set threshold lower so it always triggers
+                const ratio = Math.min(1, window.innerHeight / image.naturalHeight);
+                threshold = Math.max(0.1, ratio * 0.9); // 0.9 is a fudge factor, adjust as needed
+            }
             let currentStep = 0;
             let animating = false;
             let hasAnimated = false;
-            
-            const drawPixelated = (size) => {
-                if (!image.naturalWidth || !image.naturalHeight) return;
 
-                const w = image.naturalWidth;
-                const h = image.naturalHeight;
-                pixelCanvas.width = w;
-                pixelCanvas.height = h;
+            const drawPixelated = (size) => {
+                pixelCanvas.width = image.naturalWidth;
+                pixelCanvas.height = image.naturalHeight;
+                const w = pixelCanvas.width;
+                const h = pixelCanvas.height;
+
                 pixelContext.clearRect(0, 0, w, h);
                 pixelContext.imageSmoothingEnabled = false;
 
-                // Create a temporary offscreen canvas
-                const offCanvas = document.createElement('canvas');
-                const offCtx = offCanvas.getContext('2d');
-                const scaledW = Math.max(1, Math.floor(w / size));
-                const scaledH = Math.max(1, Math.floor(h / size));
-                offCanvas.width = scaledW;
-                offCanvas.height = scaledH;
-
-                // Draw scaled-down version to offscreen canvas
-                offCtx.imageSmoothingEnabled = false;
-                offCtx.drawImage(image, 0, 0, scaledW, scaledH);
-
-                // Draw scaled-up version from offscreen canvas to main canvas
-                pixelContext.drawImage(offCanvas, 0, 0, scaledW, scaledH, 0, 0, w, h);
+                pixelContext.drawImage(image, 0, 0, w/size, h/size);
+                pixelContext.drawImage(pixelCanvas, 0, 0, w/size, h/size, 0, 0, w, h);
             };
 
-            
             const animateDepixelate = () => {
                 if (currentStep > numSteps) {
                     animating = false;
                     return;
                 }
-                
                 const progress = currentStep / numSteps;
                 const pixelSize = startPixelSize * (1 - progress) + endPixelSize * progress;
+
                 drawPixelated(pixelSize);
                 currentStep++;
                 setTimeout(() => requestAnimationFrame(animateDepixelate), delay);
             };
-            
+
             const startPixelation = () => {
-                if (animating || hasAnimated) { return; }
-                
+                if (animating || hasAnimated) return;
                 animating = true;
                 hasAnimated = true;
                 currentStep = 0;
-                
                 drawPixelated(startPixelSize);
-                setTimeout(() => {
-                    requestAnimationFrame(animateDepixelate);
-                }, 100); // Small delay to ensure initial pixelation is visible
-                
+                requestAnimationFrame(animateDepixelate);
                 pixelCanvas.style.imageRendering = "auto";
             };
-            
-            // Enhanced intersection observer
+
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         startPixelation();
                     }
                 });
-            }, { 
-                threshold: 0.3, // Lower threshold for testing
-                rootMargin: '50px' // Add some margin
-            });
+            }, {threshold});
             
-            // Ensure image is loaded before setting up
-            const setupCanvas = () => {
-                if (image.naturalWidth && image.naturalHeight) {
-                    drawPixelated(startPixelSize);
-                    observer.observe(pixelCanvas);
-                }
-            };
-            
-            if (image.complete && image.naturalWidth) {
-                setupCanvas();
+            if (image.complete) {
+                drawPixelated(startPixelSize);
             } else {
-                image.addEventListener('load', setupCanvas);
-                // Fallback - force load after timeout
-                setTimeout(() => {
-                    if (!image.complete) {
-                        setupCanvas();
-                    }
-                }, 1000);
+                image.onload = () => drawPixelated(startPixelSize);
             }
-            
-            // Debug: Test animation manually after 3 seconds
-            setTimeout(() => {
-                if (!hasAnimated) {
-                    startPixelation();
-                }
-            }, 3000);
+            observer.observe(pixelCanvas);
         });
     }
 
@@ -667,10 +631,6 @@ function initializePage() {
         if (heroController) {
             heroController.destroy();
         }
-    });
-
-    window.addEventListener('resize', () => {
-        ScrollTrigger.refresh();
     });
 }
 

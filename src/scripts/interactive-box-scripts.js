@@ -1,9 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     const html = document.documentElement;
-    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-    const isMobileUA = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    html.classList.add(!isTouch && !isMobileUA ? 'is-desktop' : 'is-mobile');
-
+    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || (navigator.msMaxTouchPoints > 0);
+    html.classList.add(!isTouch ? 'is-desktop' : 'is-mobile');
 
     document.querySelectorAll('.interactive-section').forEach(section => {
         const container = section.querySelector('.boxes-container');
@@ -28,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 previewImage.classList.remove('active');
             });
 
-            if (isMobileUA) {
+            if (isTouch) {
                 box.addEventListener('touchstart', function () {
                     bulletBoxes.forEach(b => b.classList.remove('is-active'));
                     this.classList.add('is-active');

@@ -683,6 +683,7 @@ html.is-desktop .bullet-box.is-active::before {
     width: 100%;
     box-sizing: border-box;
     outline: 25px solid transparent;
+    height: 50vh;
 }
 .resume-box {
     background-color: var(--secondary-color);
@@ -692,6 +693,7 @@ html.is-desktop .bullet-box.is-active::before {
     font-size: 16vw;
     line-height: 1.2;
     cursor: pointer;
+    height: 100%;
 }
 .resume-box:hover {
     background-color: var(--tertiary-color);
@@ -707,6 +709,10 @@ html.is-desktop .bullet-box.is-active::before {
 @media (max-width: 768px) {
     .interactive-section {
         height: 60vh; /* Increased height */
+    }
+    
+    .resume-box-wrapper {
+        height: 30vh;
     }
 
     .content-container {
