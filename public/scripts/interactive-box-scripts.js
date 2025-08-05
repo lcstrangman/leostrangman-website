@@ -4,7 +4,6 @@ class InteractiveBoxController {
     init() {
         const html = document.documentElement;
         const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || (navigator.msMaxTouchPoints > 0);
-        html.classList.add(!isTouch ? 'is-desktop' : 'is-mobile');
 
         document.querySelectorAll('.interactive-section').forEach(section => {
             const container = section.querySelector('.boxes-container');
@@ -30,9 +29,22 @@ class InteractiveBoxController {
                 });
 
                 if (isTouch) {
-                    box.addEventListener('touchstart', function () {
-                        bulletBoxes.forEach(b => b.classList.remove('is-active'));
+                    box.addEventListener('touchstart', function (e) {
+                        e.preventDefault();
+
+                        // Remove highlight and image from ALL containers
+                        document.querySelectorAll('.preview-image').forEach(img => {
+                            img.style.opacity = '0';
+                            img.classList.remove('active');
+                            img.style.backgroundImage = '';
+                        });
+                        document.querySelectorAll('.bullet-box').forEach(b => b.classList.remove('is-active'));
+
+                        // Activate only the current box and image
                         this.classList.add('is-active');
+                        previewImage.style.backgroundImage = `url(${imageSrc})`;
+                        previewImage.style.opacity = '1';
+                        previewImage.classList.add('active');
                     });
                 }
             });
