@@ -15,6 +15,7 @@ class HeroPageController {
         this.mouseX = window.innerWidth / 2;
         this.mouseY = window.innerHeight / 2;
         this.hoverEnabled = false;
+        this.isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0);
         
         this.init();
     }
@@ -217,6 +218,10 @@ class HeroPageController {
     // Section: Circular Mouse Cursor Follow
     // ===================================================================================
     setupMouseCircle() {
+        if (this.isTouchDevice) {
+            this.circle.style.opacity = '0';
+            return;
+        }
         if (!this.circle) return;
 
         // Setup hover text interactions
@@ -250,7 +255,7 @@ class HeroPageController {
     }
 
     handleMouseMove(e) {
-        if (!this.circle) return;
+        if (!this.circle || this.isTouchDevice) return;
         
         this.mouseX = e.clientX;
         this.mouseY = e.clientY;
@@ -527,6 +532,9 @@ class HeroPageController {
     // Section: Navigation Container Scroll
     // ===================================================================================
     setupScrollAnimation() {
+        if (this.isTouchDevice) {
+            this.scrollTrack.style.animation = 'scroll 45s linear infinite';
+        }
         if (!this.scroller || !this.scrollTrack) return;
         
         if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {

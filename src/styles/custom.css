@@ -107,6 +107,7 @@ html body {
     align-items: center;
     justify-content: center;
     pointer-events: none;
+    overflow: hidden;
 }
 
 .loading-content {
@@ -118,7 +119,8 @@ html body {
     flex-direction: column;
     justify-content: space-between;
     padding: 3rem;
-    font-family: var(--main-font-family);
+    font-family: var(--main-font-family);;
+    overflow: hidden;
 }
 
 .logo-name {
@@ -176,6 +178,7 @@ html body {
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: scroll;
+    overflow: hidden;
 }
 
 /* Hero page image styles */
@@ -459,8 +462,9 @@ html body {
 /*Properties for larger screens */
 @media (min-width: 911px) {
     .accessibility-background {
-        width: 940px;
+        max-width: 940px;
         height: 300px;
+        overflow: hidden;
     }
 }
 /*Properties for medium + larger screens*/
@@ -477,6 +481,7 @@ html body {
     .accessibility-background {
         width: 730px;
         height: 420px;
+        overflow: hidden;
     }
 }
 /*Properties for smaller screens */
