@@ -226,19 +226,19 @@ class Lines {
         this.ctx.fillStyle = this.secondaryContrastColor;
         this.ctx.fill();
 
-        // --- UPDATED FONT SIZE AND POSITION ---
-        // Scale font size up to better fill the line height
-        const topLineHeight = this.linesData[0].lineHeight;
-        const fontScale = 1.4; // Tweak this value as needed for your font
-        this.ctx.font = `${topLineHeight * fontScale}px Nikkei`;
+        // FIXED FONT SIZE CALCULATION
+        // Calculate font size based on visual line height (divided by DPR) instead of canvas line height
+        const visualLineHeight = this.linesData[0].lineHeight / this.dpr;
+        const fontScale = 2.5; // Keep your existing scale
+        this.ctx.font = `${visualLineHeight * fontScale}px Nikkei`;
         this.ctx.textBaseline = 'alphabetic';
         this.ctx.fillStyle = this.secondaryColor;
 
         const text = this.pageTitle + ' ';
         let textX = lineX;
 
-        // Nudge the baseline down to sit flush with the bottom
-        const baselineNudge = topLineHeight * 0.00; // Tweak as needed
+        // Keep your existing baseline adjustment
+        const baselineNudge = this.linesData[0].lineHeight * 0.00;
         const textY = lineY + lineHeight + baselineNudge;
 
         // Repeat text across the line width
