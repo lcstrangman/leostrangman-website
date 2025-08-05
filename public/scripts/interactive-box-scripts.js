@@ -25,39 +25,21 @@ class InteractiveBoxController {
                 });
                 
                 if (isTouch) {
-                    let touchStartY = 0;
-                    let touchStartTime = 0;
-                    
-                    box.addEventListener('touchstart', function (e) {
-                        touchStartY = e.touches[0].clientY;
-                        touchStartTime = Date.now();
-                        // Don't prevent default here - let the browser handle it
-                    });
-                    
-                    box.addEventListener('touchend', function (e) {
-                        const touchEndY = e.changedTouches[0].clientY;
-                        const touchDuration = Date.now() - touchStartTime;
-                        const touchDistance = Math.abs(touchEndY - touchStartY);
+                    // Use click event instead of touch events to avoid interfering with scroll
+                    box.addEventListener('click', function (e) {
+                        // Remove highlight and image from ALL containers
+                        document.querySelectorAll('.preview-image').forEach(img => {
+                            img.style.opacity = '0';
+                            img.classList.remove('active');
+                            img.style.backgroundImage = '';
+                        });
+                        document.querySelectorAll('.bullet-box').forEach(b => b.classList.remove('is-active'));
                         
-                        // Only activate if it was a tap (short duration, minimal movement)
-                        // Allow scrolling if the user moved their finger significantly
-                        if (touchDuration < 300 && touchDistance < 10) {
-                            e.preventDefault(); // Only prevent default for actual taps
-                            
-                            // Remove highlight and image from ALL containers
-                            document.querySelectorAll('.preview-image').forEach(img => {
-                                img.style.opacity = '0';
-                                img.classList.remove('active');
-                                img.style.backgroundImage = '';
-                            });
-                            document.querySelectorAll('.bullet-box').forEach(b => b.classList.remove('is-active'));
-                            
-                            // Activate only the current box and image
-                            this.classList.add('is-active');
-                            previewImage.style.backgroundImage = `url(${imageSrc})`;
-                            previewImage.style.opacity = '1';
-                            previewImage.classList.add('active');
-                        }
+                        // Activate only the current box and image
+                        this.classList.add('is-active');
+                        previewImage.style.backgroundImage = `url(${imageSrc})`;
+                        previewImage.style.opacity = '1';
+                        previewImage.classList.add('active');
                     });
                 }
             });

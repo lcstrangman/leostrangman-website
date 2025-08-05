@@ -685,6 +685,9 @@ html body {
     .section-title {
         text-align: center; /* Center-align title on mobile */
     }
+    .button-desktop {
+        display: none;
+    }
 }
 @media (min-width: 768px) {
     .interactive-section {
@@ -711,6 +714,9 @@ html body {
     .bullet-title {
         font-size: 1.6rem;
         line-height: 1;
+    }
+    .button-mobile {
+        display: none;
     }
 }
 
@@ -774,9 +780,11 @@ html body {
     color: var(--primary-color);
     box-sizing: border-box;
     font-family: var(--secondary-font-family);
-    font-size: 10vw;
+    font-weight: bold;
+    font-size: clamp(4rem, 10vw, 10vw);
     line-height: 1;
     cursor: pointer;
+    height: 25vh;
 }
 .contact-box:hover {
     background-color: var(--tertiary-color);
@@ -791,7 +799,7 @@ html body {
     font-size: 5vw;
 }
 .contact-box-subtext {
-    font-size: 1.8vw;
+    font-size: clamp(1rem, 1.8vw, 1.8vw);
 }
 .contact-box-subtext::selection, .contact-box-title-subtext::selection {
     background-color: var(--tertiary-contrast-color);
@@ -817,4 +825,20 @@ html body {
     display: inline-block;
     width: 100%;
     height: 0;
+}
+
+.tracking-location {
+    letter-spacing: 0.15em;
+}
+
+.tracking-github {
+    letter-spacing: 0.25em;
+}
+
+.tracking-email {
+    letter-spacing: 0.45em;
+}
+
+.tracking-resume {
+    letter-spacing: 0.15em;
 }
