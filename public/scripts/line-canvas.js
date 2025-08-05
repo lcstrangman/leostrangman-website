@@ -34,7 +34,8 @@ class Lines {
         this.currentScroll = 0;
         this.hoveredIndex = 0;
         this.linesData = [];
-        this.isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0);
+        this.currentInput = 'unknown';
+        this.lastTouchTime = 0;
 
         this.initCanvas();
         this.computeLayout();
@@ -53,12 +54,10 @@ class Lines {
 
     bindEvents() {
         window.addEventListener('resize', () => this.updateSize());
-        if (!this.isTouchDevice) {
-            this.el.addEventListener('mousemove', (e) => {
-                this.mouseData.rawX = e.clientX;
-                this.mouseData.rawY = e.clientY;
-            });
-        }
+        this.el.addEventListener('mousemove', (e) => {
+            this.mouseData.rawX = e.clientX;
+            this.mouseData.rawY = e.clientY;
+        });
     }
 
     updateSize() {
@@ -227,17 +226,25 @@ class Lines {
         this.ctx.fillStyle = this.secondaryContrastColor;
         this.ctx.fill();
 
-        const fontSize = this.height * 0.28;
+        let scaleFactor = 0.15;
+        if (this.width < 600) {
+            scaleFactor = 0.28;
+        }
+        const fontSize = this.height * scaleFactor;
         this.ctx.font = `${fontSize}px Nikkei`;
         this.ctx.textBaseline = 'bottom';
         this.ctx.fillStyle = this.secondaryColor;
 
         const text = this.pageTitle + ' ';
         let textX = lineX;
-        let offsetText = 15;
+        let offsetText = 24;
+        if (this.width > 600) {
+            offsetText = 15;
+        }
         if (window.innerHeight < 600) {
             offsetText = 10;
         }
+        
         const textY = idleLineY + idleHeight - 2 + offsetText;
 
         // Repeat text across the line width

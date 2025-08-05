@@ -15,7 +15,8 @@ class HeroPageController {
         this.mouseX = window.innerWidth / 2;
         this.mouseY = window.innerHeight / 2;
         this.hoverEnabled = false;
-        this.isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0);
+        this.currentInput = 'unknown';
+        this.lastTouchTime = 0;
         
         this.init();
     }
@@ -78,6 +79,7 @@ class HeroPageController {
         // Bind methods to preserve 'this' context
         this.handleMouseMove = this.handleMouseMove.bind(this);
         this.handleMouseOut = this.handleMouseOut.bind(this);
+        this.handleTouchStart = this.handleTouchStart.bind(this);
         this.handleScroll = this.handleScroll.bind(this);
         this.handleSelectionChange = this.handleSelectionChange.bind(this);
         this.handleAccessibilityClick = this.handleAccessibilityClick.bind(this);
@@ -88,6 +90,7 @@ class HeroPageController {
         // Add event listeners
         document.addEventListener('mousemove', this.handleMouseMove);
         window.addEventListener('mouseout', this.handleMouseOut);
+        document.addEventListener('touchstart', this.handleTouchStart);
         document.addEventListener('scroll', this.handleScroll);
         document.addEventListener('selectionchange', this.handleSelectionChange);
         
@@ -112,6 +115,9 @@ class HeroPageController {
             window.removeEventListener('mouseout', this.handleMouseOut);
             document.removeEventListener('scroll', this.handleScroll);
             document.removeEventListener('selectionchange', this.handleSelectionChange);
+        }
+        if (this.handleTouchStart) {
+            document.removeEventListener('touchstart', this.handleTouchStart);
         }
 
         if (this.accessibilityButton && this.handleAccessibilityClick) {
@@ -218,10 +224,6 @@ class HeroPageController {
     // Section: Circular Mouse Cursor Follow
     // ===================================================================================
     setupMouseCircle() {
-        if (this.isTouchDevice) {
-            this.circle.style.opacity = '0';
-            return;
-        }
         if (!this.circle) return;
 
         // Setup hover text interactions
@@ -255,7 +257,11 @@ class HeroPageController {
     }
 
     handleMouseMove(e) {
-        if (!this.circle || this.isTouchDevice) return;
+        if (!this.circle) return;
+        if (this.currentInput === 'touch' && Date.now() - this.lastTouchTime < 500) {
+            return; // Ignore mouse events for 500ms after touch
+        }
+        this.currentInput = 'mouse';
         
         this.mouseX = e.clientX;
         this.mouseY = e.clientY;
@@ -272,6 +278,20 @@ class HeroPageController {
             duration: 0.37,
             ease: "elastic.out(0.7, 0.4)"
         });
+    }
+
+    handleTouchStart(e) {
+        if (!this.circle) return;
+        this.currentInput = 'touch';
+        this.lastTouchTime = Date.now();
+        
+        // Hide circle for touch input
+        this.circle.style.opacity = '0';
+        
+        // Optional: Also kill any active animations since we're hiding the circle
+        if (this.circle._followTween) {
+            this.circle._followTween.kill();
+        }
     }
 
     handleMouseOut() {
@@ -534,7 +554,7 @@ class HeroPageController {
     setupScrollAnimation() {
         if (!this.scroller || !this.scrollTrack) return;
 
-        if (window.innerWidth < 910 || this.isTouchDevice) {
+        if (window.innerWidth < 910) {
             this.scrollTrack.style.animation = 'scroll 45s linear infinite';
         }
         if (window.innerWidth < 600) {

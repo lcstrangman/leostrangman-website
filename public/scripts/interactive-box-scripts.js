@@ -2,7 +2,6 @@ class InteractiveBoxController {
     constructor() {}
 
     init() {
-        const html = document.documentElement;
         const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || (navigator.msMaxTouchPoints > 0);
 
         document.querySelectorAll('.interactive-section').forEach(section => {
