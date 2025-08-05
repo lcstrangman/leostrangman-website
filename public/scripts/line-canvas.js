@@ -226,25 +226,27 @@ class Lines {
         this.ctx.fillStyle = this.secondaryContrastColor;
         this.ctx.fill();
 
-        let scaleFactor = 0.15;
-        if (this.width < 600) {
-            scaleFactor = 0.28;
-        }
-        const fontSize = this.height * scaleFactor;
+        // Use rem units for font size
+        const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize); // px
+        let fontRem = 4.3;
+        if (this.width < 600) fontRem = 4.3;
+        if (window.innerHeight < 600) fontRem = 2.5;
+        const fontSize = rootFontSize * fontRem;
+
         this.ctx.font = `${fontSize}px Nikkei`;
         this.ctx.textBaseline = 'bottom';
         this.ctx.fillStyle = this.secondaryColor;
 
         const text = this.pageTitle + ' ';
         let textX = lineX;
-        let offsetText = 24;
+        let offsetText = 15;
         if (this.width > 600) {
             offsetText = 15;
         }
         if (window.innerHeight < 600) {
             offsetText = 10;
         }
-        
+
         const textY = idleLineY + idleHeight - 2 + offsetText;
 
         // Repeat text across the line width
