@@ -226,28 +226,20 @@ class Lines {
         this.ctx.fillStyle = this.secondaryContrastColor;
         this.ctx.fill();
 
-        // Use rem units for font size
-        const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize); // px
-        let fontRem = 4.3;
-        if (this.width < 600) fontRem = 4.3;
-        if (window.innerHeight < 600) fontRem = 2.5;
-        const fontSize = rootFontSize * fontRem;
-
-        this.ctx.font = `${fontSize}px Nikkei`;
-        this.ctx.textBaseline = 'bottom';
+        // --- UPDATED FONT SIZE AND POSITION ---
+        // Scale font size up to better fill the line height
+        const topLineHeight = this.linesData[0].lineHeight;
+        const fontScale = 1.4; // Tweak this value as needed for your font
+        this.ctx.font = `${topLineHeight * fontScale}px Nikkei`;
+        this.ctx.textBaseline = 'alphabetic';
         this.ctx.fillStyle = this.secondaryColor;
 
         const text = this.pageTitle + ' ';
         let textX = lineX;
-        let offsetText = 15;
-        if (this.width > 600) {
-            offsetText = 15;
-        }
-        if (window.innerHeight < 600) {
-            offsetText = 10;
-        }
 
-        const textY = idleLineY + idleHeight - 2 + offsetText;
+        // Nudge the baseline down to sit flush with the bottom
+        const baselineNudge = topLineHeight * 0.00; // Tweak as needed
+        const textY = lineY + lineHeight + baselineNudge;
 
         // Repeat text across the line width
         while (textX < lineX + lineWidth) {
