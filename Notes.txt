@@ -13,6 +13,7 @@ Override scroll bar
 Change the shape of the circle cursor follower, put a second dot in the middle or something 
 LCS svg as a sort of cursor follower on images/videos or something like that maybe
 Email contact form
+Add a custom 404 page
 
 FIXES:
 Make the name text be in line with the svg properly

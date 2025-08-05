@@ -2,8 +2,6 @@
 import Layout from '../layouts/Layout.astro';
 import Image from '@components/Image/Image.astro';
 import Icon from '@components/Icon/Icon.astro';
-import scenery from '../assets/images/scenery.jpg';
-import leostrangman from '../assets/images/leostrangman.jpg';
 ---
 <Layout title="Leo Strangman." 
         primaryColor="#e4c787" 
@@ -102,7 +100,7 @@ import leostrangman from '../assets/images/leostrangman.jpg';
                     <canvas class = "pixel-canvas"></canvas>
                     <Image
                         class = "source-image"
-                        src= {scenery}
+                        src= {import('@images/scenery.jpg')}
                         alt = "Scenery"
                         caption=""
                         width={500}
@@ -113,7 +111,7 @@ import leostrangman from '../assets/images/leostrangman.jpg';
                     <canvas class = "pixel-canvas"></canvas>
                     <Image
                         class = "source-image"
-                        src={leostrangman}
+                        src={import('@images/leostrangman.jpg')}
                         alt = "Leo Strangman"
                         caption=""
                         width={500}
@@ -132,8 +130,8 @@ import leostrangman from '../assets/images/leostrangman.jpg';
         </div>
     </div>
 
-    <script type="module" is:inline src = "/src/scripts/index-scripts.js"></script>
-    <script type="module" is:inline src = "/src/scripts/loading-screen.js"></script>
+    <script src="/scripts/index-scripts.js" type="module"></script>
+    <script src="/scripts/loading-screen.js" type="module"></script>
     <script is:inline>
         // Intercept all <a> clicks and scroll to top after navigation
         document.addEventListener('click', function (e) {

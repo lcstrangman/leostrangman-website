@@ -1,7 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Image from '@components/Image/Image.astro';
-import resume from '../assets/images/resume.png';
 ---
 <Layout title="Leo Strangman." 
         primaryColor="#bbb387" 
@@ -24,7 +23,7 @@ import resume from '../assets/images/resume.png';
                     <canvas class = "pixel-canvas"></canvas>
                     <Image
                         class = "source-image"
-                        src= {resume}
+                        src= {import('@images/resume.png')}
                         alt = "Leo Strangman Resume"
                         caption=""
                         width={500}
@@ -35,7 +34,7 @@ import resume from '../assets/images/resume.png';
 
             <div class="resume-box-wrapper u-mt-fluid-xl u-w-full">
                 <div class="u-w-full resume-box u-text-center u-flex u-items-center u-justify-center">
-                    <a class = "glitchable resume-box-text u-tracking-wide hover-text" target="_blank" rel="noopener noreferrer" href="/src/assets/pdfs/resume.pdf">DOWNLOAD</a>
+                    <a class = "glitchable resume-box-text u-tracking-wide hover-text" target="_blank" rel="noopener noreferrer" href="/assets/pdfs/resume.pdf">DOWNLOAD</a>
                 </div>
             </div>
 
@@ -50,7 +49,6 @@ import resume from '../assets/images/resume.png';
         </div>
     </div>
 
-    <script type="module" is:inline src="/src/scripts/index-scripts.js"></script>
-    <script type="module" is:inline src="/src/scripts/line-canvas.js"></script>
-    <script type="module" is:inline src="/src/scripts/interactive-box-scripts.js"></script>
+    <script src="/scripts/index-scripts.js" type="module"></script>
+    <script src="/scripts/line-canvas.js" type="module"></script>
 </Layout>
