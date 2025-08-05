@@ -228,9 +228,10 @@ class Lines {
 
         // FIXED FONT SIZE CALCULATION
         // Calculate font size based on visual line height (divided by DPR) instead of canvas line height
+        const baseFontScale = 1.4; // Base scale for DPR 1.0
+        const dprAdjustedScale = baseFontScale * this.dpr; // Scale up with DPR
         const visualLineHeight = this.linesData[0].lineHeight / this.dpr;
-        const fontScale = 2.5; // Keep your existing scale
-        this.ctx.font = `${visualLineHeight * fontScale}px Nikkei`;
+        this.ctx.font = `${visualLineHeight * dprAdjustedScale}px Nikkei`;
         this.ctx.textBaseline = 'alphabetic';
         this.ctx.fillStyle = this.secondaryColor;
 
