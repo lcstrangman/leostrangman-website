@@ -227,7 +227,8 @@ class Lines {
         this.ctx.fillStyle = this.secondaryContrastColor;
         this.ctx.fill();
 
-        this.ctx.font = '8vh Nikkei';
+        const fontSize = this.height * 0.28;
+        this.ctx.font = `${fontSize}px Nikkei`;
         this.ctx.textBaseline = 'bottom';
         this.ctx.fillStyle = this.secondaryColor;
 

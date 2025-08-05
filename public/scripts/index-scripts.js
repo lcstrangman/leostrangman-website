@@ -532,10 +532,14 @@ class HeroPageController {
     // Section: Navigation Container Scroll
     // ===================================================================================
     setupScrollAnimation() {
+        if (!this.scroller || !this.scrollTrack) return;
+
+        if (window.innerWidth < 910) {
+            this.scrollTrack.style.animation = 'scroll 45s linear infinite';
+        }
         if (this.isTouchDevice) {
             this.scrollTrack.style.animation = 'scroll 45s linear infinite';
         }
-        if (!this.scroller || !this.scrollTrack) return;
         
         if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
             this.scroller.setAttribute('data-animated', true);

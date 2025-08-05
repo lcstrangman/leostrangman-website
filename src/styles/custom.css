@@ -505,6 +505,7 @@ html body {
 }
 
 .interactive-section {
+    height: auto;
     position: relative;
     background: var(--secondary-color);
     color: var(--secondary-contrast-color);
@@ -529,7 +530,7 @@ html body {
 
 .content-container {
     display: flex;
-    height: calc(50vh - 47px);
+    height: auto;
     margin-top: 0;
 }
 
@@ -599,67 +600,6 @@ html body {
     z-index: 1;
 }
 
-.tracking-work-1 {
-    letter-spacing: 0.174em;
-}
-.tracking-work-2 {
-    letter-spacing: 0.167em;
-}
-.tracking-work-3 {
-    letter-spacing: 0.125em;
-}
-.tracking-work-4 {
-    letter-spacing: 0.188em;
-}
-.tracking-projects-1 {
-    letter-spacing: 0.408em;
-}
-.tracking-projects-2 {
-    letter-spacing: 0.290em;
-}
-.tracking-projects-3 {
-    letter-spacing: 0.266em;
-}
-.tracking-projects-4 {
-    letter-spacing: 0.242em;
-}
-.tracking-projects-5 {
-    letter-spacing: 0.138em;
-}
-.tracking-projects-6 {
-    letter-spacing: 0.113em;
-}
-.tracking-projects-7 {
-    letter-spacing: 0.042em;
-}
-.tracking-projects-8 {
-    letter-spacing: 0.073em;
-}
-.tracking-projects-9 {
-    letter-spacing: 0.393em;
-}
-.tracking-projects-10 {
-    letter-spacing: 0.249em;
-}
-.tracking-projects-11 {
-    letter-spacing: 0.216em;
-}
-.tracking-projects-12 {
-    letter-spacing: 0.168em;
-}
-.tracking-projects-13 {
-    letter-spacing: 0.139em;
-}
-.tracking-projects-14 {
-    letter-spacing: 0.338em;
-}
-.tracking-projects-15 {
-    letter-spacing: 0.333em;
-}
-.tracking-projects-16 {
-    letter-spacing: 0.338em;
-}
-
 /* Desktop hover effects */
 html.is-desktop .bullet-box:hover,
 html.is-desktop .bullet-box.is-active {
@@ -713,7 +653,7 @@ html.is-desktop .bullet-box.is-active::before {
 /* Mobile responsive */
 @media (max-width: 768px) {
     .interactive-section {
-        height: 60vh; /* Increased height */
+        height: auto; /* Increased height */
     }
     
     .resume-box-wrapper {
@@ -731,6 +671,15 @@ html.is-desktop .bullet-box.is-active::before {
     }
     .section-title {
         text-align: center; /* Center-align title on mobile */
+    }
+}
+@media (min-width: 768px) {
+    .interactive-section {
+        height: 50vh; /* only fixed on medium+ screens */
+    }
+    .content-container {
+        flex-direction: row;
+        height: calc(50vh - 47px);
     }
 }
 
@@ -820,4 +769,21 @@ html.is-desktop .bullet-box.is-active::before {
 
 .resume-background {
     background-color: var(--secondary-color);
+}
+
+/* Make all direct text children of .content-container justified and stretch lines */
+.interactive-section .content-container .justify-stretch {
+    display: block;
+    width: 100%;
+    text-align: justify;
+    letter-spacing: normal !important;
+    word-spacing: 0.2em;
+}
+
+/* Trick to force last line to justify */
+.interactive-section .content-container .justify-stretch::after {
+    content: "";
+    display: inline-block;
+    width: 100%;
+    height: 0;
 }
