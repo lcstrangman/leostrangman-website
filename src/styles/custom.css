@@ -29,12 +29,14 @@
     font-weight: 400;
     font-style: normal;
 }
+
 @font-face {
     font-family: 'Neue-Mono';
     src: url('/fonts/NeueMono/PPNeueMontrealMono-Book.otf') format('opentype');
     font-weight: 200;
     font-style: normal;
 }
+
 @font-face {
     font-family: 'Nikkei';
     src: url('/fonts/Nikkei/PPNikkeiLine-Light.otf') format('opentype');
@@ -63,9 +65,11 @@ html body {
 .display {
     display: grid !important;
 }
+
 .display-none {
     display: none !important;
 }
+
 .hidden {
     visibility: hidden !important;
 }
@@ -85,6 +89,7 @@ html body {
     pointer-events: none;
     opacity: 0;
 }
+
 .mouse-circle.hovered {
     width: 50px;
     height: 50px;
@@ -131,7 +136,8 @@ html body {
     flex-direction: column;
     justify-content: space-between;
     padding: 3rem;
-    font-family: var(--main-font-family);;
+    font-family: var(--main-font-family);
+    ;
     overflow: hidden;
 }
 
@@ -155,7 +161,8 @@ html body {
 .loading-name-text {
     font-weight: bold;
     font-size: 2rem;
-    transform: translateY(-8px); /* tweak this as needed */
+    transform: translateY(-8px);
+    /* tweak this as needed */
 }
 
 .loading-note {
@@ -196,7 +203,7 @@ html body {
 /* Hero page image styles */
 .hero-canvas {
     position: relative;
-    width: 100vw;
+    width: min(100vw, 1920px);
     height: 100vh;
     object-fit: cover;
 }
@@ -231,6 +238,7 @@ html body {
     line-height: 1;
     cursor: pointer;
 }
+
 .accessibility-button::selection {
     background-color: var(--primary-contrast-color);
     color: var(--primary-color);
@@ -257,30 +265,36 @@ html body {
 }
 
 /* Styles for background divs when highlighting the title text */
-.title-name-background, .title-logo-background, .title-role-background {
+.title-name-background,
+.title-logo-background,
+.title-role-background {
     position: absolute;
     z-index: 1;
     background-color: transparent;
     pointer-events: none;
-    
+
 }
+
 .title-name-background {
     width: 889.6px;
-    height: 117.4px;;
+    height: 117.4px;
     top: 5.3px;
     bottom: 0;
     left: 0;
 }
+
 .hovered-bg {
     background-color: var(--primary-color);
     color: var(--primary-contrast-color) !important;
 }
+
 .title-logo-background {
     width: 99px;
     height: 133px;
     bottom: 9px;
     left: 0;
 }
+
 .title-role-background {
     width: 155px;
     height: 133px;
@@ -293,18 +307,21 @@ html body {
     position: relative;
     z-index: 2;
     font-family: var(--main-font-family);
-    font-size: 17.5vw;
+    font-size: clamp(3rem, 17.5vw, 4em);
     line-height: 1;
 }
+
 .title-name-text::selection {
     background-color: var(--primary-contrast-color);
     color: var(--primary-color);
     mix-blend-mode: normal;
 }
+
 .title-name-color {
     color: #FDE484;
     mix-blend-mode: exclusion;
 }
+
 .title-name-color-hover {
     color: var(--primary-contrast-color) !important;
     mix-blend-mode: normal !important;
@@ -317,7 +334,8 @@ html body {
 }
 
 /* Styles for both logo-role-wrappers */
-.logo-role-wrapper, .logo-role-wrapper-alt {
+.logo-role-wrapper,
+.logo-role-wrapper-alt {
     position: relative;
     z-index: 2;
     display: flex;
@@ -328,7 +346,9 @@ html body {
     font-family: var(--main-font-family);
     line-height: 1;
 }
-#parallax-title-logo, #parallax-title-role {
+
+#parallax-title-logo,
+#parallax-title-role {
     user-select: none;
 }
 
@@ -339,10 +359,12 @@ html body {
     color: var(--primary-color);
     mix-blend-mode: exclusion;
 }
+
 .logo-role-wrapper-hover {
     color: var(--primary-contrast-color);
     mix-blend-mode: normal;
 }
+
 .role-color-hover {
     color: var(--primary-contrast-color) !important;
     mix-blend-mode: normal !important;
@@ -372,6 +394,7 @@ html body {
 .background-color {
     background-color: var(--primary-color);
 }
+
 .alt-color {
     color: var(--alt-color);
 }
@@ -395,12 +418,15 @@ html body {
     font-size: clamp(3rem, 16vw, 18rem);
     line-height: 1.2;
     cursor: pointer;
+    height: clamp(15rem, 50vh, 50vh) !important;
 }
+
 .link-box:hover {
     background-color: var(--secondary-color);
     color: var(--secondary-contrast-color);
     outline: 25px solid var(--primary-contrast-color);
 }
+
 .link-box-text::selection {
     background-color: var(--secondary-contrast-color);
     color: var(--secondary-color);
@@ -410,9 +436,11 @@ html body {
 .tracking-work {
     letter-spacing: 0.117em;
 }
+
 .tracking-about {
     letter-spacing: 0.035em;
 }
+
 .tracking-contact {
     letter-spacing: 0.115em;
 }
@@ -460,6 +488,7 @@ html body {
     line-height: 1;
     user-select: none;
 }
+
 .scroll-text:hover {
     text-decoration: underline overline;
 }
@@ -478,33 +507,41 @@ html body {
         height: 300px;
         overflow: hidden;
     }
+    .title-name-text {
+        font-size: clamp(3rem, 17.5vw, 4em) !important;
+    }
 }
+
 /*Properties for medium + larger screens*/
 @media (min-width: 720px) {
-    .title-name-text {
-        font-size: 4em;
-    }
     .accessibility-button {
         font-size: 1.5em;
     }
+    .title-name-text {
+        font-size: clamp(3rem, 17.5vw, 3em);
+    }
 }
+
 /*Properties for medium screens */
-@media (min-width: 721px) and (max-width: 910px) {
+@media (min-width: 720px) and (max-width: 910px) {
     .accessibility-background {
-        width: 730px;
-        height: 420px;
+        width: 44rem;
+        height: 16rem;
         overflow: hidden;
     }
 }
-/*Properties for smaller screens */
-@media (max-width: 720px) {
-    .link-box {
-        height: 30vh;
-    }
-}
-/*Properties for smallest screens */
-@media (max-width: 550px) {}
 
+@media (min-width: 500px) and (max-width: 720px) {
+    .title-name-text {
+        font-size: 12vw;
+    }
+    .accessibility-background {
+        width: 43rem;
+        height: 15rem;
+        overflow: hidden;
+    }
+
+}
 
 /* CUSTOM STYLES FOR THE WORK PAGE */
 .line-container {
@@ -514,6 +551,7 @@ html body {
     font-family: var(--secondary-font-family);
     position: relative;
     overflow: hidden;
+    height: clamp(20rem, 50vh, 50vh) !important;
 }
 
 .interactive-section {
@@ -588,7 +626,8 @@ html body {
     margin: 0;
     border: none;
 }
-.bullet-box + .bullet-box {
+
+.bullet-box+.bullet-box {
     border-top: 1px solid var(--secondary-contrast-color);
 }
 
@@ -635,6 +674,7 @@ html body {
     background-color: var(--secondary-contrast-color);
     color: var(--secondary-color);
 }
+
 .bullet-title::selection {
     background-color: var(--secondary-color);
     color: var(--secondary-contrast-color);
@@ -645,8 +685,9 @@ html body {
     width: 100%;
     box-sizing: border-box;
     outline: 25px solid transparent;
-    height: 50vh;
+    height: clamp(15rem, 50vh, 50vh) !important;
 }
+
 .resume-box {
     background-color: var(--secondary-color);
     color: var(--secondary-contrast-color);
@@ -657,11 +698,13 @@ html body {
     cursor: pointer;
     height: 100%;
 }
+
 .resume-box:hover {
     background-color: var(--tertiary-color);
     color: var(--tertiary-contrast-color);
     outline: 25px solid var(--tertiary-contrast-color);
 }
+
 .resume-box-text::selection {
     background-color: var(--tertiary-contrast-color);
     color: var(--tertiary-color);
@@ -670,58 +713,63 @@ html body {
 /* Mobile responsive */
 @media (max-width: 768px) {
     .interactive-section {
-        min-height: 120px; /* Increased height */
+        min-height: 120px;
     }
+
     .preview-image {
         max-height: 120px;
-    }
-    
-    .resume-box-wrapper {
-        height: 30vh;
     }
 
     .content-container {
         flex-direction: column;
     }
-    
+
     .image-display-area {
         min-height: 120px;
         margin-right: 0;
         margin-bottom: 1rem;
     }
+
     .section-title {
-        text-align: center; /* Center-align title on mobile */
+        text-align: center;
+        /* Center-align title on mobile */
     }
+
     .button-desktop {
         display: none;
     }
 }
+
 @media (min-width: 768px) {
     .interactive-section {
         display: flex;
         flex-direction: column;
-        height: 100vh; /* or whatever height you want */
-        max-height: 50vh;
+        height: clamp(30rem, 50vh, 50vh);
     }
+
     .content-container {
         flex: 1 1 0;
         display: flex;
         flex-direction: row;
         min-height: 0;
     }
+
     .boxes-container {
         display: flex;
         flex-direction: column;
         height: 100%;
         min-height: 0;
     }
+
     .bullet-box {
         min-height: 0;
     }
+
     .bullet-title {
         font-size: 1.6rem;
         line-height: 1;
     }
+
     .button-mobile {
         display: none;
     }
@@ -733,29 +781,50 @@ html body {
     background-color: var(--secondary-color);
     color: var(--secondary-contrast-color);
     overflow: hidden;
-    height: fit-content;
+    width: 100%;
+    height: clamp(30rem, 30vh, 90vh);
+}
+.scroll-container-manual:hover {
+    background-color: var(--tertiary-color);
+    color: var(--tertiary-contrast-color);
+    outline: 25px solid var(--tertiary-contrast-color);
 }
 
 /* Animated inner content of scroll container */
 .scroll-track-manual {
-    width: fit-content;
     display: flex;
-    white-space: nowrap;
-    gap: 15rem;
+    height: 100%;
+    width: 400%;
+    margin-top: 3rem;
 }
 
 /* Text styles within scroll path */
 .scroll-text-manual {
     position: relative;
-    top: 0;
-    left: 0;
+    z-index: 2;
     font-family: var(--secondary-font-family);
     line-height: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centers the content vertically */
+    align-items: stretch; /* Makes children take full width */
+    box-sizing: border-box;
+    padding-left: clamp(0rem, 10vh, 10rem);
+    padding-right: clamp(0rem, 10vh, 10rem);
+    position: relative; /* For absolute positioning of title */
 }
 
 .scroll-section-title {
-    font-size: clamp(1rem, 7vw, 3rem);
+    font-size: clamp(1.4rem, 5vw, 3rem);
+    font-weight: bold;
+    position: absolute; /* Position it absolutely */
+    top: 0; /* Align to top */
+    left: clamp(0rem, 10vh, 10rem); /* Align to left (accounting for container padding) */
+    z-index: 3; /* Make sure it's above the list */
 }
+
 .scroll-section-title:hover {
     text-decoration: underline overline;
 }
@@ -767,20 +836,20 @@ html body {
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    width: 100%;
+    justify-content: center; /* Centers the list items vertically */
+    flex: 1; /* Takes up remaining space */
 }
 
 /* Individual vertical items */
 .vertical-item {
-    font-size: clamp(1.2rem, 2.5vw, 2rem); /* Responsive item size */
+    font-size: clamp(1.2rem, 2.5vw, 2rem);
     line-height: 1.4;
     padding: 0.5rem 0;
     position: relative;
-    white-space: normal; /* Allow text wrapping within items */
-    max-width: 80vw; /* Prevent items from being too wide */
+    text-align: justify;
+    text-align-last: justify;
+    text-justify: inter-word;
 }
-
 /* Styling for the link boxes and text */
 .contact-box {
     background-color: var(--primary-contrast-color);
@@ -791,30 +860,37 @@ html body {
     font-size: clamp(4rem, 10vw, 11rem);
     line-height: 1;
     cursor: pointer;
-    height: 25vh;
+    height: clamp(15rem, 25vh, 25vh);
+    ;
 }
+
 .contact-box:hover {
     background-color: var(--tertiary-color);
     color: var(--tertiary-contrast-color);
     outline: 15px solid var(--tertiary-contrast-color);
 }
+
 .contact-box-text::selection {
     background-color: var(--tertiary-contrast-color);
     color: var(--tertiary-color);
 }
+
 .contact-box-title-subtext {
     font-size: clamp(1.5rem, 5vw, 3rem);
 }
+
 .contact-box-subtext {
     font-size: clamp(1rem, 1.8vw, 2rem);
 }
-.contact-box-subtext::selection, .contact-box-title-subtext::selection {
+
+.contact-box-subtext::selection,
+.contact-box-title-subtext::selection {
     background-color: var(--tertiary-contrast-color);
     color: var(--tertiary-color);
 }
 
 .location-box {
-    height: 30vh !important;
+    height: clamp(20rem, 30vh, 30vh) !important;
 }
 
 .resume-background {

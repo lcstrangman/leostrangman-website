@@ -17,6 +17,11 @@ class HeroPageController {
         this.hoverEnabled = false;
         this.currentInput = 'unknown';
         this.lastTouchTime = 0;
+        this.lastMouseMoveTime = 0;
+        this.isMouseInViewport = false;
+        this.circleX = window.innerWidth / 2; // Track circle position
+        this.circleY = window.innerHeight / 2;
+        this.pendingHide = false; // Flag to track if we should hide when circle reaches edge
         
         this.init();
     }
@@ -79,6 +84,7 @@ class HeroPageController {
         // Bind methods to preserve 'this' context
         this.handleMouseMove = this.handleMouseMove.bind(this);
         this.handleMouseOut = this.handleMouseOut.bind(this);
+        this.handleMouseEnterViewport = this.handleMouseEnterViewport.bind(this);
         this.handleTouchStart = this.handleTouchStart.bind(this);
         this.handleScroll = this.handleScroll.bind(this);
         this.handleSelectionChange = this.handleSelectionChange.bind(this);
@@ -87,9 +93,21 @@ class HeroPageController {
         this.handleMouseLeave = this.handleMouseLeave.bind(this);
         this.handleMediaChange = this.handleMediaChange.bind(this);
 
-        // Add event listeners
+        // Mouse movement and viewport detection
         document.addEventListener('mousemove', this.handleMouseMove);
-        window.addEventListener('mouseout', this.handleMouseOut);
+        document.addEventListener('mouseenter', this.handleMouseEnterViewport);
+        
+        // Primary mouseout listener for document element
+        document.documentElement.addEventListener('mouseleave', this.handleMouseOut);
+        
+        // Additional safety net for when mouse truly leaves the window
+        window.addEventListener('mouseout', (e) => {
+            // Only trigger if mouse is leaving the window entirely
+            if (e.toElement == null && e.relatedTarget == null) {
+                this.handleMouseOut(e);
+            }
+        });
+        
         document.addEventListener('touchstart', this.handleTouchStart);
         document.addEventListener('scroll', this.handleScroll);
         document.addEventListener('selectionchange', this.handleSelectionChange);
@@ -112,7 +130,9 @@ class HeroPageController {
     removeEventListeners() {
         if (this.handleMouseMove) {
             document.removeEventListener('mousemove', this.handleMouseMove);
-            window.removeEventListener('mouseout', this.handleMouseOut);
+            document.removeEventListener('mouseenter', this.handleMouseEnterViewport);
+            document.documentElement.removeEventListener('mouseout', this.handleMouseOut);
+            document.removeEventListener('mouseout', this.handleMouseOut);
             document.removeEventListener('scroll', this.handleScroll);
             document.removeEventListener('selectionchange', this.handleSelectionChange);
         }
@@ -256,12 +276,49 @@ class HeroPageController {
         });
     }
 
+    // Helper method to check if circle is at screen edge
+    isCircleAtEdge() {
+        if (!this.circle) return true;
+        
+        const margin = 50; // Tolerance for "at edge"
+        const rect = this.circle.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        
+        return (
+            centerX <= margin || 
+            centerX >= window.innerWidth - margin ||
+            centerY <= margin || 
+            centerY >= window.innerHeight - margin
+        );
+    }
+
+    // Method to handle circle position updates and check for edge hiding
+    updateCirclePosition() {
+        if (!this.circle || !this.pendingHide) return;
+        
+        // Check if circle has reached the edge and should be hidden
+        if (this.isCircleAtEdge()) {
+            this.circle.style.opacity = '0';
+            this.pendingHide = false;
+            
+            // Kill any active animations since we're hiding the circle
+            if (this.circle._followTween) {
+                this.circle._followTween.kill();
+            }
+        }
+    }
+
     handleMouseMove(e) {
         if (!this.circle) return;
         if (this.currentInput === 'touch' && Date.now() - this.lastTouchTime < 500) {
             return; // Ignore mouse events for 500ms after touch
         }
+        
         this.currentInput = 'mouse';
+        this.lastMouseMoveTime = Date.now();
+        this.isMouseInViewport = true;
+        this.pendingHide = false; // Cancel any pending hide since mouse is back
         
         this.mouseX = e.clientX;
         this.mouseY = e.clientY;
@@ -276,8 +333,27 @@ class HeroPageController {
             x: this.mouseX,
             y: this.mouseY,
             duration: 0.37,
-            ease: "elastic.out(0.7, 0.4)"
+            ease: "elastic.out(0.7, 0.4)",
+            onUpdate: () => {
+                // Update our tracked position
+                const rect = this.circle.getBoundingClientRect();
+                this.circleX = rect.left + rect.width / 2;
+                this.circleY = rect.top + rect.height / 2;
+                
+                // Check if we should hide the circle
+                this.updateCirclePosition();
+            }
         });
+    }
+
+    handleMouseEnterViewport(e) {
+        if (!this.circle) return;
+        
+        this.isMouseInViewport = true;
+        this.pendingHide = false; // Cancel any pending hide
+        if (this.currentInput === 'mouse') {
+            this.circle.style.opacity = '1';
+        }
     }
 
     handleTouchStart(e) {
@@ -287,6 +363,7 @@ class HeroPageController {
         
         // Hide circle for touch input
         this.circle.style.opacity = '0';
+        this.pendingHide = false;
         
         // Optional: Also kill any active animations since we're hiding the circle
         if (this.circle._followTween) {
@@ -294,9 +371,31 @@ class HeroPageController {
         }
     }
 
-    handleMouseOut() {
-        if (this.circle) {
-            this.circle.style.opacity = '0';
+    handleMouseOut(e) {
+        if (!this.circle) return;
+        
+        // Check if event exists and has coordinates, otherwise assume mouse left viewport
+        if (!e || !e.relatedTarget || 
+            e.clientX < 0 || 
+            e.clientX > window.innerWidth || 
+            e.clientY < 0 || 
+            e.clientY > window.innerHeight) {
+            
+            this.isMouseInViewport = false;
+            this.pendingHide = true; // Mark for hiding when circle reaches edge
+            
+            // Instead of immediately hiding, let the circle animate to the edge
+            // The circle will be hidden in updateCirclePosition() when it reaches the edge
+            
+            // If the circle is already at the edge, hide it immediately
+            if (this.isCircleAtEdge()) {
+                this.circle.style.opacity = '0';
+                this.pendingHide = false;
+                
+                if (this.circle._followTween) {
+                    this.circle._followTween.kill();
+                }
+            }
         }
     }
 
@@ -467,6 +566,13 @@ class HeroPageController {
         if (this.logo) this.logo.style.transform = `translateY(${scrollY * -0.2}px)`;
         if (this.logoBackground) this.logoBackground.style.transform = `translateY(${scrollY * -0.2}px)`;
         if (this.logoHover) this.logoHover.style.transform = `translateY(${scrollY * -0.2}px)`;
+
+        if (this.circle && 
+            this.currentInput === 'mouse' && 
+            this.isMouseInViewport && 
+            Date.now() - this.lastMouseMoveTime < 2000) { // 2 seconds
+            this.circle.style.opacity = '1';
+        }
     }
 
     // ===================================================================================
@@ -539,10 +645,24 @@ class HeroPageController {
                 });
             }, {threshold});
             
-            if (image.complete) {
+            const isImageReady = () => {
+                return image.complete && image.naturalWidth > 0 && image.naturalHeight > 0;
+            };
+
+            if (isImageReady()) {
                 drawPixelated(startPixelSize);
             } else {
-                image.onload = () => drawPixelated(startPixelSize);
+                const handleImageLoad = () => {
+                    if (isImageReady()) {
+                        drawPixelated(startPixelSize);
+                    }
+                };
+                
+                image.onload = handleImageLoad;
+                // Also handle the case where the image is already loaded but dimensions aren't ready yet
+                if (image.complete) {
+                    setTimeout(handleImageLoad, 0);
+                }
             }
             observer.observe(pixelCanvas);
         });
@@ -578,12 +698,12 @@ class HeroPageController {
 
     setupScrollAnimationManual() {
         if (!this.scrollTrackManual || !this.scrollerManual) return;
-    
+
         // Calculate the total width to scroll
         const scrollWidth = this.scrollTrackManual.scrollWidth;
         const containerWidth = this.scrollerManual.offsetWidth;
         const maxScroll = scrollWidth - containerWidth;
-    
+
         // Keep text at start position initially
         gsap.set(this.scrollTrackManual, { x: 0 });
         
@@ -591,12 +711,31 @@ class HeroPageController {
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: this.scrollerManual,
-                start: "center center", // Start when container is centered
-                end: `+=${maxScroll + window.innerHeight}`, // End after scrolling through all text + extra space
+                start: "center center",
+                end: `+=${maxScroll}`,
                 scrub: 1,
-                pin: ".link-box-wrapper", // Pin the parent wrapper instead of just the scroll container
+                pin: ".link-box-wrapper",
                 anticipatePin: 1,
-                invalidateOnRefresh: true
+                invalidateOnRefresh: true,
+                // Add callbacks to handle canvas refresh
+                onRefresh: () => {
+                    // Delay canvas refresh to allow layout to settle
+                    setTimeout(() => {
+                        this.refreshLineCanvas();
+                    }, 100);
+                },
+                onPin: () => {
+                    // Canvas needs to be refreshed when pinning starts
+                    setTimeout(() => {
+                        this.refreshLineCanvas();
+                    }, 50);
+                },
+                onUnpin: () => {
+                    // Canvas needs to be refreshed when pinning ends
+                    setTimeout(() => {
+                        this.refreshLineCanvas();
+                    }, 50);
+                }
             }
         });
         
@@ -605,26 +744,47 @@ class HeroPageController {
             x: -maxScroll,
             ease: "none"
         });
+
+        // Store the ScrollTrigger instance for cleanup
+        this.manualScrollTrigger = tl.scrollTrigger;
     }
 
+    // Add this method to your HeroPageController class
+    refreshLineCanvas() {
+        // Dispatch custom event for line canvas to listen to
+        const event = new CustomEvent('lineCanvasRefresh', {
+            detail: { 
+                trigger: 'scrollTrigger',
+                timestamp: Date.now()
+            }
+        });
+        window.dispatchEvent(event);
+        
+        // Also call global function if it exists
+        if (window.refreshLineCanvas && typeof window.refreshLineCanvas === 'function') {
+            window.refreshLineCanvas();
+        }
+    }
 
+    // Update your cleanup method to include the new ScrollTrigger
     cleanup() {
         // Kill GSAP animations
         if (this.heroAnimation) {
             this.heroAnimation.kill();
         }
         
-        // Kill ScrollTrigger instances
+        // Kill specific ScrollTrigger instances
+        if (this.manualScrollTrigger) {
+            this.manualScrollTrigger.kill();
+        }
+        
+        // Kill any remaining ScrollTrigger instances
         ScrollTrigger.getAll().forEach(trigger => trigger.kill());
         
         // Remove event listeners
         this.removeEventListeners();
         
         this.isInitialized = false;
-    }
-
-    destroy() {
-        this.cleanup();
     }
 }
 
