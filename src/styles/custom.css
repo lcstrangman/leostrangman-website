@@ -42,6 +42,13 @@
     font-style: normal;
 }
 
+.site-container {
+    max-width: 1920px;
+    margin: 0 auto;
+    background-color: var(--primary-color);
+    min-height: 100vh;
+}
+
 root {
     font-size: 16px;
 }
@@ -202,7 +209,7 @@ html body {
     width: 100%;
     height: calc(11.5rem + 2em);
     background-color: var(--primary-color);
-    font-size: 16.3vw;
+    font-size: clamp(3rem, 16.3vw, 7rem);
 }
 
 /* Wrapper for the accessibility button */
@@ -220,7 +227,7 @@ html body {
     background-color: var(--primary-color);
     color: var(--primary-contrast-color);
     font-family: var(--main-font-family);
-    font-size: 3vw;
+    font-size: clamp(1rem, 3vw, 2rem);
     line-height: 1;
     cursor: pointer;
 }
@@ -385,7 +392,7 @@ html body {
     color: var(--primary-color);
     box-sizing: border-box;
     font-family: var(--secondary-font-family);
-    font-size: 16vw;
+    font-size: clamp(3rem, 16vw, 18rem);
     line-height: 1.2;
     cursor: pointer;
 }
@@ -645,7 +652,7 @@ html body {
     color: var(--secondary-contrast-color);
     box-sizing: border-box;
     font-family: var(--secondary-font-family);
-    font-size: 16vw;
+    font-size: clamp(3rem, 16vw, 18rem);
     line-height: 1.2;
     cursor: pointer;
     height: 100%;
@@ -747,7 +754,7 @@ html body {
 }
 
 .scroll-section-title {
-    font-size: 7vw;
+    font-size: clamp(1rem, 7vw, 3rem);
 }
 .scroll-section-title:hover {
     text-decoration: underline overline;
@@ -796,14 +803,18 @@ html body {
     color: var(--tertiary-color);
 }
 .contact-box-title-subtext {
-    font-size: 5vw;
+    font-size: clamp(1.5rem, 5vw, 3rem);
 }
 .contact-box-subtext {
-    font-size: clamp(1rem, 1.8vw, 1.8vw);
+    font-size: clamp(1rem, 1.8vw, 2rem);
 }
 .contact-box-subtext::selection, .contact-box-title-subtext::selection {
     background-color: var(--tertiary-contrast-color);
     color: var(--tertiary-color);
+}
+
+.location-box {
+    height: 30vh !important;
 }
 
 .resume-background {

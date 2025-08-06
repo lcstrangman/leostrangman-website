@@ -93,26 +93,27 @@ const FONTS: string[] = [
         </div>
         -->
         
+        <div class = "site-container">
+            <main id="swup" class="transition-fade">
+                <div id="content">
+                    <slot />
+                </div>
+            </main>
 
-        <main id="swup" class="transition-fade">
-            <div id="content">
-                <slot />
-            </div>
-        </main>
+            <footer class="u-container u-flex u-justify-between u-py-fluid-xs font-nikkei background-color footer-selection" style="color: var(--primary-contrast-color);">
+                <div>
+                    &copy;{new Date().getFullYear()}
+                </div>
 
-        <footer class="u-container u-flex u-justify-between u-py-fluid-xs font-nikkei background-color footer-selection" style="color: var(--primary-contrast-color);">
-            <div>
-                &copy;{new Date().getFullYear()}
-            </div>
-
-            <nav class="u-flex u-gap-gutter font-nikkei footer-selection">
-                <a class = "glitchable hover-text" href="/">Index</a>
-                <a class = "glitchable hover-text" href="/projects">Projects</a>
-                <a class = "glitchable hover-text" href="/work">My Work</a>
-                <a class = "glitchable hover-text" href="/about">About Me</a>
-                <a class = "glitchable hover-text" href="/contact">Contact</a>
-            </nav>
-        </footer>
+                <nav class="u-flex u-gap-gutter font-nikkei footer-selection">
+                    <a class = "glitchable hover-text" href="/">Index</a>
+                    <a class = "glitchable hover-text" href="/projects">Projects</a>
+                    <a class = "glitchable hover-text" href="/work">My Work</a>
+                    <a class = "glitchable hover-text" href="/about">About Me</a>
+                    <a class = "glitchable hover-text" href="/contact">Contact</a>
+                </nav>
+            </footer>
+        </div>
         <script src="../scripts/app.ts"></script>
         <script>
             import { setViewportSize } from '@scripts/utils/setViewportSize';
