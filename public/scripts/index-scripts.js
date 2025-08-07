@@ -167,6 +167,8 @@ class HeroPageController {
         }
     }
     destroy() {
+
+        this.cleanup();
         // Kill any GSAP timelines
         if (this.manualScrollTrigger) {
             this.manualScrollTrigger.kill();
