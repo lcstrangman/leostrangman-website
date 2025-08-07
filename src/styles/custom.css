@@ -503,8 +503,8 @@ html body {
 /*Properties for larger screens */
 @media (min-width: 911px) {
     .accessibility-background {
-        max-width: 940px;
-        height: 300px;
+        max-width: 58rem;
+        height: 18.5rem;
         overflow: hidden;
     }
     .title-name-text {
@@ -596,7 +596,7 @@ html body {
 .preview-image {
     width: 100%;
     height: 100%;
-    max-height: 250px;
+    max-height: 15rem;
     aspect-ratio: 1 / 1;
     background: center/cover no-repeat;
     border: 2px solid var(--secondary-contrast-color);
@@ -711,12 +711,11 @@ html body {
 
 /* Mobile responsive */
 @media (max-width: 768px) {
-    .interactive-section {
-        min-height: 120px;
-    }
-
     .preview-image {
-        max-height: 120px;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 3 / 1; /* Maintains 3:1 aspect ratio */
+        max-height: none; /* Remove the height restriction */
     }
 
     .content-container {
@@ -724,7 +723,8 @@ html body {
     }
 
     .image-display-area {
-        min-height: 120px;
+        width: 100%; /* Full width */
+        min-height: auto; /* Let aspect ratio control height */
         margin-right: 0;
         margin-bottom: 1rem;
     }
