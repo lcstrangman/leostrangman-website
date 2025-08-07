@@ -42,6 +42,11 @@ class Lines {
         this.computeOffsetArray();
         this.bindEvents();
         this.play();
+
+        // Listen for custom refresh event to update size/layout
+        window.addEventListener('lineCanvasRefresh', () => {
+            this.updateSize();
+        });
     }
 
     initCanvas() {
@@ -61,6 +66,12 @@ class Lines {
     }
 
     updateSize() {
+        // Save relative offsets before layout is recomputed
+        const prevWidth = this.canvasWidth || this.el.offsetWidth;
+        const prevOffsets = this.offsetArray ? [...this.offsetArray] : [];
+        const prevSmoothOffsets = this.smoothOffsetArray ? [...this.smoothOffsetArray] : [];
+
+        // Update sizes
         this.width = this.el.offsetWidth;
         this.height = this.el.offsetHeight;
         this.canvasWidth = Math.ceil((this.dpr * this.width) / 4.0) * 4.0;
@@ -70,7 +81,22 @@ class Lines {
         this.$canvas.style.width = `${this.width}px`;
         this.$canvas.style.height = `${this.height}px`;
 
+        // Recompute layout (resets offsetArray and smoothOffsetArray)
         this.computeLayout();
+
+        // Restore offsets as a ratio of new width
+        if (
+            prevOffsets.length === this.offsetArray.length &&
+            prevSmoothOffsets.length === this.smoothOffsetArray.length
+        ) {
+            for (let i = 0; i < this.offsetArray.length; i++) {
+                const ratio = prevOffsets[i] / prevWidth;
+                this.offsetArray[i] = ratio * this.canvasWidth;
+                const smoothRatio = prevSmoothOffsets[i] / prevWidth;
+                this.smoothOffsetArray[i] = smoothRatio * this.canvasWidth;
+            }
+        }
+
         this.setBounds();
     }
 

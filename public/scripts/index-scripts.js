@@ -22,7 +22,8 @@ class HeroPageController {
         this.circleX = window.innerWidth / 2; // Track circle position
         this.circleY = window.innerHeight / 2;
         this.pendingHide = false; // Flag to track if we should hide when circle reaches edge
-        
+        this.activeGlitchIntervals = new Set();
+
         this.init();
     }
 
@@ -164,6 +165,30 @@ class HeroPageController {
             this.preloadFrames();
             this.startAnimation();
         }
+    }
+    destroy() {
+        // Kill any GSAP timelines
+        if (this.manualScrollTrigger) {
+            this.manualScrollTrigger.kill();
+        }
+        
+        // Remove event listeners
+        if (this.resizeHandler) {
+            window.removeEventListener('resize', this.resizeHandler);
+        }
+        
+        // Clear any timeouts
+        if (this.resizeTimer) {
+            clearTimeout(this.resizeTimer);
+        }
+        
+        // Kill all ScrollTriggers associated with this instance
+        ScrollTrigger.getAll().forEach(trigger => {
+            if (trigger.trigger && this.scrollerManual && 
+                trigger.trigger.contains(this.scrollerManual)) {
+                trigger.kill();
+            }
+        });
     }
 
     // ===================================================================================
@@ -311,15 +336,17 @@ class HeroPageController {
 
     handleMouseMove(e) {
         if (!this.circle) return;
+        // If touch was recently used, do not show the mouse circle
         if (this.currentInput === 'touch' && Date.now() - this.lastTouchTime < 500) {
-            return; // Ignore mouse events for 500ms after touch
+            this.circle.style.opacity = '0';
+            return;
         }
-        
+
         this.currentInput = 'mouse';
         this.lastMouseMoveTime = Date.now();
         this.isMouseInViewport = true;
         this.pendingHide = false; // Cancel any pending hide since mouse is back
-        
+
         this.mouseX = e.clientX;
         this.mouseY = e.clientY;
 
@@ -339,7 +366,7 @@ class HeroPageController {
                 const rect = this.circle.getBoundingClientRect();
                 this.circleX = rect.left + rect.width / 2;
                 this.circleY = rect.top + rect.height / 2;
-                
+
                 // Check if we should hide the circle
                 this.updateCirclePosition();
             }
@@ -408,21 +435,36 @@ class HeroPageController {
 
     setupGlitchable(el) {
         let originalText = el.textContent;
-        let glitchInterval;
+        let glitchInterval = null;
+        let glitchTimeout = null;
 
         const glitchText = () => {
+            if (glitchInterval) return; // Prevent stacking
             glitchInterval = setInterval(() => {
                 el.textContent = this.shuffleText(originalText);
             }, 50);
+            this.activeGlitchIntervals.add(glitchInterval);
 
-            setTimeout(() => {
-                clearInterval(glitchInterval);
+            glitchTimeout = setTimeout(() => {
+                if (glitchInterval) {
+                    clearInterval(glitchInterval);
+                    this.activeGlitchIntervals.delete(glitchInterval);
+                    glitchInterval = null;
+                }
                 el.textContent = originalText;
             }, 250);
         };
 
         const stopGlitch = () => {
-            clearInterval(glitchInterval);
+            if (glitchInterval) {
+                clearInterval(glitchInterval);
+                this.activeGlitchIntervals.delete(glitchInterval);
+                glitchInterval = null;
+            }
+            if (glitchTimeout) {
+                clearTimeout(glitchTimeout);
+                glitchTimeout = null;
+            }
             el.textContent = originalText;
         };
 
@@ -432,8 +474,8 @@ class HeroPageController {
 
     shuffleText(text) {
         const words = text.split(' ').map(word => {
-            const letters = word.replace(/[^a-zA-Z0-9@#$%&*/\+=©!-]/g, '');
-            const punctuation = word.replace(/[a-zA-Z0-9@#$%&*/\+=©!-]/g, '');
+            const letters = word.replace(/[^a-zA-Z0-9[@#$%&*/\]+=©!-]/g, '');
+            const punctuation = word.replace(/[a-zA-Z0-9[@#$%&*/\]+=©!-]/g, '');
 
             let shuffledLetters = letters.split('');
             for (let i = shuffledLetters.length - 1; i > 0; i--) {
@@ -651,15 +693,31 @@ class HeroPageController {
 
             if (isImageReady()) {
                 drawPixelated(startPixelSize);
+                // Fallback: If image is already 80%+ visible, depixelate immediately
+                setTimeout(() => {
+                    const rect = pixelCanvas.getBoundingClientRect();
+                    const visibleHeight = Math.max(0, Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0));
+                    const visibleRatio = visibleHeight / rect.height;
+                    if (visibleRatio >= 0.8 && !hasAnimated) {
+                        startPixelation();
+                    }
+                }, 0);
             } else {
                 const handleImageLoad = () => {
                     if (isImageReady()) {
                         drawPixelated(startPixelSize);
+                        // Fallback: If image is already 80%+ visible, depixelate immediately
+                        setTimeout(() => {
+                            const rect = pixelCanvas.getBoundingClientRect();
+                            const visibleHeight = Math.max(0, Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0));
+                            const visibleRatio = visibleHeight / rect.height;
+                            if (visibleRatio >= 0.8 && !hasAnimated) {
+                                startPixelation();
+                            }
+                        }, 0);
                     }
                 };
-                
                 image.onload = handleImageLoad;
-                // Also handle the case where the image is already loaded but dimensions aren't ready yet
                 if (image.complete) {
                     setTimeout(handleImageLoad, 0);
                 }
@@ -699,15 +757,24 @@ class HeroPageController {
     setupScrollAnimationManual() {
         if (!this.scrollTrackManual || !this.scrollerManual) return;
 
-        // Calculate the total width to scroll
-        const scrollWidth = this.scrollTrackManual.scrollWidth;
-        const containerWidth = this.scrollerManual.offsetWidth;
-        const maxScroll = scrollWidth - containerWidth;
+        // Kill previous ScrollTrigger/timeline if it exists
+        if (this.manualScrollTrigger) {
+            this.manualScrollTrigger.kill();
+            this.manualScrollTrigger = null;
+        }
+        // Also kill any other ScrollTriggers attached to this.scrollerManual (safety)
+        ScrollTrigger.getAll().forEach(trigger => {
+            if (trigger.trigger === this.scrollerManual) {
+                trigger.kill();
+            }
+        });
 
-        // Keep text at start position initially
+        // Calculate based on your known 4-section layout
+        const containerWidth = this.scrollerManual.offsetWidth;
+        const maxScroll = containerWidth * 3; // 3 sections worth of scrolling (4 sections - 1)
+
         gsap.set(this.scrollTrackManual, { x: 0 });
-        
-        // Create the scroll animation using the timeline properly
+
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: this.scrollerManual,
@@ -717,35 +784,14 @@ class HeroPageController {
                 pin: ".link-box-wrapper",
                 anticipatePin: 1,
                 invalidateOnRefresh: true,
-                // Add callbacks to handle canvas refresh
-                onRefresh: () => {
-                    // Delay canvas refresh to allow layout to settle
-                    setTimeout(() => {
-                        this.refreshLineCanvas();
-                    }, 100);
-                },
-                onPin: () => {
-                    // Canvas needs to be refreshed when pinning starts
-                    setTimeout(() => {
-                        this.refreshLineCanvas();
-                    }, 50);
-                },
-                onUnpin: () => {
-                    // Canvas needs to be refreshed when pinning ends
-                    setTimeout(() => {
-                        this.refreshLineCanvas();
-                    }, 50);
-                }
             }
         });
-        
-        // Add the horizontal scroll animation to the timeline
+
         tl.to(this.scrollTrackManual, {
             x: -maxScroll,
             ease: "none"
         });
 
-        // Store the ScrollTrigger instance for cleanup
         this.manualScrollTrigger = tl.scrollTrigger;
     }
 
@@ -784,6 +830,12 @@ class HeroPageController {
         // Remove event listeners
         this.removeEventListeners();
         
+        // Clear all active glitch intervals
+        if (this.activeGlitchIntervals) {
+            this.activeGlitchIntervals.forEach(interval => clearInterval(interval));
+            this.activeGlitchIntervals.clear();
+        }
+
         this.isInitialized = false;
     }
 }
@@ -798,6 +850,7 @@ function initializePage() {
             heroController.destroy();
         }
         heroController = new HeroPageController();
+        window.heroController = heroController; // <-- Add this line
     };
 
     // Handle initial load and navigation
@@ -813,16 +866,22 @@ function initializePage() {
             init();
         }
     });
+    window.addEventListener('resize', () => {
+        // Debounce to avoid too many calls
+        clearTimeout(window._resizeTimer);
+        window._resizeTimer = setTimeout(() => {
+            ScrollTrigger.refresh();
+            // Refresh the manual scroll animation (re-initialize)
+            if (window.heroController && typeof window.heroController.setupScrollAnimationManual === 'function') {
+                window.heroController.setupScrollAnimationManual();
+            }
+            // Dispatch event for line-canvas to resize
+            window.dispatchEvent(new CustomEvent('lineCanvasRefresh'));
+        }, 250);
+    });
 
     // Handle popstate (back/forward buttons)
     window.addEventListener('popstate', init);
-    
-    // Cleanup on page unload
-    window.addEventListener('beforeunload', () => {
-        if (heroController) {
-            heroController.destroy();
-        }
-    });
 }
 
 // Auto-initialize when script loads

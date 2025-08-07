@@ -776,18 +776,34 @@ html body {
 }
 
 
-/* Container for scolling text */
+/* Container for scrolling text */
 .scroll-container-manual {
     background-color: var(--secondary-color);
     color: var(--secondary-contrast-color);
     overflow: hidden;
     width: 100%;
-    height: clamp(30rem, 30vh, 90vh);
+    height: clamp(30rem, 40vh, 90vh);
 }
+
 .scroll-container-manual:hover {
     background-color: var(--tertiary-color);
     color: var(--tertiary-contrast-color);
     outline: 25px solid var(--tertiary-contrast-color);
+}
+
+@media (max-height: 650px) {
+    .scroll-container-manual {
+        height: clamp(20rem, 90vh, 90vh);
+    }
+}
+
+@media (max-width: 400px) {
+    .scroll-section-title {
+        font-size: clamp(1rem, 2vw, 2rem) !important;
+    }
+    .vertical-item {
+        font-size: clamp(0.9rem, 1.5vw, 1.2rem) !important;
+    }
 }
 
 /* Animated inner content of scroll container */
@@ -795,10 +811,9 @@ html body {
     display: flex;
     height: 100%;
     width: 400%;
-    margin-top: 3rem;
 }
 
-/* Text styles within scroll path */
+/* Text styles within scroll path - this is the key container for centering */
 .scroll-text-manual {
     position: relative;
     z-index: 2;
@@ -808,21 +823,27 @@ html body {
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centers the content vertically */
-    align-items: stretch; /* Makes children take full width */
+    justify-content: center; /* Centers the entire content block vertically */
+    align-items: center; /* Centers horizontally */
     box-sizing: border-box;
-    padding-left: clamp(0rem, 10vh, 10rem);
-    padding-right: clamp(0rem, 10vh, 10rem);
-    position: relative; /* For absolute positioning of title */
+    padding-left: clamp(0rem, 8vw, 10rem);
+    padding-right: clamp(0rem, 8vw, 10rem);
+}
+
+/* Content wrapper to group title and list together */
+.scroll-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch; /* Makes children take full width */
+    width: 100%;
+    gap: 1rem; /* Adjustable space between title and list */
 }
 
 .scroll-section-title {
     font-size: clamp(1.4rem, 5vw, 3rem);
     font-weight: bold;
-    position: absolute; /* Position it absolutely */
-    top: 0; /* Align to top */
-    left: clamp(0rem, 10vh, 10rem); /* Align to left (accounting for container padding) */
-    z-index: 3; /* Make sure it's above the list */
+    text-align: left; /* Align to left edge of container */
+    width: 100%;
 }
 
 .scroll-section-title:hover {
@@ -836,8 +857,8 @@ html body {
     margin: 0;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centers the list items vertically */
-    flex: 1; /* Takes up remaining space */
+    justify-content: center;
+    width: 100%;
 }
 
 /* Individual vertical items */
