@@ -46,9 +46,12 @@ const FONTS: string[] = [
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-        <link rel="icon" href="/favicon.png" type="image/png">
-        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" type = "image/png" href = "/favicon-96-96.png" sizes = "96x96">
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="LCS" />
+        <link rel="manifest" href="/site.webmanifest"/>
         <meta name="generator" content={Astro.generator} />
 
         <SEO {...seoData} />
@@ -83,7 +86,7 @@ const FONTS: string[] = [
                 window.scrollTo(0, 0);
             }
         </script>
-        <!--
+        <!-- Hide default nav container, maybe bring back later
         <div class="u-container">
             <nav class="u-flex u-gap-gutter u-py-fluid-md">
                 <a href="/">Index</a>
@@ -92,14 +95,18 @@ const FONTS: string[] = [
             </nav>
         </div>
         -->
+        <!-- Set up mouse follower -->
         <div class = "mouse-circle"></div>
+        <!-- Container to set width for ultrawide displays -->
         <div class = "site-container">
+            <!-- Set up Swup page transitions and add main content -->
             <main id="swup" class="transition-fade">
                 <div id="content">
                     <slot />
                 </div>
             </main>
 
+            <!-- Footer with matching colors to current page -->
             <footer class="u-container u-flex u-justify-between u-py-fluid-xs font-nikkei background-color footer-selection" style="color: var(--primary-contrast-color);">
                 <div>
                     &copy;{new Date().getFullYear()}

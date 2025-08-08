@@ -5,15 +5,12 @@ import tailwindConfig from './tailwind.config';
 import postcssTailwindShortcuts from '@locomotivemtl/postcss-tailwind-shortcuts';
 import removeDoubleParentheses from '@locomotivemtl/postcss-remove-double-parentheses';
 
-import cloudflare from '@astrojs/cloudflare';
-
 const isProd = import.meta.env.PROD;
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://leostrangman.com',
   output: 'static',
-
   vite: {
       css: {
           preprocessorOptions: {
@@ -56,6 +53,4 @@ export default defineConfig({
       domains: ['leostrangman.com'],
       remotePatterns: [{ protocol: 'https' }]
   },
-
-  adapter: cloudflare()
 });

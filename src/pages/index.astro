@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Image from '@components/Image/Image.astro';
 import Icon from '@components/Icon/Icon.astro';
 ---
+<!-- Import layout with set variables for page name and color scheme -->
 <Layout title="Leo Strangman." 
         primaryColor="#e4c787" 
         primaryContrastColor="#192727" 
@@ -40,7 +41,9 @@ import Icon from '@components/Icon/Icon.astro';
         <!-- Fullscreen background image as canvas -->
         <canvas class = "hero-canvas" id = "parallax-canvas"></canvas>
 
+        <!-- Accessibility background for title text -->
         <div class = "accessibility-background hidden" id = "accessibility-background"></div>
+        <!-- Accessibility background toggle -->
         <div class="accessibility-wrapper" id = "parallax-accessibility">
             <div class="accessibility-button glitchable hover-text" aria-label="Accessibility Options">Accessible Mode</div>
         </div>
@@ -79,7 +82,9 @@ import Icon from '@components/Icon/Icon.astro';
 
     <!-- Div to correctly display parallax effect with background sliding over image -->
     <div class = "u-z-2 u-relative background-color">
+        <!-- Matching wrapper to keep pages consistent -->
         <div class="link-box-wrapper">
+            <!-- Standard boxes for page links -->
             <div class="u-w-full u-h-[50vh] link-box u-text-center u-flex u-items-center u-justify-center">
                 <a class = "glitchable link-box-text u-tracking-wide hover-text" href="/projects">PROJECTS</a>
             </div>
@@ -93,7 +98,9 @@ import Icon from '@components/Icon/Icon.astro';
                 <a class = "glitchable link-box-text tracking-contact hover-text" href="/contact">CONTACT</a>
             </div>
         
+            <!-- Image grid -->
             <div class="u-mt-12 u-grid u-grid-cols-2 u-gap-gutter">
+            <!-- Image container with pixelated canvas acting as the real image -->
                 <div class = "image-wrapper u-w-full u-h-full">
                     <canvas class = "pixel-canvas"></canvas>
                     <Image
@@ -113,6 +120,7 @@ import Icon from '@components/Icon/Icon.astro';
                     />
                 </div>
             </div>
+            <!-- Container for automatically scrolling text above footer -->
             <div class = "scroll-container u-w-full u-mt-fluid-xl u-h-[50vh]">
                 <ul class = "scroll-track">
                     <li class = "scroll-text hover-text glitchable">©2025</li>
@@ -124,6 +132,7 @@ import Icon from '@components/Icon/Icon.astro';
         </div>
     </div>
 
+    <!-- Main script files -->
     <script src="/scripts/index-scripts.js" type="module"></script>
     <script src="/scripts/loading-screen.js" type="module"></script>
     <script is:inline>

@@ -1,10 +1,4 @@
-PAGE LOAD:
-When loading any page, give some sort of animation
-Make it be my name/logo and the developer text, maybe location or something
-Have the letters distort/rearrange while it happens, make a full-screen thing that animates in and out
-Maybe while doing this have it cycle through the canvas quickly just to hide that being an issue
-
-OTHER INTERESTING IDEAS:
+INTERESTING IDEAS:
 Page progress bar
 Hover over images/elements like sayhito-atlas.com
 Increase scroll speed
@@ -17,6 +11,8 @@ Add a custom 404 page
 Add custom page transitions with swup
 
 FIXES:
+Put repeated items in astro components
+Reformat css
 Make the name text be in line with the svg properly
 
 Add initialize page logic/loading screen to the layout.astro

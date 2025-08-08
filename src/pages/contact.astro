@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 ---
+<!-- Import layout with set variables for page name and color scheme -->
 <Layout title="Leo Strangman." 
         primaryColor="#2a2d17" 
         primaryContrastColor="#e4c787" 
@@ -12,10 +13,14 @@ import Layout from '../layouts/Layout.astro';
         quaternaryContrastColor="#593636" 
         pageTitle = "CONTACT">
 
+    <!-- Main container -->
     <div class="u-z-2 background-color u-relative">
+        <!-- Matching wrapper to keep pages consistent -->
         <div class="link-box-wrapper">
+            <!-- Canvas for the moving line header effect -->
             <div class="line-container hover-text u-h-[50vh] u-w-full" id="lines-wrapper"></div>
 
+            <!-- Top box for location information -->
             <div class="u-mt-12 u-grid u-grid-cols-1 u-gap-gutter">
                 <div class="u-w-full contact-box location-box u-text-center u-flex u-flex-col u-items-center u-justify-center">
                     <div class = "glitchable contact-box-text tracking-location hover-text">Worcester, MA</div>
@@ -23,6 +28,7 @@ import Layout from '../layouts/Layout.astro';
                 </div>
             </div>
 
+            <!-- Boxes for contact links -->
             <div class="u-mt-12 u-grid u-grid-cols-2 u-gap-gutter button-desktop">
                 <div class="u-w-full contact-box u-text-center u-flex u-flex-col u-items-center u-justify-center">
                     <a class = "glitchable contact-box-text tracking-email hover-text" target="_blank" rel="noopener noreferrer" href="mailto:lcstrangman@gmail.com">Email</a>
@@ -43,7 +49,7 @@ import Layout from '../layouts/Layout.astro';
                     <div class = "glitchable contact-box-subtext u-tracking-wide hover-text">/resume</div>
                 </div>
             </div>
-            <!-- Version for mobile devices -->
+            <!-- Version of boxes for mobile devices -->
             <div class="u-mt-12 button-mobile">
                 <div class="u-w-full contact-box u-text-center u-flex u-flex-col u-items-center u-justify-center">
                     <a class = "glitchable contact-box-text tracking-email hover-text" target="_blank" rel="noopener noreferrer" href="mailto:lcstrangman@gmail.com">Email</a>
@@ -69,7 +75,7 @@ import Layout from '../layouts/Layout.astro';
                 </div>
             </div>
    
-
+            <!-- Container for automatically scrolling text above footer -->
             <div class="scroll-container u-mt-fluid-xl u-h-[50vh] u-w-full">
                 <ul class="scroll-track">
                     <li class="scroll-text hover-text glitchable">©2025</li>

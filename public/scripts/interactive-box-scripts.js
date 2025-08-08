@@ -2,8 +2,6 @@ class InteractiveBoxController {
     constructor() {}
     
     init() {
-        const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || (navigator.msMaxTouchPoints > 0);
-        
         document.querySelectorAll('.interactive-section').forEach(section => {
             const container = section.querySelector('.boxes-container');
             const previewImage = section.querySelector('.preview-image');

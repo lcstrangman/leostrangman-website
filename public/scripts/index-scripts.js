@@ -394,7 +394,6 @@ class HeroPageController {
         this.circle.style.opacity = '0';
         this.pendingHide = false;
         
-        // Optional: Also kill any active animations since we're hiding the circle
         if (this.circle._followTween) {
             this.circle._followTween.kill();
         }
@@ -614,7 +613,7 @@ class HeroPageController {
         if (this.circle && 
             this.currentInput === 'mouse' && 
             this.isMouseInViewport && 
-            Date.now() - this.lastMouseMoveTime < 2000) { // 2 seconds
+            Date.now() - this.lastMouseMoveTime < 2000) {
             this.circle.style.opacity = '1';
         }
     }
@@ -639,7 +638,7 @@ class HeroPageController {
             if (image.naturalHeight && window.innerHeight) {
                 // If image is taller than viewport, set threshold lower so it always triggers
                 const ratio = Math.min(1, window.innerHeight / image.naturalHeight);
-                threshold = Math.max(0.1, ratio * 0.9); // 0.9 is a fudge factor, adjust as needed
+                threshold = Math.max(0.1, ratio * 0.9); // 0.9 is a magic number
             }
             let currentStep = 0;
             let animating = false;
@@ -771,7 +770,6 @@ class HeroPageController {
             }
         });
 
-        // Calculate based on your known 4-section layout
         const containerWidth = this.scrollerManual.offsetWidth;
         const maxScroll = containerWidth * 3; // 3 sections worth of scrolling (4 sections - 1)
 
@@ -797,7 +795,6 @@ class HeroPageController {
         this.manualScrollTrigger = tl.scrollTrigger;
     }
 
-    // Add this method to your HeroPageController class
     refreshLineCanvas() {
         // Dispatch custom event for line canvas to listen to
         const event = new CustomEvent('lineCanvasRefresh', {
@@ -814,7 +811,6 @@ class HeroPageController {
         }
     }
 
-    // Update your cleanup method to include the new ScrollTrigger
     cleanup() {
         // Kill GSAP animations
         if (this.heroAnimation) {
@@ -852,7 +848,7 @@ function initializePage() {
             heroController.destroy();
         }
         heroController = new HeroPageController();
-        window.heroController = heroController; // <-- Add this line
+        window.heroController = heroController;
     };
 
     // Handle initial load and navigation

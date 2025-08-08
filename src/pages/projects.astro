@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 ---
-
+<!-- Import layout with set variables for page name and color scheme -->
 <Layout title="Leo Strangman." 
         primaryColor="#192727" 
         primaryContrastColor="#e4c787" 
@@ -13,10 +13,14 @@ import Layout from '../layouts/Layout.astro';
         quaternaryContrastColor="#3a2d2d"
         pageTitle = "PROJECTS">
 
+    <!-- Main container -->
     <div class="u-z-2 background-color u-relative">
+        <!-- Matching wrapper to keep pages consistent -->
         <div class="link-box-wrapper">
+            <!-- Canvas for the moving line header effect -->
             <div class="line-container hover-text u-h-[50vh] u-w-full" id="lines-wrapper"></div>
 
+            <!-- Content section with experience box -->
             <div class="interactive-section u-mt-fluid-xl u-min-h-[50vh] u-w-full">
                 <div class="section-title glitchable hover-text">/* leostrangman.com */</div>
                 <div class="section-divider"></div>
@@ -40,6 +44,7 @@ import Layout from '../layouts/Layout.astro';
                     </div>
                 </div>
             </div>
+            <!-- Another content box -->
             <div class="interactive-section u-mt-fluid-xl u-min-h-[50vh] u-w-full">
                 <div class="section-title glitchable hover-text">/* ResearchApp */</div>
                 <div class="section-divider"></div>
@@ -63,6 +68,7 @@ import Layout from '../layouts/Layout.astro';
                     </div>
                 </div>
             </div>
+            <!-- Another content box -->
             <div class="interactive-section u-mt-fluid-xl u-min-h-[50vh] u-w-full">
                 <div class="section-title glitchable hover-text">/* Vehicle HUD Design */</div>
                 <div class="section-divider"></div>
@@ -86,6 +92,7 @@ import Layout from '../layouts/Layout.astro';
                     </div>
                 </div>
             </div>
+            <!-- Another content box -->
             <div class="interactive-section u-mt-fluid-xl u-min-h-[50vh] u-w-full">
                 <div class="section-title glitchable hover-text">/* Exploiting Programs in C and Assembly */</div>
                 <div class="section-divider"></div>
@@ -109,12 +116,14 @@ import Layout from '../layouts/Layout.astro';
                     </div>
                 </div>
             </div>
+            <!-- Resume page link box -->
             <div class="resume-box-wrapper u-mt-fluid-xl u-h-[50vh] u-w-full">
                 <div class="u-w-full resume-box u-text-center u-flex u-items-center u-justify-center">
                     <a class = "glitchable resume-box-text u-tracking-wide hover-text" href="/resume">RESUME</a>
                 </div>
             </div>
 
+            <!-- Container for automatically scrolling text above footer -->
             <div class="scroll-container u-mt-fluid-xl u-h-[50vh] u-w-full">
                 <ul class="scroll-track">
                     <li class="scroll-text hover-text glitchable">©2025</li>

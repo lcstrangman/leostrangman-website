@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 ---
-
+<!-- Import layout with set variables for page name and color scheme -->
 <Layout title="Leo Strangman." 
         primaryColor="#9ab28a" 
         primaryContrastColor="#593636" 
@@ -13,19 +13,21 @@ import Layout from '../layouts/Layout.astro';
         quaternaryContrastColor="#3a2d2d" 
         pageTitle = "MY WORK">
 
+    <!-- Main container -->
     <div class="u-z-2 background-color u-relative">
+        <!-- Matching wrapper to keep pages consistent -->
         <div class="link-box-wrapper">
+            <!-- Canvas for the moving line header effect -->
             <div class="line-container hover-text u-h-[50vh] u-w-full" id="lines-wrapper"></div>
 
+            <!-- Content section with work box -->
             <div class="interactive-section u-mt-fluid-xl u-min-h-[50vh] u-w-full">
                 <div class="section-title glitchable hover-text">/* MASSACHUSETTS GENERAL HOSPITAL */</div>
                 <div class="section-divider"></div>
-
                 <div class="content-container">
                     <div class="image-display-area">
                         <div class="preview-image" id="preview-image"></div>
                     </div>
-
                     <div class="boxes-container" data-prefix = "/work-">
                         <div class="bullet-box" data-image="bullet1">
                             <span class="justify-stretch bullet-title glitchable hover-text tracking-work-1">Front and back-end website development for the Neural Systems Group</span>
@@ -42,12 +44,14 @@ import Layout from '../layouts/Layout.astro';
                     </div>
                 </div>
             </div>
+            <!-- Resume page link box -->
             <div class="resume-box-wrapper u-mt-fluid-xl u-w-full">
                 <div class="u-w-full resume-box u-text-center u-flex u-items-center u-justify-center">
                     <a class = "glitchable resume-box-text u-tracking-wide hover-text" href="/resume">RESUME</a>
                 </div>
             </div>
 
+            <!-- Container for automatically scrolling text above footer -->
             <div class="scroll-container u-mt-fluid-xl u-h-[50vh] u-w-full">
                 <ul class="scroll-track">
                     <li class="scroll-text hover-text glitchable">©2025</li>

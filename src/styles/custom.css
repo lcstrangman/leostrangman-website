@@ -30,6 +30,7 @@
     font-style: normal;
 }
 
+/* Custom font using free trial license from Pangram Pangram Foundry: https://pangrampangram.com/pages/faq*/
 @font-face {
     font-family: 'Neue-Mono';
     src: url('/fonts/NeueMono/PPNeueMontrealMono-Book.otf') format('opentype');
@@ -37,6 +38,7 @@
     font-style: normal;
 }
 
+/* Custom font using free trial license from Pangram Pangram Foundry: https://pangrampangram.com/pages/faq*/
 @font-face {
     font-family: 'Nikkei';
     src: url('/fonts/Nikkei/PPNikkeiLine-Light.otf') format('opentype');
@@ -162,7 +164,6 @@ html body {
     font-weight: bold;
     font-size: 2rem;
     transform: translateY(-8px);
-    /* tweak this as needed */
 }
 
 .loading-note {
@@ -238,7 +239,6 @@ html body {
     line-height: 1;
     cursor: pointer;
 }
-
 .accessibility-button::selection {
     background-color: var(--primary-contrast-color);
     color: var(--primary-color);
@@ -488,7 +488,6 @@ html body {
     line-height: 1;
     user-select: none;
 }
-
 .scroll-text:hover {
     text-decoration: underline overline;
 }
@@ -715,7 +714,7 @@ html body {
         width: 100%;
         height: auto;
         aspect-ratio: 3 / 1; /* Maintains 3:1 aspect ratio */
-        max-height: none; /* Remove the height restriction */
+        max-height: none;
     }
 
     .content-container {
@@ -723,15 +722,14 @@ html body {
     }
 
     .image-display-area {
-        width: 100%; /* Full width */
-        min-height: auto; /* Let aspect ratio control height */
+        width: 100%;
+        min-height: auto;
         margin-right: 0;
         margin-bottom: 1rem;
     }
 
     .section-title {
         text-align: center;
-        /* Center-align title on mobile */
     }
 
     .button-desktop {
@@ -822,8 +820,8 @@ html body {
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centers the entire content block vertically */
-    align-items: center; /* Centers horizontally */
+    justify-content: center;
+    align-items: center;
     box-sizing: border-box;
     padding-left: clamp(0rem, 8vw, 10rem);
     padding-right: clamp(0rem, 8vw, 10rem);
@@ -833,15 +831,15 @@ html body {
 .scroll-content-wrapper {
     display: flex;
     flex-direction: column;
-    align-items: stretch; /* Makes children take full width */
+    align-items: stretch;
     width: 100%;
-    gap: 1rem; /* Adjustable space between title and list */
+    gap: 1rem;
 }
 
 .scroll-section-title {
     font-size: clamp(1.4rem, 5vw, 3rem);
     font-weight: bold;
-    text-align: left; /* Align to left edge of container */
+    text-align: left;
     width: 100%;
 }
 
