@@ -1,27 +1,27 @@
 import metaImage from '@images/meta.png';
 
 export const defaultSeo: Seo = {
-    title: 'Astro boilerplate',
-    description: 'Boilerplate for Astro',
+    title: 'leostrangman.com',
+    description: 'Personal portfolio website of Leo Strangman',
     social: {
         facebook: {
-            title: 'Astro boilerplate',
+            title: 'leostrangman.com',
             image: {
                 url: metaImage.src
             },
-            description: 'Boilerplate for Astro'
+            description: 'Personal portfolio website of Leo Strangman'
         },
         twitter: {
-            creator: '@LocomotiveMTL',
-            title: 'Astro boilerplate',
+            creator: '@leostrangman',
+            title: 'leostrangman.com',
             image: {
                 url: metaImage.src
             },
-            description: 'Boilerplate for Astro'
+            description: 'Personal portfolio website of Leo Strangman'
         }
     },
     advanced: {
         robots: ['noindex', 'nofollow'],
-        canonical: 'https://locomotive.ca'
+        canonical: 'https://leostrangman.com'
     }
 };
