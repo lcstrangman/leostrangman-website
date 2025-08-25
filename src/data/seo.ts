@@ -2,14 +2,14 @@ import metaImage from '@images/meta.png';
 
 export const defaultSeo: Seo = {
     title: 'leostrangman.com',
-    description: 'Personal portfolio website of Leo Strangman',
+    description: 'Leo Strangman/Leonel Strangman - Web developer, designer, and creator. Portfolio, projects, and contact info.',
     social: {
         facebook: {
             title: 'leostrangman.com',
             image: {
                 url: metaImage.src
             },
-            description: 'Personal portfolio website of Leo Strangman'
+            description: 'Leo Strangman/Leonel Strangman - Web developer, designer, and creator. Portfolio, projects, and contact info.',
         },
         twitter: {
             creator: '@leostrangman',
@@ -17,11 +17,10 @@ export const defaultSeo: Seo = {
             image: {
                 url: metaImage.src
             },
-            description: 'Personal portfolio website of Leo Strangman'
+            description: 'Leo Strangman/Leonel Strangman - Web developer, designer, and creator. Portfolio, projects, and contact info.'
         }
     },
     advanced: {
-        robots: ['noindex', 'nofollow'],
         canonical: 'https://leostrangman.com'
     }
 };
