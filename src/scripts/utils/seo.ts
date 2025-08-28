@@ -1,7 +1,7 @@
 export const getSeo = (seo: Seo, defaultSeo: Seo, pageTitle: string | null = null) => {
     const title = seo?.title || pageTitle || defaultSeo.title;
     const description = seo?.description || defaultSeo.description;
-
+    const robots = seo?.advanced?.robots || defaultSeo.advanced?.robots || ["index", "follow"];
     return {
         title,
         description,
@@ -33,20 +33,12 @@ export const getSeo = (seo: Seo, defaultSeo: Seo, pageTitle: string | null = nul
                 description
         },
         canonical: seo?.advanced?.canonical || defaultSeo.advanced?.canonical,
-        noindex:
-            seo?.advanced?.robots?.includes('noindex') ||
-            defaultSeo?.advanced?.robots?.includes('noindex'),
-        nofollow:
-            seo?.advanced?.robots?.includes('nofollow') ||
-            defaultSeo?.advanced?.robots?.includes('noindex'),
-        extend: {
+        noindex: robots.includes("noindex"),
+        nofollow: robots.includes("nofollow"),
+        extend: robots.length > 0 ? {
             meta: [
-                {
-                    name: 'robots',
-                    content:
-                        seo?.advanced?.robots?.join(',') || defaultSeo.advanced?.robots?.join(',')
-                }
+                { name: 'robots', content: robots.join(",") }
             ]
-        }
+        } : {}
     };
 };
