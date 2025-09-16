@@ -1,8 +1,9 @@
 // ==========================================================================
 // Utilities / Container
 // ==========================================================================
+@use '../mixins/mixins-container' as *;
 @layer utilities {
     .u-container {
-        @include -container;
+        @include container;
     }
 }

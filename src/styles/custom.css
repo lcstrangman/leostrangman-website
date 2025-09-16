@@ -100,14 +100,18 @@ html body {
     mix-blend-mode: difference;
 }
 
+/* Initial screen - shown by default on every page load */
 #initial-screen {
     position: fixed;
     inset: 0;
-    background: var(--primary-contrast-color);
-    z-index: 10001;
+    z-index: 9999;
     display: flex;
     align-items: center;
     justify-content: center;
+    background: #192727;
+    opacity: 1;
+    pointer-events: auto;
+    transition: opacity 0.3s ease;
 }
 
 #initial-screen .hover-text {
@@ -116,7 +120,7 @@ html body {
     color: var(--primary-color);
 }
 
-/* Loading screen - initially hidden */
+/* Loading screen - only shown during first-time animation sequence */
 #loading-screen {
     position: fixed;
     inset: 0;
@@ -127,6 +131,7 @@ html body {
     justify-content: center;
     pointer-events: none;
     overflow: hidden;
+    opacity: 0;
 }
 
 .loading-content {
@@ -139,7 +144,6 @@ html body {
     justify-content: space-between;
     padding: 3rem;
     font-family: var(--main-font-family);
-    ;
     overflow: hidden;
 }
 
@@ -159,7 +163,6 @@ html body {
     vertical-align: middle;
 }
 
-
 .loading-name-text {
     font-weight: bold;
     font-size: 2rem;
@@ -167,9 +170,9 @@ html body {
 }
 
 .loading-note {
+    color: var(--primary-color);
     margin-bottom: 2rem;
     font-size: 0.9rem;
-    opacity: 0.8;
 }
 
 /* Pixel transition overlay */
@@ -179,10 +182,13 @@ html body {
     z-index: 10002;
     display: none;
     pointer-events: none;
+    width: 100vw;
+    height: 100vh;
 }
 
 .pixel {
     background: transparent;
+    transition: background-color 0.1s ease;
 }
 
 .pixel.black {
@@ -471,7 +477,7 @@ html body {
 
 /* Animated inner content of scroll container */
 .scroll-track {
-    animation: scroll 30s linear infinite;
+    animation: scroll 20s linear infinite;
     width: fit-content;
     display: flex;
     white-space: nowrap;

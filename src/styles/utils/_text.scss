@@ -1,12 +1,13 @@
 // ==========================================================================
 // Utilities / Texts
 // ==========================================================================
+@use '../mixins/mixins-text' as *;
 @layer utilities {
     .u-text-body {
-        @include -body;
+        @include body;
     }
 
     .u-text-subtitle {
-        @include -subtitle;
+        @include subtitle;
     }
 }

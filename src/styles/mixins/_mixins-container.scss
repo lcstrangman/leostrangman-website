@@ -1,7 +1,7 @@
 // ==========================================================================
 // MIXINS / CONTAINERS
 // ==========================================================================
-@mixin -container {
+@mixin container {
     --container-margin: theme-spacing('containerMarginMobile');
 
     margin-right: auto;

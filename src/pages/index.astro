@@ -14,28 +14,6 @@ import Icon from '@components/Icon/Icon.astro';
         quaternaryColor="#c4a8b8" 
         quaternaryContrastColor="#3a2d2d"
         pageTitle = "INDEX">
-
-    <!-- Initial screen (only icon centered) -->
-    <div id="initial-screen">
-        <div class="icon-wrapper">
-            <Icon class="hover-text" name="icon-amber-supply" />
-        </div>
-    </div>
-
-    <!-- Loading screen (icon + name + note) -->
-    <div id="loading-screen">
-        <div class="loading-content">
-            <div class="logo-name u-flex u-flex-row">
-                <Icon class="hover-text" name="icon-amber-supply" />
-                <span class="loading-name-text">Leo Strangman</span>
-            </div>
-            <p class="loading-note">For the full animated experience, use a desktop browser</p>
-        </div>
-    </div>
-
-    <!-- Pixel transition overlay -->
-    <div id="pixel-transition"></div>
-
     <!-- Hero Section Container -->
     <div class="hero" id="parallax-hero">
         <!-- Fullscreen background image as canvas -->
@@ -131,26 +109,4 @@ import Icon from '@components/Icon/Icon.astro';
             </div>
         </div>
     </div>
-
-    <!-- Main script files -->
-    <script src="/scripts/index-scripts.js" type="module"></script>
-    <script src="/scripts/loading-screen.js" type="module"></script>
-    <script is:inline>
-        // Intercept all <a> clicks and scroll to top after navigation
-        document.addEventListener('click', function (e) {
-            const target = e.target.closest('a');
-            if (target && target.href && !target.target && !target.hasAttribute('download')) {
-                if (target.origin === window.location.origin) {
-                    e.preventDefault();
-                    window.location.href = target.href;
-                }
-            }
-        });
-
-        // On popstate (back/forward), let browser restore scroll position (no scrollTo)
-        window.addEventListener('popstate', function () {
-            window.location.reload();
-        });
-    </script>
-
 </Layout>

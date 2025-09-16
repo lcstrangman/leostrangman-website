@@ -2,142 +2,72 @@
 import '@styles/main.scss';
 import '@styles/custom.css';
 import { SEO } from 'astro-seo';
-import { defaultSeo } from '@data/seo';
+import { defaultSeo, type Seo } from '@data/seo';
 import { getSeo } from '@scripts/utils/seo';
+import Icon from '@components/Icon/Icon.astro';
 
 interface Props {
-    title: string;
-    seo?: Seo;
-    primaryColor?: string;
-    primaryContrastColor?: string;
-    secondaryColor?: string;
-    secondaryContrastColor?: string;
-    tertiaryColor?: string;
-    tertiaryContrastColor?: string;
-    quaternaryColor?: string;
-    quaternaryContrastColor?: string;
-    pageTitle?: string;
+  title?: string;
+  seo?: Seo;
+  pageTitle?: string;
+  primaryColor?: string;
+  primaryContrastColor?: string;
+  secondaryColor?: string;
+  secondaryContrastColor?: string;
+  tertiaryColor?: string;
+  tertiaryContrastColor?: string;
+  quaternaryColor?: string;
+  quaternaryContrastColor?: string;
 }
 
-const { 
-        title, 
-        seo = {}, 
-        primaryColor = "#e4c787", 
-        primaryContrastColor = "#192727", 
-        secondaryColor = "#9ab28a", 
-        secondaryContrastColor = "#593636", 
-        tertiaryColor = "#c8a8a8", 
-        tertiaryContrastColor = "#2a3a4a", 
-        quaternaryColor = "#c4a8b8", 
-        quaternaryContrastColor = "#3a2d2d", 
-        pageTitle = "INDEX" 
-      } = Astro.props;
+const {
+  title = 'INDEX',
+  seo = {},
+  pageTitle = 'INDEX',
+  primaryColor = '#e4c787',
+  primaryContrastColor = '#192727',
+  secondaryColor = '#9ab28a',
+  secondaryContrastColor = '#593636',
+  tertiaryColor = '#c8a8a8',
+  tertiaryContrastColor = '#2a3a4a',
+  quaternaryColor = '#c4a8b8',
+  quaternaryContrastColor = '#3a2d2d'
+} = Astro.props;
 
-const seoData = getSeo(seo, defaultSeo, title);
+// Dynamic canonical for current page
+const currentUrl = `${Astro.site}${Astro.url.pathname}`;
+const seoData = getSeo(seo, defaultSeo, title, currentUrl);
 
-const FONTS: string[] = [
-    // 'WebfontRegular.woff2',
-    // 'WebfontBold.woff2',
-];
 ---
 
-<!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" type = "image/png" href = "/favicon-96-96.png" sizes = "96x96">
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="shortcut icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <meta name="apple-mobile-web-app-title" content="LCS" />
-        <link rel="manifest" href="/site.webmanifest"/>
-        <meta name="generator" content={Astro.generator} />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="generator" content={Astro.generator} />
 
-        <SEO {...seoData} />
+    <!-- SEO / canonical / robots -->
+    <SEO {...seoData} />
+  </head>
 
-        <!-- Fonts -->
-        {
-            FONTS.map((font) => (
-                <link
-                    rel="preload"
-                    href={`/fonts/${font}`}
-                    as="font"
-                    type="font/woff2"
-                    crossorigin
-                />
-            ))
-        }
-    </head>
-    <body style={`--primary-color: ${primaryColor}; 
-                  --primary-contrast-color: ${primaryContrastColor}; 
-                  --secondary-color: ${secondaryColor}; 
-                  --secondary-contrast-color: ${secondaryContrastColor};
-                  --tertiary-color: ${tertiaryColor}; 
-                  --tertiary-contrast-color: ${tertiaryContrastColor};
-                  --quaternary-color: ${quaternaryColor}; 
-                  --quaternary-contrast-color: ${quaternaryContrastColor}; 
-                  --page-title: ${pageTitle};`}>
-        <script is:inline>
-            if (window.performance && window.performance.navigation.type === 1) {
-                // This is a reload, don't scroll
-            } else if (window.history.length > 1 && window.location.hash === "") {
-                // Not a reload, not a hash link, scroll to top
-                window.scrollTo(0, 0);
-            }
-        </script>
-        <!-- Hide default nav container, maybe bring back later
-        <div class="u-container">
-            <nav class="u-flex u-gap-gutter u-py-fluid-md">
-                <a href="/">Index</a>
-                <a href="/about">About</a>
-                <a href="/post">The post</a>
-            </nav>
-        </div>
-        -->
-        <!-- Set up mouse follower -->
-        <div class = "mouse-circle"></div>
-        <!-- Container to set width for ultrawide displays -->
-        <div class = "site-container">
-            <!-- Set up Swup page transitions and add main content -->
-            <main id="swup" class="transition-fade">
-                <div id="content">
-                    <slot />
-                </div>
-            </main>
-
-            <!-- Footer with matching colors to current page -->
-            <footer class="u-container u-flex u-justify-between u-py-fluid-xs font-nikkei background-color footer-selection" style="color: var(--primary-contrast-color);">
-                <div>
-                    &copy;{new Date().getFullYear()}
-                </div>
-
-                <nav class="u-flex u-gap-gutter font-nikkei footer-selection">
-                    <a class = "glitchable hover-text" href="/">Index</a>
-                    <a class = "glitchable hover-text" href="/projects">Projects</a>
-                    <a class = "glitchable hover-text" href="/work">My Work</a>
-                    <a class = "glitchable hover-text" href="/about">About Me</a>
-                    <a class = "glitchable hover-text" href="/contact">Contact</a>
-                </nav>
-            </footer>
-        </div>
-        <script src="../scripts/app.ts"></script>
-        <script>
-            import { setViewportSize } from '@scripts/utils/setViewportSize';
-            import { $screenDebounce } from '@scripts/stores/screen';
-
-            // Set viewport size
-            $screenDebounce.subscribe(() => {
-                setViewportSize();
-            });
-        </script>
-        <style>
-            .font-nikkei {
-                font-family: "Nikkei";
-            }
-            .footer-selection {
-                user-select: none;
-            }
-        </style>
-    </body>
+  <body
+    style={`--primary-color: ${primaryColor};
+           --primary-contrast-color: ${primaryContrastColor};
+           --secondary-color: ${secondaryColor};
+           --secondary-contrast-color: ${secondaryContrastColor};
+           --tertiary-color: ${tertiaryColor};
+           --tertiary-contrast-color: ${tertiaryContrastColor};
+           --quaternary-color: ${quaternaryColor};
+           --quaternary-contrast-color: ${quaternaryContrastColor};
+           --page-title: ${pageTitle};`}
+  >
+    <!-- Main content -->
+    <div id="content">
+      <slot />
+    </div>
+  </body>
 </html>

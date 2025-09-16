@@ -1,10 +1,7 @@
-<p align="center">
-    <a href="https://github.com/locomotivemtl/locomotive-boilerplate">
-        <img src="https://user-images.githubusercontent.com/4596862/54868065-c2aea200-4d5e-11e9-9ce3-e0013c15f48c.png" height="140">
-    </a>
-</p>
-<h1 align="center">Locomotive Astro Boilerplate</h1>
-<p align="center">Astro boilerplate for projects by <a href="https://locomotive.ca/">Locomotive</a>.</p>
+## LEOSTRANGMAN.COM
+
+-   Personal Website for Leo Strangman, with Experience, Projects, Personal Info, and Contact
+-   https://leostrangman.com
 
 ## Features
 
@@ -26,7 +23,7 @@ Make sure you have the following installed:
 
 ```sh
 # Clone the repository.
-git clone https://github.com/locomotivemtl/astro-boilerplate.git my-new-project
+git clone https://github.com/lcstrangman/leostrangman-website.git my-new-project
 
 # Enter the newly-cloned directory.
 cd my-new-project

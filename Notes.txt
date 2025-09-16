@@ -8,7 +8,6 @@ Change the shape of the circle cursor follower, put a second dot in the middle o
 LCS svg as a sort of cursor follower on images/videos or something like that maybe
 Email contact form
 Add a custom 404 page
-Add custom page transitions with swup
 
 FIXES:
 Put repeated items in astro components
