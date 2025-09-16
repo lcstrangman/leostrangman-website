@@ -7,55 +7,54 @@ import { getSeo } from '@scripts/utils/seo';
 import Icon from '@components/Icon/Icon.astro';
 
 interface Props {
-  title?: string;
-  seo?: Seo;
-  pageTitle?: string;
-  primaryColor?: string;
-  primaryContrastColor?: string;
-  secondaryColor?: string;
-  secondaryContrastColor?: string;
-  tertiaryColor?: string;
-  tertiaryContrastColor?: string;
-  quaternaryColor?: string;
-  quaternaryContrastColor?: string;
+    title?: string;
+    seo?: Seo;
+    pageTitle?: string;
+    primaryColor?: string;
+    primaryContrastColor?: string;
+    secondaryColor?: string;
+    secondaryContrastColor?: string;
+    tertiaryColor?: string;
+    tertiaryContrastColor?: string;
+    quaternaryColor?: string;
+    quaternaryContrastColor?: string;
 }
 
 const {
-  title = 'INDEX',
-  seo = {},
-  pageTitle = 'INDEX',
-  primaryColor = '#e4c787',
-  primaryContrastColor = '#192727',
-  secondaryColor = '#9ab28a',
-  secondaryContrastColor = '#593636',
-  tertiaryColor = '#c8a8a8',
-  tertiaryContrastColor = '#2a3a4a',
-  quaternaryColor = '#c4a8b8',
-  quaternaryContrastColor = '#3a2d2d'
+    title = 'INDEX',
+    seo = {},
+    pageTitle = 'INDEX',
+    primaryColor = '#e4c787',
+    primaryContrastColor = '#192727',
+    secondaryColor = '#9ab28a',
+    secondaryContrastColor = '#593636',
+    tertiaryColor = '#c8a8a8',
+    tertiaryContrastColor = '#2a3a4a',
+    quaternaryColor = '#c4a8b8',
+    quaternaryContrastColor = '#3a2d2d'
 } = Astro.props;
 
 // Dynamic canonical for current page
 const currentUrl = `${Astro.site}${Astro.url.pathname}`;
 const seoData = getSeo(seo, defaultSeo, title, currentUrl);
-
 ---
 
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" href="/favicon.svg" />
-    <link rel="shortcut icon" href="/favicon.ico" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
-    <link rel="manifest" href="/site.webmanifest" />
-    <meta name="generator" content={Astro.generator} />
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.svg" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+        <link rel="manifest" href="/site.webmanifest" />
+        <meta name="generator" content={Astro.generator} />
 
-    <!-- SEO / canonical / robots -->
-    <SEO {...seoData} />
-  </head>
+        <!-- SEO / canonical / robots -->
+        <SEO {...seoData} />
+    </head>
 
-  <body
-    style={`--primary-color: ${primaryColor};
+    <body
+        style={`--primary-color: ${primaryColor};
            --primary-contrast-color: ${primaryContrastColor};
            --secondary-color: ${secondaryColor};
            --secondary-contrast-color: ${secondaryContrastColor};
@@ -63,11 +62,73 @@ const seoData = getSeo(seo, defaultSeo, title, currentUrl);
            --tertiary-contrast-color: ${tertiaryContrastColor};
            --quaternary-color: ${quaternaryColor};
            --quaternary-contrast-color: ${quaternaryContrastColor};
-           --page-title: ${pageTitle};`}
-  >
-    <!-- Main content -->
-    <div id="content">
-      <slot />
-    </div>
-  </body>
+           --page-title: ${pageTitle};`}>
+        <!-- Mouse follower -->
+        <div class="mouse-circle"></div>
+
+        <!-- Loading screens -->
+        <div id="initial-screen">
+            <div class="icon-wrapper u-select-none">
+                <Icon class="hover-text" name="icon-amber-supply" />
+            </div>
+        </div>
+
+        <div id="loading-screen">
+            <div class="loading-content">
+                <div class="logo-name u-flex u-flex-row">
+                    <Icon class="hover-text" name="icon-amber-supply" />
+                    <span class="loading-name-text">Leo Strangman</span>
+                </div>
+                <p class="loading-note">For the full animated experience, use a desktop browser</p>
+            </div>
+        </div>
+
+        <div id="pixel-transition"></div>
+
+        <!-- Main content -->
+        <div class="site-container">
+            <main
+                id="swup"
+                class="transition-fade"
+                data-primary-color={primaryColor}
+                data-primary-contrast-color={primaryContrastColor}
+                data-secondary-color={secondaryColor}
+                data-secondary-contrast-color={secondaryContrastColor}
+                data-tertiary-color={tertiaryColor}
+                data-tertiary-contrast-color={tertiaryContrastColor}
+                data-quaternary-color={quaternaryColor}
+                data-quaternary-contrast-color={quaternaryContrastColor}
+                data-page-title={pageTitle}
+            >
+                <div id="content">
+                    <slot />
+                </div>
+            </main>
+
+            <!-- Footer -->
+            <footer
+                class="u-container font-nikkei background-color footer-selection u-flex u-justify-between u-py-fluid-xs"
+                style="color: var(--primary-contrast-color);"
+            >
+                <div>&copy;{new Date().getFullYear()}</div>
+                <nav class="font-nikkei footer-selection u-flex u-gap-gutter">
+                    <a class="glitchable hover-text" href="/">Index</a>
+                    <a class="glitchable hover-text" href="/projects">Projects</a>
+                    <a class="glitchable hover-text" href="/work">My Work</a>
+                    <a class="glitchable hover-text" href="/about">About Me</a>
+                    <a class="glitchable hover-text" href="/contact">Contact</a>
+                </nav>
+            </footer>
+        </div>
+
+        <script src="../scripts/app.ts"></script>
+        <style>
+            .font-nikkei {
+                font-family: 'Nikkei';
+            }
+            .footer-selection {
+                user-select: none;
+            }
+        </style>
+    </body>
 </html>
