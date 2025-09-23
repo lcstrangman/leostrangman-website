@@ -29,33 +29,48 @@ import ScrollingFooter from '../components/ScrollingFooter/ScrollingFooter.astro
         <!-- Text/svg logo in hero section -->
         <div class="hero-content" id = "hero-content-primary">
             <!-- Name text -->
-            <div class = "title-name-background" id = "parallax-name-background" aria-hidden="true"></div>
-            <div class = "title-logo-background" id = "parallax-logo-background" aria-hidden="true"></div>
-            <div class = "title-role-background" id = "parallax-role-background" aria-hidden="true"></div>
-            <h1 class = "title-name-text title-name-color glitchable hover-text" id = "parallax-title-name">Leo Strangman.</h1>
-            <!-- Secondary heading text/svg -->
-            <div class = "logo-role-wrapper" id = "logo-role-wrapper">
-                <!-- Wrapper for main logo svg -->
-                <div class = "logo-wrapper" id = "parallax-title-logo">
-                    <Icon class = "hover-text" name = "icon-amber-supply">
+            <div class = "name-section">
+                <div class = "title-name-background" id = "parallax-name-background" aria-hidden="true"></div>
+                <h1 class = "title-name-text title-name-color glitchable hover-text" id = "parallax-title-name">Leo Strangman.</h1>
+            </div>
+            
+            <div class = "bottom-row" id = "bottom-row">
+                <div class = "logo-section" id = "logo-section">
+                    <div class = "title-logo-background" id = "parallax-logo-background" aria-hidden="true"></div>
+                    <div class = "logo-wrapper" id = "parallax-title-logo">
+                        <Icon class = "hover-text" name = "icon-amber-supply">
+                    </div>
+                    <!-- Wrapper for secondary logo svg that shows on hover -->
+                    <div class = "logo-wrapper logo-hover u-hidden "id = "parallax-logo-hover">
+                        <Icon class = "hover-text" name = "icon-green-supply" width = "75" height = "75" viewBox="0, 0, 75, 75">
+                    </div>
                 </div>
-                <!-- Wrapper for secondary logo svg that shows on hover -->
-                <div class = "logo-wrapper logo-hover u-hidden "id = "parallax-logo-hover">
-                    <Icon class = "hover-text" name = "icon-green-supply" width = "75" height = "75" viewBox="0, 0, 75, 75">
+
+                <div class = "role-section" id = "role-section">
+                    <div class = "title-role-background" id = "parallax-role-background" aria-hidden="true"></div>
+                    <div class = "role-wrapper">
+                        <h2 class = "title-role-text u-mt-1.5 glitchable hover-text" id = "parallax-title-role">Developer</h2>
+                    </div>
                 </div>
-                <h2 class = "title-role-text u-mt-1.5 glitchable hover-text" id = "parallax-title-role">Developer</h2>
             </div>
         </div>
         <!-- Alternate hero-content div for when the accessibility mode is selected -->
         <div class="hero-content-alt" id = "hero-content-alt">
-           <h1 class = "title-name-text title-name-color-alt glitchable hover-text" id = "parallax-title-name">Leo Strangman.</h1>
-        <!-- Secondary heading text/svg -->
-           <div class = "logo-role-wrapper-alt">
-               <div class = "logo-wrapper" id = "parallax-title-logo">
-                    <Icon class = "hover-text" name = "icon-green-supply" width = "75" height = "75" viewBox="0, 0, 75, 75">
-               </div>
-               <h2 class = "title-role-text u-mt-1.5 glitchable hover-text" id = "parallax-title-role">Developer</h2>
-           </div>
+            <div class = "name-section">
+                <h1 class = "title-name-text title-name-color-alt glitchable hover-text" id = "parallax-title-name">Leo Strangman.</h1>
+            </div>
+            <div class = "bottom-row">
+                <div class = "logo-section">
+                    <div class = "logo-wrapper-alt" id = "parallax-title-logo">
+                        <Icon class = "hover-text" name = "icon-green-supply">
+                    </div>
+                </div>
+                <div class = "role-section">
+                    <div class = "role-wrapper-alt">
+                        <h2 class = "title-role-text u-mt-1.5 glitchable hover-text" id = "parallax-title-role">Developer</h2>
+                    </div>
+                </div>
+            </div>
        </div>
     </div>
 

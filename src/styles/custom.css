@@ -266,19 +266,13 @@ html body {
 /* Styles for hero content at the bottom left of the hero page */
 .hero-content {
     position: absolute;
-    display: grid;
+    width: calc(889.6px + 155px);
     bottom: 20px;
     left: 20px;
     font-size: 2rem;
+    height: auto;
     mix-blend-mode: normal;
 }
-
-.logo-name-row {
-  display: flex;
-  align-items: center;
-  gap: 1em; /* or whatever spacing you want */
-}
-
 /* Alt hero-content div for accessibility mode */
 .hero-content-alt {
     position: absolute;
@@ -289,23 +283,20 @@ html body {
     mix-blend-mode: normal;
 }
 
-/* Styles for background divs when highlighting the title text */
-.title-name-background,
-.title-logo-background,
-.title-role-background {
-    position: absolute;
-    z-index: 1;
-    background-color: transparent;
-    pointer-events: none;
-
+.name-section {
+    position: relative;
+    width: 891px;
+    height: 117.4px;
+    bottom: 0;
 }
 
 .title-name-background {
-    width: 889.6px;
-    height: 117.4px;
+    position: absolute;
     top: 5.3px;
-    bottom: 0;
     left: 0;
+    width: 890.2px;
+    height: 100%;
+    background-color: transparent;
 }
 
 .hovered-bg {
@@ -313,28 +304,18 @@ html body {
     color: var(--primary-contrast-color) !important;
 }
 
-.title-logo-background {
-    width: 99px;
-    height: 133px;
-    bottom: 9px;
-    left: 0;
-}
-
-.title-role-background {
-    width: 155px;
-    height: 133px;
-    bottom: 9px;
-    left: 97.5px;
-}
 
 /* Styles for the name text */
 .title-name-text {
     position: relative;
+    width: 100%;
+    display: flex;
     z-index: 2;
     font-family: var(--main-font-family);
     font-size: clamp(3rem, 17.5vw, 4em);
     line-height: 1;
     margin-left: 0px;
+    bottom: 0;
 }
 
 .title-name-text::selection {
@@ -359,34 +340,98 @@ html body {
     mix-blend-mode: normal;
 }
 
-/* Styles for both logo-role-wrappers */
-.logo-role-wrapper,
-.logo-role-wrapper-alt {
-    position: relative;
-    z-index: 2;
+.bottom-row {
     display: flex;
-    align-items: center;
-    gap: 0.5em;
-    margin-left: 7px;
-    margin-bottom: 9px;
+    height: 133px;
+    color: var(--primary-color);
     font-family: var(--main-font-family);
-    line-height: 1;
-}
-
-#parallax-title-logo,
-#parallax-title-role {
     user-select: none;
 }
 
-/* Styles for the wrapper around the logo svg and role text */
-.logo-role-wrapper {
-    height: 127px;
-    width: 250px;
-    color: var(--primary-color);
+.logo-section {
+    position: relative;
+    width: 100px;
+    height: 100%;
+}
+
+.title-logo-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    mix-blend-mode: normal !important;
+}
+
+.logo-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    margin-left: 7px;
     mix-blend-mode: exclusion;
 }
 
-.logo-role-wrapper-hover {
+.logo-wrapper-alt {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    margin-left: 7px;
+    mix-blend-mode: normal;
+}
+
+.logo-hover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    margin-left: 7px;
+    display: none;
+    mix-blend-mode: normal;
+}
+
+.role-section {
+    position: relative;
+    width: 155px;
+    height: 100%;
+}
+
+.title-role-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    mix-blend-mode: normal !important;
+}
+
+.role-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    mix-blend-mode: exclusion;
+}
+
+.role-wrapper-alt {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    mix-blend-mode: normal;
+    color: var(--primary-contrast-color);
+}
+
+.role-wrapper-hover {
     color: var(--primary-contrast-color);
     mix-blend-mode: normal;
 }
@@ -394,26 +439,6 @@ html body {
 .role-color-hover {
     color: var(--primary-contrast-color) !important;
     mix-blend-mode: normal !important;
-}
-
-/*Alt version of logo-role-wrapper for accessibility mode */
-.logo-role-wrapper-alt {
-    height: 127px;
-    width: 250px;
-    color: var(--primary-contrast-color);
-    mix-blend-mode: normal;
-}
-
-/* Styles for specificially the logo svg wrapper */
-.logo-wrapper {
-    user-select: none;
-    cursor: default;
-}
-
-/* Styles for hovered svg version */
-.logo-hover {
-    position: absolute;
-    left: 0;
 }
 
 /* Page background, set on a page-by-page basis, automatically updated in footer */
@@ -525,12 +550,6 @@ html body {
     }
 }
 
-@media (max-width: 911px) {
-    .logo-role-wrapper, .logo-role-wrapper-alt {
-        margin-left: 6px;
-    }
-}
-
 /*Properties for larger screens */
 @media (min-width: 911px) {
     .accessibility-background {
@@ -560,35 +579,56 @@ html body {
         height: 16rem;
         overflow: hidden;
     }
+
+    .name-section {
+        height: 92.2px;
+    }
     .title-name-background {
         width: 667px;
         height: 88px;
-        top: 4.3px;
-        bottom: 0px;
+        top: 3.3px;
         left: 0;
     }
-    .title-logo-background {
-        width: 94px;
-        height: 130.6px;
-        bottom: 9px;
-        left: 0;
-    }
+
+    .title-logo-background,
     .title-role-background {
-        width: 155px;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+    }
+
+    .bottom-row {
         height: 130.6px;
-        bottom: 9px;
-        left: 94.4px;
+    }
+
+    .hero-content {
+        width: calc(669px + 155px);
+    }
+
+    .logo-wrapper {
+        margin-left: 6px;
     }
 }
 
 @media (min-width: 500px) and (max-width: 720px) {
     .title-name-text {
-        font-size: 12vw;
+        font-size: clamp(4.2rem, 12vw, 8rem);
     }
     .accessibility-background {
         width: 43rem;
         height: 15rem;
         overflow: hidden;
+    }
+}
+
+@media (max-width: 720px) {
+    .logo-wrapper {
+        margin-left: 5px;
+    }
+
+    .name-section {
+        height: 70px;
     }
 }
 
@@ -785,10 +825,6 @@ html body {
 
     .button-desktop {
         display: none;
-    }
-
-    .logo-role-wrapper, .logo-role-wrapper-alt {
-        margin-left: 5px;
     }
 }
 

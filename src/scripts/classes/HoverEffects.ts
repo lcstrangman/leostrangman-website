@@ -9,9 +9,10 @@ export class HoverEffects {
     private static background: HTMLElement | null = null;
     private static logoBackground: HTMLElement | null = null;
     private static roleBackground: HTMLElement | null = null;
-    private static logoRoleWrapper: HTMLElement | null = null;
-    private static logoWrapper: HTMLElement | null = null;
+    private static logoSection: HTMLElement | null = null;
+    private static roleSection: HTMLElement | null = null;
     private static roleWrapper: HTMLElement | null = null;
+    private static bottomRow: HTMLElement | null = null;
     private static role: HTMLElement | null = null;
     private static logo: HTMLElement | null = null;
     private static logoHover: HTMLElement | null = null;
@@ -34,9 +35,9 @@ export class HoverEffects {
         this.background = document.getElementById("parallax-name-background");
         this.logoBackground = document.getElementById("parallax-logo-background");
         this.roleBackground = document.getElementById("parallax-role-background");
-        this.logoRoleWrapper = document.getElementById('logo-role-wrapper');
-        this.logoWrapper = document.getElementById('logo-wrapper');
-        this.roleWrapper = document.getElementById('role-wrapper');
+        this.logoSection = document.getElementById('logo-section');
+        this.roleSection = document.getElementById('role-section');
+        this.roleWrapper = document.querySelector('.role-wrapper');
         this.role = document.getElementById("parallax-title-role");
         this.logo = document.getElementById("parallax-title-logo");
         this.logoHover = document.getElementById("parallax-logo-hover");
@@ -45,7 +46,7 @@ export class HoverEffects {
         this.accessibilityButton = document.getElementById('parallax-accessibility');
 
         this.hoverTexts = document.querySelectorAll('.hover-text');
-        this.hoverTargets = [this.name, this.logoRoleWrapper].filter(Boolean) as HTMLElement[];
+        this.hoverTargets = [this.name, this.logoSection, this.roleSection].filter(Boolean) as HTMLElement[];
 
         // Combined media query: hover capability AND minimum screen width
         const mediaQuery = window.matchMedia('(hover: hover) and (min-width: 721px)');
@@ -76,7 +77,10 @@ export class HoverEffects {
         this.background = null;
         this.logoBackground = null;
         this.roleBackground = null;
-        this.logoRoleWrapper = null;
+        this.bottomRow = null;
+        this.logoSection = null;
+        this.roleSection = null;
+        this.roleWrapper = null;
         this.role = null;
         this.logo = null;
         this.logoHover = null;
@@ -116,7 +120,7 @@ export class HoverEffects {
         this.name?.classList.remove('title-name-color');
         this.name?.classList.add('title-name-color-hover');
         this.role?.classList.add('role-color-hover');
-        this.logoRoleWrapper?.classList.add('logo-role-wrapper-hover');
+        this.roleWrapper?.classList.add('role-wrapper-hover');
         this.logoHover?.classList.remove('display-none');
         this.logoHover?.classList.add('display');
     };
@@ -130,7 +134,7 @@ export class HoverEffects {
         this.name?.classList.add('title-name-color');
         this.name?.classList.remove('title-name-color-hover');
         this.role?.classList.remove('role-color-hover');
-        this.logoRoleWrapper?.classList.remove('logo-role-wrapper-hover');
+        this.roleWrapper?.classList.remove('role-wrapper-hover');
         this.logo?.setAttribute("name", "icon-amber-supply");
         this.logoHover?.classList.remove('display');
         this.logoHover?.classList.add('display-none');
