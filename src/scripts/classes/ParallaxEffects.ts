@@ -8,8 +8,9 @@ export class ParallaxEffects {
     private static name: HTMLElement | null = null;
     private static background: HTMLElement | null = null;
     private static logoBackground: HTMLElement | null = null;
+    private static logoBackgroundInvisible: HTMLElement | null = null;
     private static roleBackground: HTMLElement | null = null;
-    private static logoRoleWrapper: HTMLElement | null = null;
+    private static roleBackgroundInvisible: HTMLElement | null = null;
     private static role: HTMLElement | null = null;
     private static logo: HTMLElement | null = null;
     private static logoHover: HTMLElement | null = null;
@@ -33,8 +34,9 @@ export class ParallaxEffects {
         this.name = document.getElementById("parallax-title-name");
         this.background = document.getElementById("parallax-name-background");
         this.logoBackground = document.getElementById("parallax-logo-background");
+        this.logoBackgroundInvisible = document.querySelector('.title-logo-background-invisible');
         this.roleBackground = document.getElementById("parallax-role-background");
-        this.logoRoleWrapper = document.getElementById('logo-role-wrapper');
+        this.roleBackgroundInvisible = document.querySelector('.title-role-background-invisible');
         this.role = document.getElementById("parallax-title-role");
         this.logo = document.getElementById("parallax-title-logo");
         this.logoHover = document.getElementById("parallax-logo-hover");
@@ -67,8 +69,9 @@ export class ParallaxEffects {
         this.name = null;
         this.background = null;
         this.logoBackground = null;
+        this.logoBackgroundInvisible = null;
         this.roleBackground = null;
-        this.logoRoleWrapper = null;
+        this.roleBackgroundInvisible = null;
         this.role = null;
         this.logo = null;
         this.logoHover = null;
@@ -87,8 +90,10 @@ export class ParallaxEffects {
         if (this.background) this.background.style.transform = `translateY(${scrollY * -0.27}px)`;
         if (this.role) this.role.style.transform = `translateY(${scrollY * -0.15}px)`;
         if (this.roleBackground) this.roleBackground.style.transform = `translateY(${scrollY * -0.15}px)`;
+        if (this.roleBackgroundInvisible) this.roleBackgroundInvisible.style.transform = `translateY(${scrollY * -0.15}px)`;
         if (this.logo) this.logo.style.transform = `translateY(${scrollY * -0.2}px)`;
         if (this.logoBackground) this.logoBackground.style.transform = `translateY(${scrollY * -0.2}px)`;
+        if (this.logoBackgroundInvisible) this.logoBackgroundInvisible.style.transform = `translateY(${scrollY * -0.2}px)`;
         if (this.logoHover) this.logoHover.style.transform = `translateY(${scrollY * -0.2}px)`;
 
         if (this.circle &&

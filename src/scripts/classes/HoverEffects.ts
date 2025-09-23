@@ -9,10 +9,9 @@ export class HoverEffects {
     private static background: HTMLElement | null = null;
     private static logoBackground: HTMLElement | null = null;
     private static roleBackground: HTMLElement | null = null;
-    private static logoSection: HTMLElement | null = null;
-    private static roleSection: HTMLElement | null = null;
+    private static logoBackgroundInvisible: HTMLElement | null = null;
+    private static roleBackgroundInvisible: HTMLElement | null = null;
     private static roleWrapper: HTMLElement | null = null;
-    private static bottomRow: HTMLElement | null = null;
     private static role: HTMLElement | null = null;
     private static logo: HTMLElement | null = null;
     private static logoHover: HTMLElement | null = null;
@@ -34,9 +33,9 @@ export class HoverEffects {
         this.name = document.getElementById("parallax-title-name");
         this.background = document.getElementById("parallax-name-background");
         this.logoBackground = document.getElementById("parallax-logo-background");
+        this.logoBackgroundInvisible = document.querySelector('.title-logo-background-invisible');
         this.roleBackground = document.getElementById("parallax-role-background");
-        this.logoSection = document.getElementById('logo-section');
-        this.roleSection = document.getElementById('role-section');
+        this.roleBackgroundInvisible = document.querySelector('.title-role-background-invisible');
         this.roleWrapper = document.querySelector('.role-wrapper');
         this.role = document.getElementById("parallax-title-role");
         this.logo = document.getElementById("parallax-title-logo");
@@ -46,7 +45,7 @@ export class HoverEffects {
         this.accessibilityButton = document.getElementById('parallax-accessibility');
 
         this.hoverTexts = document.querySelectorAll('.hover-text');
-        this.hoverTargets = [this.name, this.logoSection, this.roleSection].filter(Boolean) as HTMLElement[];
+        this.hoverTargets = [this.name, this.logoBackgroundInvisible, this.role, this.roleBackgroundInvisible].filter(Boolean) as HTMLElement[];
 
         // Combined media query: hover capability AND minimum screen width
         const mediaQuery = window.matchMedia('(hover: hover) and (min-width: 721px)');
@@ -77,9 +76,8 @@ export class HoverEffects {
         this.background = null;
         this.logoBackground = null;
         this.roleBackground = null;
-        this.bottomRow = null;
-        this.logoSection = null;
-        this.roleSection = null;
+        this.logoBackgroundInvisible = null;
+        this.roleBackgroundInvisible = null;
         this.roleWrapper = null;
         this.role = null;
         this.logo = null;
