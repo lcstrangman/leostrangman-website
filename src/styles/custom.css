@@ -46,6 +46,19 @@
     font-style: normal;
 }
 
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+}
+
 .site-container {
     max-width: 1920px;
     margin: 0 auto;
@@ -260,6 +273,12 @@ html body {
     mix-blend-mode: normal;
 }
 
+.logo-name-row {
+  display: flex;
+  align-items: center;
+  gap: 1em; /* or whatever spacing you want */
+}
+
 /* Alt hero-content div for accessibility mode */
 .hero-content-alt {
     position: absolute;
@@ -315,6 +334,7 @@ html body {
     font-family: var(--main-font-family);
     font-size: clamp(3rem, 17.5vw, 4em);
     line-height: 1;
+    margin-left: 0px;
 }
 
 .title-name-text::selection {
@@ -347,7 +367,7 @@ html body {
     display: flex;
     align-items: center;
     gap: 0.5em;
-    margin-left: 9px;
+    margin-left: 7px;
     margin-bottom: 9px;
     font-family: var(--main-font-family);
     line-height: 1;
@@ -505,6 +525,12 @@ html body {
     }
 }
 
+@media (max-width: 911px) {
+    .logo-role-wrapper, .logo-role-wrapper-alt {
+        margin-left: 6px;
+    }
+}
+
 /*Properties for larger screens */
 @media (min-width: 911px) {
     .accessibility-background {
@@ -533,6 +559,25 @@ html body {
         width: 44rem;
         height: 16rem;
         overflow: hidden;
+    }
+    .title-name-background {
+        width: 667px;
+        height: 88px;
+        top: 4.3px;
+        bottom: 0px;
+        left: 0;
+    }
+    .title-logo-background {
+        width: 94px;
+        height: 130.6px;
+        bottom: 9px;
+        left: 0;
+    }
+    .title-role-background {
+        width: 155px;
+        height: 130.6px;
+        bottom: 9px;
+        left: 94.4px;
     }
 }
 
@@ -740,6 +785,10 @@ html body {
 
     .button-desktop {
         display: none;
+    }
+
+    .logo-role-wrapper, .logo-role-wrapper-alt {
+        margin-left: 5px;
     }
 }
 

@@ -1,5 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import InteractiveSection from '../components/InteractiveSection/InteractiveSection.astro';
+import ResumeBox from '../components/ResumeBox/ResumeBox.astro';
+import ScrollingFooter from '../components/ScrollingFooter/ScrollingFooter.astro';
 ---
 <!-- Import layout with set variables for page name and color scheme -->
 <Layout title="Leo Strangman." 
@@ -21,45 +24,23 @@ import Layout from '../layouts/Layout.astro';
             <div class="line-container hover-text u-h-[50vh] u-w-full" id="lines-wrapper"></div>
 
             <!-- Content section with work box -->
-            <div class="interactive-section u-mt-fluid-xl u-min-h-[50vh] u-w-full">
-                <div class="section-title glitchable hover-text">/* MASSACHUSETTS GENERAL HOSPITAL */</div>
-                <div class="section-divider"></div>
-                <div class="content-container">
-                    <div class="image-display-area">
-                        <div class="preview-image" id="preview-image"></div>
-                    </div>
-                    <div class="boxes-container" data-prefix = "/work-">
-                        <div class="bullet-box" data-image="bullet1">
-                            <span class="justify-stretch bullet-title glitchable hover-text tracking-work-1">Front and back-end website development for the Neural Systems Group</span>
-                        </div>
-                        <div class="bullet-box" data-image="bullet2">
-                            <span class="justify-stretch bullet-title glitchable hover-text tracking-work-2">Automated data analysis collected with biomedical research equipment</span>
-                        </div>
-                        <div class="bullet-box" data-image="bullet3">
-                            <span class="justify-stretch bullet-title glitchable hover-text tracking-work-3">Supported design of a novel biomedical monitoring and brain imaging system</span>
-                        </div>
-                        <div class="bullet-box" data-image="bullet4">
-                            <span class="justify-stretch bullet-title glitchable hover-text tracking-work-4">Aided in redesigning and fabricating housing and sensor components</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <InteractiveSection
+                title='MASSACHUSETTS GENERAL HOSPITAL'
+                dataPrefix="/work-"
+                bullets={[
+                    'Front and back-end website development for the Neural Systems Group',
+                    'Automated data analysis collected with biomedical research equipment',
+                    'Supported design of a novel biomedical monitoring and brain imaging system',
+                    'Aided in redesigning and fabricating housing and sensor components'
+                ]}
+                sectionIndex={0}>
+            </InteractiveSection>
+
             <!-- Resume page link box -->
-            <div class="resume-box-wrapper u-mt-fluid-xl u-w-full">
-                <div class="u-w-full resume-box u-text-center u-flex u-items-center u-justify-center">
-                    <a class = "glitchable resume-box-text u-tracking-wide hover-text" href="/resume">RESUME</a>
-                </div>
-            </div>
+            <ResumeBox mode = "view"/>
 
             <!-- Container for automatically scrolling text above footer -->
-            <div class="scroll-container u-mt-fluid-xl u-h-[50vh] u-w-full">
-                <ul class="scroll-track">
-                    <li class="scroll-text hover-text glitchable">©2025</li>
-                    <li class="scroll-text hover-text glitchable">/* Designed and Developed by LCS */</li>
-                    <li class="scroll-text hover-text glitchable">©2025</li>
-                    <li class="scroll-text hover-text glitchable">/* Open to Work */</li>
-                </ul>
-            </div>
+            <ScrollingFooter/>
         </div>
     </div>
 </Layout>

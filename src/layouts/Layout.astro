@@ -6,6 +6,7 @@ import { defaultSeo, type Seo } from '@data/seo';
 import { getSeo } from '@scripts/utils/seo';
 import Icon from '@components/Icon/Icon.astro';
 
+
 interface Props {
     title?: string;
     seo?: Seo;
@@ -64,29 +65,31 @@ const seoData = getSeo(seo, defaultSeo, title, currentUrl);
            --quaternary-contrast-color: ${quaternaryContrastColor};
            --page-title: ${pageTitle};`}>
         <!-- Mouse follower -->
-        <div class="mouse-circle"></div>
+        <div class="mouse-circle" aria-hidden="true"></div>
 
         <!-- Loading screens -->
-        <div id="initial-screen">
-            <div class="icon-wrapper u-select-none">
-                <Icon class="hover-text" name="icon-amber-supply" />
-            </div>
-        </div>
-
-        <div id="loading-screen">
-            <div class="loading-content">
-                <div class="logo-name u-flex u-flex-row">
+        <div role="banner" aria-label="Loading Screen">
+            <div id="initial-screen">
+                <div class="icon-wrapper u-select-none">
                     <Icon class="hover-text" name="icon-amber-supply" />
-                    <span class="loading-name-text">Leo Strangman</span>
                 </div>
-                <p class="loading-note">For the full animated experience, use a desktop browser</p>
             </div>
-        </div>
 
-        <div id="pixel-transition"></div>
+            <div id="loading-screen">
+                <div class="loading-content">
+                    <div class="logo-name u-flex u-flex-row">
+                        <Icon class="hover-text" name="icon-amber-supply" />
+                        <span class="loading-name-text">Leo Strangman</span>
+                    </div>
+                    <p class="loading-note">For the full animated experience, use a desktop browser</p>
+                </div>
+            </div>
+
+            <div id="pixel-transition"></div>
+        </div>
 
         <!-- Main content -->
-        <div class="site-container">
+        <div class="site-container" role="main">
             <main
                 id="swup"
                 class="transition-fade"
@@ -112,7 +115,7 @@ const seoData = getSeo(seo, defaultSeo, title, currentUrl);
             >
                 <div>&copy;{new Date().getFullYear()}</div>
                 <nav class="font-nikkei footer-selection u-flex u-gap-gutter">
-                    <a class="glitchable hover-text" href="/">Index</a>
+                    <a class="glitchable hover-text" href="/">Home</a>
                     <a class="glitchable hover-text" href="/projects">Projects</a>
                     <a class="glitchable hover-text" href="/work">My Work</a>
                     <a class="glitchable hover-text" href="/about">About Me</a>

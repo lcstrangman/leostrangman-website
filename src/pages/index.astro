@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Image from '@components/Image/Image.astro';
 import Icon from '@components/Icon/Icon.astro';
+import ScrollingFooter from '../components/ScrollingFooter/ScrollingFooter.astro';
 ---
 <!-- Import layout with set variables for page name and color scheme -->
 <Layout title="Leo Strangman." 
@@ -15,22 +16,22 @@ import Icon from '@components/Icon/Icon.astro';
         quaternaryContrastColor="#3a2d2d"
         pageTitle = "INDEX">
     <!-- Hero Section Container -->
-    <div class="hero" id="parallax-hero">
+    <div class="hero" id="parallax-hero" role="banner" aria-label="Hero Section">
         <!-- Fullscreen background image as canvas -->
-        <canvas class = "hero-canvas" id = "parallax-canvas"></canvas>
+        <canvas class = "hero-canvas" id = "parallax-canvas" aria-hidden="true"></canvas>
 
         <!-- Accessibility background for title text -->
-        <div class = "accessibility-background hidden" id = "accessibility-background"></div>
+        <div class = "accessibility-background hidden" id = "accessibility-background" aria-hidden="true"></div>
         <!-- Accessibility background toggle -->
         <div class="accessibility-wrapper" id = "parallax-accessibility">
-            <div class="accessibility-button glitchable hover-text" aria-label="Accessibility Options">Accessible Mode</div>
+            <button class="accessibility-button glitchable hover-text" aria-label="Toggle Accessibility Mode" aria-pressed="false">Accessible Mode</button>
         </div>
         <!-- Text/svg logo in hero section -->
         <div class="hero-content" id = "hero-content-primary">
             <!-- Name text -->
-            <div class = "title-name-background" id = "parallax-name-background"></div>
-            <div class = "title-logo-background" id = "parallax-logo-background"></div>
-            <div class = "title-role-background" id = "parallax-role-background"></div>
+            <div class = "title-name-background" id = "parallax-name-background" aria-hidden="true"></div>
+            <div class = "title-logo-background" id = "parallax-logo-background" aria-hidden="true"></div>
+            <div class = "title-role-background" id = "parallax-role-background" aria-hidden="true"></div>
             <h1 class = "title-name-text title-name-color glitchable hover-text" id = "parallax-title-name">Leo Strangman.</h1>
             <!-- Secondary heading text/svg -->
             <div class = "logo-role-wrapper" id = "logo-role-wrapper">
@@ -80,33 +81,26 @@ import Icon from '@components/Icon/Icon.astro';
             <div class="u-mt-12 u-grid u-grid-cols-2 u-gap-gutter">
             <!-- Image container with pixelated canvas acting as the real image -->
                 <div class = "image-wrapper u-w-full u-h-full">
-                    <canvas class = "pixel-canvas"></canvas>
+                    <canvas class = "pixel-canvas" aria-hidden="true"></canvas>
                     <Image
                         class = "source-image"
                         src= {import('@images/scenery.jpg')}
-                        alt = "Scenery"
+                        alt = "Mountain Scenery"
                         caption=""
                     />
                 </div>
                 <div class = "image-wrapper u-w-full u-h-full">
-                    <canvas class = "pixel-canvas"></canvas>
+                    <canvas class = "pixel-canvas" aria-hidden="true"></canvas>
                     <Image
                         class = "source-image"
                         src={import('@images/leostrangman.jpg')}
-                        alt = "Leo Strangman"
+                        alt = "Portrait photograph of Leo Strangman"
                         caption=""
                     />
                 </div>
             </div>
             <!-- Container for automatically scrolling text above footer -->
-            <div class = "scroll-container u-w-full u-mt-fluid-xl u-h-[50vh]">
-                <ul class = "scroll-track">
-                    <li class = "scroll-text hover-text glitchable">©2025</li>
-                    <li class = "scroll-text hover-text glitchable">/* Designed and Developed by LCS */</li>
-                    <li class = "scroll-text hover-text glitchable">©2025</li>
-                    <li class = "scroll-text hover-text glitchable">/* Open to Work */</li>
-                </ul>
-            </div>
+            <ScrollingFooter/>
         </div>
     </div>
 </Layout>

@@ -1,5 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ResumeBox from '../components/ResumeBox/ResumeBox.astro';
+import ScrollingFooter from '../components/ScrollingFooter/ScrollingFooter.astro';
 ---
 <Layout title="Leo Strangman." 
         primaryColor="#593636" 
@@ -19,7 +21,7 @@ import Layout from '../layouts/Layout.astro';
             <div class="scroll-container-manual u-mt-fluid-xl u-w-full">
                 <ul class="scroll-track-manual">
                     <li class="scroll-text-manual">
-                        <div class = "scroll-section-title hover-text glitchable">/* Hi, I am Leo Strangman [LCS] */</div>
+                        <h2 class = "scroll-section-title hover-text glitchable">/* Hi, I am Leo Strangman [LCS] */</h2>
                         <ul class = "vertical-list">
                             <li class = "vertical-item hover-text glitchable u-mt-s"> I am a developer and designer who loves to combine innovative technology with unique design </li>
                             <li class = "vertical-item hover-text glitchable"> I have always been fascinated by computers - the physical hardware and the software that brings it to life</li>
@@ -28,7 +30,7 @@ import Layout from '../layouts/Layout.astro';
                         </ul>
                     </li>
                     <li class="scroll-text-manual">
-                        <div class = "scroll-section-title hover-text glitchable">/* I am a Senior CS/DS Student */</div>
+                        <h2 class = "scroll-section-title hover-text glitchable">/* I am a Senior CS/DS Student */</h2>
                         <ul class = "vertical-list">
                             <li class = "vertical-item hover-text glitchable u-mt-s"> Originally from Boxford, MA, I currently attend Worcester Polytechnic Institute </li>
                             <li class = "vertical-item hover-text glitchable"> I have enjoyed learning about software engineering, web development, UI/UX design, AI/ML, and data science </li>
@@ -37,7 +39,7 @@ import Layout from '../layouts/Layout.astro';
                         </ul>
                     </li>
                     <li class="scroll-text-manual">
-                        <div class = "scroll-section-title hover-text glitchable">/* My Experience */</div>
+                        <h2 class = "scroll-section-title hover-text glitchable">/* My Experience */</h2>
                         <ul class = "vertical-list">
                             <li class = "vertical-item hover-text glitchable u-mt-s"> I completed an internship with Massachusetts General Hospital working on space medicine research </li>
                             <li class = "vertical-item hover-text glitchable"> I redeveloped websites for multiple labs and organizations within Massachusetts General Hospital </li>
@@ -46,7 +48,7 @@ import Layout from '../layouts/Layout.astro';
                         </ul>
                     </li>
                     <li class="scroll-text-manual">
-                        <div class = "scroll-section-title hover-text glitchable">/* I Am Open to Work */</div>
+                        <h2 class = "scroll-section-title hover-text glitchable">/* I Am Open to Work */</h2>
                         <ul class = "vertical-list">
                             <li class = "vertical-item hover-text glitchable u-mt-s"> I am looking for my first full-time role where I can meaningfully contribute to a team </li>
                             <li class = "vertical-item hover-text glitchable"> I am eager to continue my growth as a developer and see the real-world impacts of my abilities </li>
@@ -57,20 +59,9 @@ import Layout from '../layouts/Layout.astro';
                 </ul>
             </div>
 
-            <div class="resume-box-wrapper u-mt-fluid-xl u-w-full">
-                <div class="u-w-full resume-box u-text-center u-flex u-items-center u-justify-center">
-                    <a class = "glitchable resume-box-text u-tracking-wide hover-text" href="/resume">RESUME</a>
-                </div>
-            </div>
+            <ResumeBox mode = "view"/>
 
-            <div class="scroll-container u-mt-fluid-xl u-h-[50vh] u-w-full">
-                <ul class="scroll-track">
-                    <li class="scroll-text hover-text glitchable">©2025</li>
-                    <li class="scroll-text hover-text glitchable">/* Designed and Developed by LCS */</li>
-                    <li class="scroll-text hover-text glitchable">©2025</li>
-                    <li class="scroll-text hover-text glitchable">/* Open to Work */</li>
-                </ul>
-            </div>
+            <ScrollingFooter/>
         </div>
     </div>
 </Layout>

@@ -27,3 +27,8 @@ F9E076 (Similar)
 E6BE8A (Muted)
 F8E9A1 (Lighter)
 F7DC6F (Darker)
+
+
+ACCESSIBILITY:
+Aria labels, make sure loading screen is defined
+Make sure that browser scaling too high makes the hover background disable on the hero section

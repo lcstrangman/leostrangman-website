@@ -1,0 +1,39 @@
+---
+// InteractiveSection.astro
+
+export interface Props {
+  title?: string;
+  dataPrefix?: string;
+  bullets: string[]; // array of 1-4 bullet texts
+  sectionIndex?: number;
+}
+
+const { 
+  title = "/* leostrangman.com */", 
+  dataPrefix = "/projects-", 
+  bullets,
+  sectionIndex = 0
+} = Astro.props;
+---
+
+<div class="interactive-section u-mt-fluid-xl u-min-h-[50vh] u-w-full">
+    <h2 class="section-title glitchable hover-text">/* {title} */</h2>
+    <div class="section-divider" aria-hidden="true"></div>
+    
+    <div class="content-container">
+        <div class="image-display-area">
+            <div class="preview-image" id="preview-image" aria-hidden="true"></div>
+        </div>
+        
+        <ul class="boxes-container" data-prefix={dataPrefix}>
+            {bullets.slice(0,4).map((text, index) => {
+                const imageNumber = sectionIndex * 4 + index + 1;
+                return (
+                <li class="bullet-box" data-image={`bullet${imageNumber}`}>
+                    <span class="justify-stretch bullet-title glitchable hover-text">{text}</span>
+                </li>
+                );
+            })}
+        </ul>
+    </div>
+</div>

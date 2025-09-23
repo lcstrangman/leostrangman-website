@@ -1,5 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import InteractiveSection from '../components/InteractiveSection/InteractiveSection.astro';
+import ResumeBox from '../components/ResumeBox/ResumeBox.astro';
+import ScrollingFooter from '../components/ScrollingFooter/ScrollingFooter.astro';
 ---
 <!-- Import layout with set variables for page name and color scheme -->
 <Layout title="Leo Strangman." 
@@ -18,120 +21,63 @@ import Layout from '../layouts/Layout.astro';
         <!-- Matching wrapper to keep pages consistent -->
         <div class="link-box-wrapper">
             <!-- Canvas for the moving line header effect -->
-            <div class="line-container hover-text u-h-[50vh] u-w-full" id="lines-wrapper"></div>
+            <div class="line-container hover-text u-h-[50vh] u-w-full" id="lines-wrapper" role="region" aria-labelledby="projects-title"></div>
+            <h1 id="projects-title" class="sr-only">Projects</h1>
 
             <!-- Content section with experience box -->
-            <div class="interactive-section u-mt-fluid-xl u-min-h-[50vh] u-w-full">
-                <div class="section-title glitchable hover-text">/* leostrangman.com */</div>
-                <div class="section-divider"></div>
-                <div class="content-container">
-                    <div class="image-display-area">
-                        <div class="preview-image" id="preview-image"></div>
-                    </div>
-                    <div class="boxes-container" data-prefix = "/projects-">
-                        <div class="bullet-box" data-image="bullet1">
-                            <span class="justify-stretch bullet-title glitchable hover-text">Designed and developed personal portfolio website</span>
-                        </div>
-                        <div class="bullet-box" data-image="bullet2">
-                            <span class="justify-stretch bullet-title glitchable hover-text">Created by utilizing Astro, Tailwind, TypeScript, and Vercel</span>
-                        </div>
-                        <div class="bullet-box" data-image="bullet3">
-                            <span class="justify-stretch bullet-title glitchable hover-text">Fully responsive and animated design across the full website</span>
-                        </div>
-                        <div class="bullet-box" data-image="bullet4">
-                            <span class="justify-stretch bullet-title glitchable hover-text">Emphasized technical skill, aesthetic design, and accessibility</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <InteractiveSection
+                title='leostrangman.com'
+                dataPrefix="/projects-"
+                bullets={[
+                    'Designed and developed personal portfolio website',
+                    'Created by utilizing Astro, Tailwind, TypeScript, and Vercel',
+                    'Fully responsive and animated design across the full website',
+                    'Emphasized technical skill, aesthetic design, and accessibility'
+                ]}
+                sectionIndex={0}>
+            </InteractiveSection>
             <!-- Another content box -->
-            <div class="interactive-section u-mt-fluid-xl u-min-h-[50vh] u-w-full">
-                <div class="section-title glitchable hover-text">/* ResearchApp */</div>
-                <div class="section-divider"></div>
-                <div class="content-container">
-                    <div class="image-display-area">
-                        <div class="preview-image" id="preview-image"></div>
-                    </div>
-                    <div class="boxes-container" data-prefix = "/projects-">
-                        <div class="bullet-box" data-image="bullet5">
-                            <span class="justify-stretch bullet-title glitchable hover-text">Created application to post and apply to research positions at a university</span>
-                        </div>
-                        <div class="bullet-box" data-image="bullet6">
-                            <span class="justify-stretch bullet-title glitchable hover-text">Utilized RESTful APIs to manage user data, research listings, and applications</span>
-                        </div>
-                        <div class="bullet-box" data-image="bullet7">
-                            <span class="justify-stretch bullet-title glitchable hover-text">Managed class relationships and user information securely using SQL Alchemy and Python</span>
-                        </div>
-                        <div class="bullet-box" data-image="bullet8">
-                            <span class="justify-stretch bullet-title glitchable hover-text">Established a local server with Python and Flask to access on the university network</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <InteractiveSection
+                title='ResearchApp'
+                dataPrefix="/projects-"
+                bullets={[
+                    'Created application to post and apply to research positions at a university',
+                    'Utilized RESTful APIs to manage user data, research listings, and applications',
+                    'Managed class relationships and user information securely using SQL Alchemy and Python',
+                    'Established a local server with Python and Flask to access on the university network'
+                ]}
+                sectionIndex={1}>
+            </InteractiveSection>
             <!-- Another content box -->
-            <div class="interactive-section u-mt-fluid-xl u-min-h-[50vh] u-w-full">
-                <div class="section-title glitchable hover-text">/* Vehicle HUD Design */</div>
-                <div class="section-divider"></div>
-                <div class="content-container">
-                    <div class="image-display-area">
-                        <div class="preview-image" id="preview-image"></div>
-                    </div>
-                    <div class="boxes-container" data-prefix = "/projects-">
-                        <div class="bullet-box" data-image="bullet9">
-                            <span class="justify-stretch bullet-title glitchable hover-text">Designed heads-up display for use on many vehicles</span>
-                        </div>
-                        <div class="bullet-box" data-image="bullet10">
-                            <span class="justify-stretch bullet-title glitchable hover-text">Focused on limiting distraction and providing vital information</span>
-                        </div>
-                        <div class="bullet-box" data-image="bullet11">
-                            <span class="justify-stretch bullet-title glitchable hover-text">Based on HCI heuristics, qualitative user research, and interviews</span>
-                        </div>
-                        <div class="bullet-box" data-image="bullet12">
-                            <span class="justify-stretch bullet-title glitchable hover-text">Final HUD was chosen to be the most effective and satisfactory design</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <InteractiveSection
+                title='Vehicle HUD Design'
+                dataPrefix="/projects-"
+                bullets={[
+                    'Designed heads-up display for use on many vehicles',
+                    'Focused on limiting distraction and providing vital information',
+                    'Based on HCI heuristics, qualitative user research, and interviews',
+                    'Final HUD was chosen to be the most effective and satisfactory design'
+                ]}
+                sectionIndex={2}>
+            </InteractiveSection>
             <!-- Another content box -->
-            <div class="interactive-section u-mt-fluid-xl u-min-h-[50vh] u-w-full">
-                <div class="section-title glitchable hover-text">/* Exploiting Programs in C and Assembly */</div>
-                <div class="section-divider"></div>
-                <div class="content-container">
-                    <div class="image-display-area">
-                        <div class="preview-image" id="preview-image"></div>
-                    </div>
-                    <div class="boxes-container" data-prefix = "/projects-">
-                        <div class="bullet-box" data-image="bullet13">
-                            <span class="justify-stretch bullet-title glitchable hover-text">Analyzed decompiled C code to reverse engineer and exploit vulnerabilities</span>
-                        </div>
-                        <div class="bullet-box" data-image="bullet14">
-                            <span class="justify-stretch bullet-title glitchable hover-text">Crafted inputs and performed control flow manipulation</span>
-                        </div>
-                        <div class="bullet-box" data-image="bullet15">
-                            <span class="justify-stretch bullet-title glitchable hover-text">Executed advanced stack-based buffer overflow attacks</span>
-                        </div>
-                        <div class="bullet-box" data-image="bullet16">
-                            <span class="justify-stretch bullet-title glitchable hover-text">Implemented ROP chains to bypass security mechanisms</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <InteractiveSection
+                title='Exploiting Programs in C and Assembly'
+                dataPrefix="/projects-"
+                bullets={[
+                    'Analyzed decompiled C code to reverse engineer and exploit vulnerabilities',
+                    'Crafted inputs and performed control flow manipulation',
+                    'Executed advanced stack-based buffer overflow attacks',
+                    'Implemented ROP chains to bypass security mechanisms'
+                ]}
+                sectionIndex={3}>
+            </InteractiveSection>
+
             <!-- Resume page link box -->
-            <div class="resume-box-wrapper u-mt-fluid-xl u-h-[50vh] u-w-full">
-                <div class="u-w-full resume-box u-text-center u-flex u-items-center u-justify-center">
-                    <a class = "glitchable resume-box-text u-tracking-wide hover-text" href="/resume">RESUME</a>
-                </div>
-            </div>
+            <ResumeBox mode = "view"/>
 
             <!-- Container for automatically scrolling text above footer -->
-            <div class="scroll-container u-mt-fluid-xl u-h-[50vh] u-w-full">
-                <ul class="scroll-track">
-                    <li class="scroll-text hover-text glitchable">©2025</li>
-                    <li class="scroll-text hover-text glitchable">/* Designed and Developed by LCS */</li>
-                    <li class="scroll-text hover-text glitchable">©2025</li>
-                    <li class="scroll-text hover-text glitchable">/* Open to Work */</li>
-                </ul>
-            </div>
+            <ScrollingFooter/>
         </div>
     </div>
 </Layout>

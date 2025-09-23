@@ -70,9 +70,6 @@ export class ScrollAnimation {
                 const duplicatedItem = item.cloneNode(true) as HTMLElement;
                 duplicatedItem.setAttribute('aria-hidden', 'true');
                 duplicatedItem.classList.add('glitchable');
-                if (duplicatedItem.classList.contains('glitchable')) {
-                    this.setupGlitchable(duplicatedItem);
-                }
                 this.scrollTrack?.appendChild(duplicatedItem);
             });
         }
@@ -114,10 +111,5 @@ export class ScrollAnimation {
         });
 
         this.manualScrollTrigger = tl.scrollTrigger ?? null;
-    }
-
-    // Example placeholder: implement your glitchable setup here
-    private static setupGlitchable(element: HTMLElement): void {
-        // Optional: integrate glitch effect logic here
     }
 }

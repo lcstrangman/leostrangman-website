@@ -1,0 +1,26 @@
+---
+export interface Props {
+  mode?: "download" | "view"; // default: download
+}
+
+const { mode = "download" } = Astro.props;
+
+// Determine link href and text based on mode
+const linkHref = mode === "download" ? "/assets/pdfs/resume.pdf" : "/resume";
+const linkText = mode === "download" ? "DOWNLOAD" : "RESUME";
+
+// Set extra attributes for download mode
+const extraAttrs = mode === "download" ? { target: "_blank", rel: "noopener noreferrer" } : {};
+---
+
+<div class="resume-box-wrapper u-mt-fluid-xl u-w-full">
+  <div class="u-w-full resume-box u-text-center u-flex u-items-center u-justify-center">
+    <a
+      class="glitchable resume-box-text u-tracking-wide hover-text"
+      href={linkHref}
+      {...extraAttrs}
+    >
+      {linkText}
+    </a>
+  </div>
+</div>

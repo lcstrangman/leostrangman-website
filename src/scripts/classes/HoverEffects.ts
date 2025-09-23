@@ -10,6 +10,8 @@ export class HoverEffects {
     private static logoBackground: HTMLElement | null = null;
     private static roleBackground: HTMLElement | null = null;
     private static logoRoleWrapper: HTMLElement | null = null;
+    private static logoWrapper: HTMLElement | null = null;
+    private static roleWrapper: HTMLElement | null = null;
     private static role: HTMLElement | null = null;
     private static logo: HTMLElement | null = null;
     private static logoHover: HTMLElement | null = null;
@@ -33,6 +35,8 @@ export class HoverEffects {
         this.logoBackground = document.getElementById("parallax-logo-background");
         this.roleBackground = document.getElementById("parallax-role-background");
         this.logoRoleWrapper = document.getElementById('logo-role-wrapper');
+        this.logoWrapper = document.getElementById('logo-wrapper');
+        this.roleWrapper = document.getElementById('role-wrapper');
         this.role = document.getElementById("parallax-title-role");
         this.logo = document.getElementById("parallax-title-logo");
         this.logoHover = document.getElementById("parallax-logo-hover");
@@ -43,8 +47,8 @@ export class HoverEffects {
         this.hoverTexts = document.querySelectorAll('.hover-text');
         this.hoverTargets = [this.name, this.logoRoleWrapper].filter(Boolean) as HTMLElement[];
 
-        // Media query to enable/disable hover effects on non-hover devices
-        const mediaQuery = window.matchMedia('(hover: hover)');
+        // Combined media query: hover capability AND minimum screen width
+        const mediaQuery = window.matchMedia('(hover: hover) and (min-width: 721px)');
         mediaQuery.addEventListener('change', this.handleMediaChangeBound);
         this.handleMediaChange(mediaQuery);
 
@@ -57,7 +61,7 @@ export class HoverEffects {
         this.disableHoverEffects();
 
         // Remove media query listener
-        const mediaQuery = window.matchMedia('(hover: hover)');
+        const mediaQuery = window.matchMedia('(hover: hover) and (min-width: 721px)');
         mediaQuery.removeEventListener('change', this.handleMediaChangeBound);
 
         // Remove selection listener
