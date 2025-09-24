@@ -350,7 +350,7 @@ html body {
 
 .logo-section {
     position: relative;
-    width: 100px;
+    width: 102px;
     height: 100%;
 }
 
@@ -606,12 +606,12 @@ html body {
     }
 
     .name-section {
-        height: 92.2px;
+        height: 91px;
     }
     .title-name-background {
         width: 667px;
-        height: 88px;
-        top: 3.3px;
+        height: 87px;
+        top: 4.3px;
         left: 0;
     }
 
