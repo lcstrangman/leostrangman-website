@@ -24,15 +24,9 @@ import ScrollingFooter from '../components/ScrollingFooter/ScrollingFooter.astro
         <canvas class="hero-canvas" id="parallax-canvas" aria-hidden="true"></canvas>
 
         <!-- Accessibility background for title text -->
-        <div class="access-background hidden" id="accessibility-background" aria-hidden="true">
-        </div>
+        <div class="access-background hidden" id="accessibility-background" aria-hidden="true"></div>
         <!-- Accessibility background toggle -->
-        <button
-            class="access-button glitchable hover-text"
-            id="access-button"
-            aria-label="Toggle Accessibility Mode"
-            aria-pressed="false">Accessible Mode</button
-        >
+        <button class="access-button glitchable hover-text" id="access-button" aria-label="Toggle Accessibility Mode" aria-pressed="false">Accessible Mode</button>
         <!-- Text/svg logo in hero section -->
         <div class="hero-container" id="hero-content-primary">
             <!-- Name text -->
@@ -43,128 +37,81 @@ import ScrollingFooter from '../components/ScrollingFooter/ScrollingFooter.astro
             <div class="bottom-row">
                 <div class="icon-container" id="icon-container">
                     <div class="icon-background" id="icon-background"></div>
-                    <div
-                        class="icon-background-invisible hover-text"
-                        id="icon-background-invisible"
-                    >
-                    </div>
+                    <div class="icon-background-invisible hover-text" id="icon-background-invisible"></div>
                     <div class="svg-position hover-text" id="main-svg">
-                        <Icon
-                            name="icon-amber-supply"
-                            width="75"
-                            height="75"
-                            viewBox="0, 0, 75, 75"
-                        />
-                        <div class="svg-position secondary removed hover-text" id="secondary-svg">
-                            <Icon
-                                name="icon-green-supply"
-                                width="75"
-                                height="75"
-                                viewBox="0, 0, 75, 75"
-                            />
-                        </div>
-                        <div class="role-container" id="role-container">
-                            <div class="role-background" id="role-background"></div>
-                            <div
-                                class="role-background-invisible hover-text"
-                                id="role-background-invisible"
-                            >
-                            </div>
-                            <h2 class="role-text glitchable hover-text" id="role-text">
-                                Developer
-                            </h2>
-                        </div>
+                        <Icon name="icon-amber-supply" width="75" height="75" viewBox="0, 0, 75, 75"/>
+                    </div>
+                    <div class="svg-position secondary removed hover-text" id="secondary-svg">
+                        <Icon name="icon-green-supply" width="75" height="75" viewBox="0, 0, 75, 75"/>
                     </div>
                 </div>
-                <!-- Alternate hero-content div for when the accessibility mode is selected -->
-                <div class="hero-content-accessible removed" id="hero-content-accessible">
-                    <div class="name-container">
-                        <h1 class="name-text-accessible hover-text glitchable">Leo Strangman.</h1>
-                    </div>
-                    <div class="bottom-row">
-                        <div class="icon-container">
-                            <div class="svg-position secondary hover-text">
-                                <Icon
-                                    name="icon-green-supply"
-                                    width="75"
-                                    height="75"
-                                    viewBox="0, 0, 75, 75"
-                                />
-                            </div>
-                            <div class="role-container">
-                                <h2 class="role-text-accessible glitchable hover-text">
-                                    Developer
-                                </h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Div to correctly display parallax effect with background sliding over image -->
-                <div class="u-z-2 background-color u-relative">
-                    <!-- Matching wrapper to keep pages consistent -->
-                    <div class="link-box-wrapper">
-                        <!-- Standard boxes for page links -->
-                        <div
-                            class="link-box u-flex u-h-[50vh] u-w-full u-items-center u-justify-center u-text-center"
-                        >
-                            <a
-                                class="glitchable link-box-text hover-text u-tracking-wide"
-                                href="/projects">PROJECTS</a
-                            >
-                        </div>
-                        <div
-                            class="link-box u-mt-12 u-flex u-h-[50vh] u-w-full u-items-center u-justify-center u-text-center"
-                        >
-                            <a
-                                class="glitchable link-box-text tracking-work hover-text"
-                                href="/work">MY WORK</a
-                            >
-                        </div>
-                        <div
-                            class="link-box u-mt-12 u-flex u-h-[50vh] u-w-full u-items-center u-justify-center u-text-center"
-                        >
-                            <a
-                                class="glitchable link-box-text tracking-about hover-text"
-                                href="/about">ABOUT ME</a
-                            >
-                        </div>
-                        <div
-                            class="link-box u-mt-12 u-flex u-h-[50vh] u-w-full u-items-center u-justify-center u-text-center"
-                        >
-                            <a
-                                class="glitchable link-box-text tracking-contact hover-text"
-                                href="/contact">CONTACT</a
-                            >
-                        </div>
-
-                        <!-- Image grid -->
-                        <div class="u-mt-12 u-grid u-grid-cols-2 u-gap-gutter">
-                            <!-- Image container with pixelated canvas acting as the real image -->
-                            <div class="image-wrapper u-h-full u-w-full">
-                                <canvas class="pixel-canvas" aria-hidden="true"></canvas>
-                                <Image
-                                    class="source-image"
-                                    src={import('@images/scenery.jpg')}
-                                    alt="Mountain Scenery"
-                                    caption=""
-                                />
-                            </div>
-                            <div class="image-wrapper u-h-full u-w-full">
-                                <canvas class="pixel-canvas" aria-hidden="true"></canvas>
-                                <Image
-                                    class="source-image"
-                                    src={import('@images/leostrangman.jpg')}
-                                    alt="Portrait photograph of Leo Strangman"
-                                    caption=""
-                                />
-                            </div>
-                        </div>
-                        <!-- Container for automatically scrolling text above footer -->
-                        <ScrollingFooter />
-                    </div>
+                <div class="role-container" id="role-container">
+                    <div class="role-background" id="role-background"></div>
+                    <div class="role-background-invisible hover-text" id="role-background-invisible"></div>
+                    <h2 class="role-text glitchable hover-text" id="role-text">Developer</h2>
                 </div>
             </div>
         </div>
-    </div></Layout
->
+        <!-- Alternate hero-content div for when the accessibility mode is selected -->
+        <div class="hero-content-accessible removed" id="hero-content-accessible">
+            <div class="name-container">
+                <h1 class="name-text-accessible hover-text glitchable">Leo Strangman.</h1>
+            </div>
+            <div class="bottom-row">
+                <div class="icon-container">
+                    <div class="svg-position secondary hover-text">
+                        <Icon name="icon-green-supply" width="75" height="75" viewBox="0, 0, 75, 75"/>
+                    </div>
+                </div>
+                <div class="role-container">
+                    <h2 class="role-text-accessible glitchable hover-text">Developer</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Div to correctly display parallax effect with background sliding over image -->
+    <div class="u-z-2 background-color u-relative">
+        <!-- Matching wrapper to keep pages consistent -->
+        <div class="link-box-wrapper">
+            <!-- Standard boxes for page links -->
+            <div class="link-box u-flex u-h-[50vh] u-w-full u-items-center u-justify-center u-text-center">
+                <a class="glitchable link-box-text hover-text u-tracking-wide" href="/projects">PROJECTS</a>
+            </div>
+            <div class="link-box u-mt-12 u-flex u-h-[50vh] u-w-full u-items-center u-justify-center u-text-center">
+                <a class="glitchable link-box-text tracking-work hover-text" href="/work">MY WORK</a>
+            </div>
+            <div class="link-box u-mt-12 u-flex u-h-[50vh] u-w-full u-items-center u-justify-center u-text-center">
+                <a class="glitchable link-box-text tracking-about hover-text" href="/about">ABOUT ME</a>
+            </div>
+            <div class="link-box u-mt-12 u-flex u-h-[50vh] u-w-full u-items-center u-justify-center u-text-center" >
+                <a class="glitchable link-box-text tracking-contact hover-text" href="/contact">CONTACT</a>
+            </div>
+
+            <!-- Image grid -->
+            <div class="u-mt-12 u-grid u-grid-cols-2 u-gap-gutter">
+                <!-- Image container with pixelated canvas acting as the real image -->
+                <div class="image-wrapper u-h-full u-w-full">
+                    <canvas class="pixel-canvas" aria-hidden="true"></canvas>
+                    <Image
+                        class="source-image"
+                        src={import('@images/scenery.jpg')}
+                        alt="Mountain Scenery"
+                        caption=""
+                    />
+                </div>
+                <div class="image-wrapper u-h-full u-w-full">
+                    <canvas class="pixel-canvas" aria-hidden="true"></canvas>
+                    <Image
+                        class="source-image"
+                        src={import('@images/leostrangman.jpg')}
+                        alt="Portrait photograph of Leo Strangman"
+                        caption=""
+                    />
+                </div>
+            </div>
+            <!-- Container for automatically scrolling text above footer -->
+            <ScrollingFooter />
+        </div>
+    </div>
+</Layout>

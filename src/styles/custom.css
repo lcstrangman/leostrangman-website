@@ -260,7 +260,7 @@ html body {
     z-index: 2;
     font-size: 8rem;
     line-height: 0.92;
-    font-family: 'Supply';
+    font-family: var(--main-font-family);
     color: var(--primary-color);
     overflow: hidden;
     mix-blend-mode: exclusion;
@@ -367,7 +367,7 @@ html body {
     align-items: center;
     color: var(--primary-color);
     mix-blend-mode: exclusion;
-    font-family: 'Supply';
+    font-family: var(--main-font-family);
     font-size: 2rem;
     line-height: 1;
     margin-top: 0.4rem;
@@ -400,7 +400,7 @@ html body {
 .name-text-accessible {
     font-size: 8rem;
     line-height: 0.92;
-    font-family: 'Supply';
+    font-family: var(--main-font-family);
     color: var(--primary-contrast-color);
     overflow: hidden;
     white-space: nowrap;
@@ -411,7 +411,7 @@ html body {
     justify-content: center;
     align-items: center;
     color: var(--primary-contrast-color);
-    font-family: 'Supply';
+    font-family: var(--main-font-family);
     font-size: 2rem;
     line-height: 1;
     margin-top: 0.4rem;
@@ -426,7 +426,7 @@ html body {
     z-index: 3;
     background-color: var(--primary-color);
     color: var(--primary-contrast-color);
-    font-family: 'Supply';
+    font-family: var(--main-font-family);
     font-size: 1.7rem;
     line-height: 1.7rem;
     cursor: pointer;
