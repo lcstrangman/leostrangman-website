@@ -9,48 +9,48 @@ const isProd = import.meta.env.PROD;
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://leostrangman.com',
-  output: 'static',
-  vite: {
-      css: {
-          preprocessorOptions: {
-              scss: {
-                  api: 'modern-compiler',
-                  additionalData: `
+    site: 'https://leostrangman.com',
+    output: 'static',
+    vite: {
+        css: {
+            preprocessorOptions: {
+                scss: {
+                    api: 'modern-compiler',
+                    additionalData: `
                       @use "sass:math";
                       @use "sass:list";
                       @use "@styles/tools/maths" as *;
                       @use "@styles/tools/functions" as *;
                   `
-              }
-          },
-          postcss: {
-              plugins: [
-                  postcssTailwindShortcuts(tailwindConfig.theme, { prefix: 'theme' }),
-                  removeDoubleParentheses()
-              ]
-          }
-      },
-      esbuild: {
-          drop: isProd ? ['console', 'debugger'] : []
-      }
-  },
+                }
+            },
+            postcss: {
+                plugins: [
+                    postcssTailwindShortcuts(tailwindConfig.theme, { prefix: 'theme' }),
+                    removeDoubleParentheses()
+                ]
+            }
+        },
+        esbuild: {
+            drop: isProd ? ['console', 'debugger'] : []
+        }
+    },
 
-  integrations: [
-      tailwind({
-          applyBaseStyles: false
-      }),
-      svgSprite({
-          include: './src/assets/svgs'
-      })
-  ],
+    integrations: [
+        tailwind({
+            applyBaseStyles: false
+        }),
+        svgSprite({
+            include: './src/assets/svgs'
+        })
+    ],
 
-  devToolbar: {
-      enabled: false
-  },
+    devToolbar: {
+        enabled: false
+    },
 
-  image: {
-      domains: ['leostrangman.com'],
-      remotePatterns: [{ protocol: 'https' }]
-  },
+    image: {
+        domains: ['leostrangman.com'],
+        remotePatterns: [{ protocol: 'https' }]
+    }
 });

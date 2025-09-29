@@ -4,18 +4,20 @@ import InteractiveSection from '../components/InteractiveSection/InteractiveSect
 import ResumeBox from '../components/ResumeBox/ResumeBox.astro';
 import ScrollingFooter from '../components/ScrollingFooter/ScrollingFooter.astro';
 ---
-<!-- Import layout with set variables for page name and color scheme -->
-<Layout title="Leo Strangman." 
-        primaryColor="#9ab28a" 
-        primaryContrastColor="#593636" 
-        secondaryColor="#C2BA93" 
-        secondaryContrastColor="#2A2F04" 
-        tertiaryColor="#e4c787" 
-        tertiaryContrastColor="#192727" 
-        quaternaryColor="#c8a8a8" 
-        quaternaryContrastColor="#3a2d2d" 
-        pageTitle = "MY WORK">
 
+<!-- Import layout with set variables for page name and color scheme -->
+<Layout
+    title="Leo Strangman."
+    primaryColor="#9ab28a"
+    primaryContrastColor="#593636"
+    secondaryColor="#C2BA93"
+    secondaryContrastColor="#2A2F04"
+    tertiaryColor="#e4c787"
+    tertiaryContrastColor="#192727"
+    quaternaryColor="#c8a8a8"
+    quaternaryContrastColor="#3a2d2d"
+    pageTitle="MY WORK"
+>
     <!-- Main container -->
     <div class="u-z-2 background-color u-relative">
         <!-- Matching wrapper to keep pages consistent -->
@@ -25,7 +27,7 @@ import ScrollingFooter from '../components/ScrollingFooter/ScrollingFooter.astro
 
             <!-- Content section with work box -->
             <InteractiveSection
-                title='MASSACHUSETTS GENERAL HOSPITAL'
+                title="MASSACHUSETTS GENERAL HOSPITAL"
                 dataPrefix="/work-"
                 bullets={[
                     'Front and back-end website development for the Neural Systems Group',
@@ -33,14 +35,14 @@ import ScrollingFooter from '../components/ScrollingFooter/ScrollingFooter.astro
                     'Supported design of a novel biomedical monitoring and brain imaging system',
                     'Aided in redesigning and fabricating housing and sensor components'
                 ]}
-                sectionIndex={0}>
-            </InteractiveSection>
+                sectionIndex={0}
+            />
 
             <!-- Resume page link box -->
-            <ResumeBox mode = "view"/>
+            <ResumeBox mode="view" />
 
             <!-- Container for automatically scrolling text above footer -->
-            <ScrollingFooter/>
+            <ScrollingFooter />
         </div>
     </div>
 </Layout>

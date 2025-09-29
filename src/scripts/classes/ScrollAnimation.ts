@@ -1,5 +1,5 @@
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,11 +16,15 @@ export class ScrollAnimation {
     static init(): void {
         this.scroller = document.querySelector('.scroll-container');
         this.scrollTrack = this.scroller?.querySelector('.scroll-track') || null;
-        this.scrollTrackContent = this.scrollTrack ? Array.from(this.scrollTrack.children) as HTMLElement[] : [];
+        this.scrollTrackContent = this.scrollTrack
+            ? (Array.from(this.scrollTrack.children) as HTMLElement[])
+            : [];
 
         this.scrollerManual = document.querySelector('.scroll-container-manual');
         this.scrollTrackManual = this.scrollerManual?.querySelector('.scroll-track-manual') || null;
-        this.scrollTrackContentManual = this.scrollTrackManual ? Array.from(this.scrollTrackManual.children) as HTMLElement[] : [];
+        this.scrollTrackContentManual = this.scrollTrackManual
+            ? (Array.from(this.scrollTrackManual.children) as HTMLElement[])
+            : [];
 
         this.setupScrollAnimation();
         this.setupScrollAnimationManual();
@@ -39,7 +43,7 @@ export class ScrollAnimation {
             this.manualScrollTrigger = null;
         }
         if (this.scrollerManual) {
-            ScrollTrigger.getAll().forEach(trigger => {
+            ScrollTrigger.getAll().forEach((trigger) => {
                 if (trigger.trigger === this.scrollerManual) trigger.kill();
             });
         }
@@ -63,10 +67,10 @@ export class ScrollAnimation {
             this.scrollTrack.style.animation = 'scroll 55s linear infinite';
         }
 
-        if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             this.scroller.setAttribute('data-animated', 'true');
 
-            this.scrollTrackContent.forEach(item => {
+            this.scrollTrackContent.forEach((item) => {
                 const duplicatedItem = item.cloneNode(true) as HTMLElement;
                 duplicatedItem.setAttribute('aria-hidden', 'true');
                 duplicatedItem.classList.add('glitchable');
@@ -84,7 +88,7 @@ export class ScrollAnimation {
             this.manualScrollTrigger = null;
         }
 
-        ScrollTrigger.getAll().forEach(trigger => {
+        ScrollTrigger.getAll().forEach((trigger) => {
             if (trigger.trigger === this.scrollerManual) trigger.kill();
         });
 
@@ -96,18 +100,18 @@ export class ScrollAnimation {
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: this.scrollerManual,
-                start: "center center",
+                start: 'center center',
                 end: `+=${maxScroll}`,
                 scrub: 1,
-                pin: ".link-box-wrapper",
+                pin: '.link-box-wrapper',
                 anticipatePin: 1,
-                invalidateOnRefresh: true,
+                invalidateOnRefresh: true
             }
         });
 
         tl.to(this.scrollTrackManual, {
             x: -maxScroll,
-            ease: "none"
+            ease: 'none'
         });
 
         this.manualScrollTrigger = tl.scrollTrigger ?? null;

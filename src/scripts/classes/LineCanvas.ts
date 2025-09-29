@@ -46,10 +46,18 @@ export class LineCanvas {
     private isPlaying = false;
 
     // Color and page title
-    private primaryColor = getComputedStyle(document.body).getPropertyValue('--primary-color').trim();
-    private primaryContrastColor = getComputedStyle(document.body).getPropertyValue('--primary-contrast-color').trim();
-    private secondaryColor = getComputedStyle(document.body).getPropertyValue('--secondary-color').trim();
-    private secondaryContrastColor = getComputedStyle(document.body).getPropertyValue('--secondary-contrast-color').trim();
+    private primaryColor = getComputedStyle(document.body)
+        .getPropertyValue('--primary-color')
+        .trim();
+    private primaryContrastColor = getComputedStyle(document.body)
+        .getPropertyValue('--primary-contrast-color')
+        .trim();
+    private secondaryColor = getComputedStyle(document.body)
+        .getPropertyValue('--secondary-color')
+        .trim();
+    private secondaryContrastColor = getComputedStyle(document.body)
+        .getPropertyValue('--secondary-contrast-color')
+        .trim();
     private pageTitle = getComputedStyle(document.body).getPropertyValue('--page-title').trim();
 
     // Constants
@@ -130,8 +138,10 @@ export class LineCanvas {
 
         this.computeLayout();
 
-        if (prevOffsets.length === this.offsetArray.length &&
-            prevSmoothOffsets.length === this.smoothOffsetArray.length) {
+        if (
+            prevOffsets.length === this.offsetArray.length &&
+            prevSmoothOffsets.length === this.smoothOffsetArray.length
+        ) {
             for (let i = 0; i < this.offsetArray.length; i++) {
                 const ratio = prevOffsets[i] / prevWidth;
                 this.offsetArray[i] = ratio * this.canvasWidth;
@@ -159,13 +169,15 @@ export class LineCanvas {
         for (let i = 0; i < LineCanvas.LINES_COUNT; i++) {
             const invertedIndex = LineCanvas.LINES_COUNT - 1 - i;
             const idleDivider = gsap.utils.mapRange(
-                0, LineCanvas.LINES_COUNT - 1,
+                0,
+                LineCanvas.LINES_COUNT - 1,
                 LineCanvas.LINES_IDLE_DIVIDER_FIRST,
                 LineCanvas.LINES_IDLE_DIVIDER_LAST,
                 invertedIndex
             );
             const interactiveDivider = gsap.utils.mapRange(
-                0, LineCanvas.LINES_COUNT - 1,
+                0,
+                LineCanvas.LINES_COUNT - 1,
                 LineCanvas.LINES_INTERACTIVE_DIVIDER_FIRST,
                 LineCanvas.LINES_INTERACTIVE_DIVIDER_LAST,
                 invertedIndex
@@ -214,8 +226,14 @@ export class LineCanvas {
     }
 
     private updateMouse(): void {
-        this.mouseData.x = Math.max(Math.min(this.mouseData.rawX - this.bounds.left, this.bounds.width), 0);
-        this.mouseData.y = Math.max(Math.min(this.mouseData.rawY - this.bounds.top, this.bounds.height), 0);
+        this.mouseData.x = Math.max(
+            Math.min(this.mouseData.rawX - this.bounds.left, this.bounds.width),
+            0
+        );
+        this.mouseData.y = Math.max(
+            Math.min(this.mouseData.rawY - this.bounds.top, this.bounds.height),
+            0
+        );
 
         const hovered = this.getHoveredLineIndex(this.mouseData.y);
         if (hovered !== undefined && hovered !== this.hoveredIndex) {
@@ -237,14 +255,27 @@ export class LineCanvas {
         this.updateMouse();
         this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
 
-        this.linesData.forEach(line => this.drawLine(line));
+        this.linesData.forEach((line) => this.drawLine(line));
     }
 
     private drawLine(line: LineData): void {
-        const { index, lineX, lineY, lineWidth, lineHeight, idleLineY, idleHeight, interactiveLineY } = line;
+        const {
+            index,
+            lineX,
+            lineY,
+            lineWidth,
+            lineHeight,
+            idleLineY,
+            idleHeight,
+            interactiveLineY
+        } = line;
 
-        this.smoothOffsetArray[index] += (this.offsetArray[index] - this.smoothOffsetArray[index]) * LineCanvas.SMOOTH_LERP;
-        const angleX = lineX + lineWidth * (1 - LineCanvas.LINES_INTERACTIVE_ANGLE_DIVIDER) - this.smoothOffsetArray[index];
+        this.smoothOffsetArray[index] +=
+            (this.offsetArray[index] - this.smoothOffsetArray[index]) * LineCanvas.SMOOTH_LERP;
+        const angleX =
+            lineX +
+            lineWidth * (1 - LineCanvas.LINES_INTERACTIVE_ANGLE_DIVIDER) -
+            this.smoothOffsetArray[index];
 
         this.ctx.save();
         this.ctx.beginPath();

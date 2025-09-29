@@ -55,6 +55,9 @@ const transitions = new Transitions({
         // Initialize features after content replacement
         updateColorsFromPage();
         Accessibility.initWithStateRestore();
+        requestAnimationFrame(() => {
+            Accessibility.applyScrollSpeedToDOM();
+        });
         GlitchEffects.init();
         ImagePixelation.init();
         InteractiveSections.init();
@@ -72,20 +75,30 @@ const transitions = new Transitions({
 });
 
 function updateColorsFromPage() {
-    const swupContainer = document.getElementById("swup");
+    const swupContainer = document.getElementById('swup');
     if (!swupContainer) return;
 
     const style = swupContainer.dataset; // the dataset object contains all data-* attributes
 
-    if (style.primaryColor) document.body.style.setProperty("--primary-color", style.primaryColor);
-    if (style.primaryContrastColor) document.body.style.setProperty("--primary-contrast-color", style.primaryContrastColor);
-    if (style.secondaryColor) document.body.style.setProperty("--secondary-color", style.secondaryColor);
-    if (style.secondaryContrastColor) document.body.style.setProperty("--secondary-contrast-color", style.secondaryContrastColor);
-    if (style.tertiaryColor) document.body.style.setProperty("--tertiary-color", style.tertiaryColor);
-    if (style.tertiaryContrastColor) document.body.style.setProperty("--tertiary-contrast-color", style.tertiaryContrastColor);
-    if (style.quaternaryColor) document.body.style.setProperty("--quaternary-color", style.quaternaryColor);
-    if (style.quaternaryContrastColor) document.body.style.setProperty("--quaternary-contrast-color", style.quaternaryContrastColor);
-    if (style.pageTitle) document.body.style.setProperty("--page-title", style.pageTitle);
+    if (style.primaryColor) document.body.style.setProperty('--primary-color', style.primaryColor);
+    if (style.primaryContrastColor)
+        document.body.style.setProperty('--primary-contrast-color', style.primaryContrastColor);
+    if (style.secondaryColor)
+        document.body.style.setProperty('--secondary-color', style.secondaryColor);
+    if (style.secondaryContrastColor)
+        document.body.style.setProperty('--secondary-contrast-color', style.secondaryContrastColor);
+    if (style.tertiaryColor)
+        document.body.style.setProperty('--tertiary-color', style.tertiaryColor);
+    if (style.tertiaryContrastColor)
+        document.body.style.setProperty('--tertiary-contrast-color', style.tertiaryContrastColor);
+    if (style.quaternaryColor)
+        document.body.style.setProperty('--quaternary-color', style.quaternaryColor);
+    if (style.quaternaryContrastColor)
+        document.body.style.setProperty(
+            '--quaternary-contrast-color',
+            style.quaternaryContrastColor
+        );
+    if (style.pageTitle) document.body.style.setProperty('--page-title', style.pageTitle);
 }
 
 transitions.init();
@@ -98,6 +111,6 @@ if (import.meta.env.MODE === 'development') {
     new GridHelper({
         columns: 'var(--grid-columns)',
         gutterWidth: `var(--grid-gutter, ${tailwindConfig?.theme?.extend?.gap?.gutter})`,
-        marginWidth: `var(--grid-margin, ${tailwindConfig?.theme?.extend?.spacing?.containerMargin})`,
+        marginWidth: `var(--grid-margin, ${tailwindConfig?.theme?.extend?.spacing?.containerMargin})`
     });
 }

@@ -7,24 +7,17 @@ interface MouseCircle extends HTMLElement {
 export class MouseEffects {
     private static circle: MouseCircle | null = null;
     private static hoverTexts: NodeListOf<HTMLElement> = null!;
-    private static hoverTargets: HTMLElement[] = [];
     private static currentInput: 'mouse' | 'touch' | 'unknown' = 'unknown';
     private static lastTouchTime = 0;
-    private static lastMouseMoveTime = 0;
-    private static isMouseInViewport = true;
     private static pendingHide = false;
     private static mouseX = 0;
     private static mouseY = 0;
-    private static circleX = 0;
-    private static circleY = 0;
 
     static init(): void {
         this.circle = document.querySelector('.mouse-circle') as MouseCircle;
         this.hoverTexts = document.querySelectorAll('.hover-text');
 
         if (!this.circle) return;
-
-        this.hoverTargets = []; // Add other targets if needed
 
         // Bind event handlers
         document.addEventListener('mousemove', this.handleMouseMove);
@@ -61,20 +54,20 @@ export class MouseEffects {
     private static setupMouseCircle(): void {
         if (!this.circle) return;
 
-        this.hoverTexts.forEach(text => {
+        this.hoverTexts.forEach((text) => {
             const scaleUp = () => {
                 gsap.to(this.circle!, {
                     scale: 1.3,
                     duration: 0.7,
-                    ease: "elastic.out(1, 0.2)"
+                    ease: 'elastic.out(1, 0.2)'
                 });
             };
-            
+
             const scaleDown = () => {
                 gsap.to(this.circle!, {
                     scale: 1,
                     duration: 0.7,
-                    ease: "elastic.out(1, 0.2)"
+                    ease: 'elastic.out(1, 0.2)'
                 });
             };
 
@@ -82,7 +75,7 @@ export class MouseEffects {
                 this.circle!.classList.add('hovered');
                 scaleUp();
             });
-            
+
             text.addEventListener('mouseleave', () => {
                 this.circle!.classList.remove('hovered');
                 scaleDown();
@@ -127,8 +120,6 @@ export class MouseEffects {
         }
 
         this.currentInput = 'mouse';
-        this.lastMouseMoveTime = Date.now();
-        this.isMouseInViewport = true;
         this.pendingHide = false;
 
         this.mouseX = e.clientX;
@@ -142,25 +133,20 @@ export class MouseEffects {
             x: this.mouseX,
             y: this.mouseY,
             duration: 0.37,
-            ease: "elastic.out(0.7, 0.4)",
+            ease: 'elastic.out(0.7, 0.4)',
             onUpdate: () => {
-                const rect = this.circle!.getBoundingClientRect();
-                this.circleX = rect.left + rect.width / 2;
-                this.circleY = rect.top + rect.height / 2;
-
                 this.updateCirclePosition();
             }
         });
-    }
+    };
 
     private static handleMouseEnterViewport = (): void => {
         if (!this.circle) return;
-        this.isMouseInViewport = true;
         this.pendingHide = false;
         if (this.currentInput === 'mouse') {
             this.circle.style.opacity = '1';
         }
-    }
+    };
 
     private static handleTouchStart = (): void => {
         if (!this.circle) return;
@@ -172,18 +158,19 @@ export class MouseEffects {
         if (this.circle._followTween) {
             this.circle._followTween.kill();
         }
-    }
+    };
 
     private static handleMouseOut = (e: MouseEvent): void => {
         if (!this.circle) return;
 
-        if (!e || !e.relatedTarget ||
+        if (
+            !e ||
+            !e.relatedTarget ||
             e.clientX < 0 ||
             e.clientX > window.innerWidth ||
             e.clientY < 0 ||
             e.clientY > window.innerHeight
         ) {
-            this.isMouseInViewport = false;
             this.pendingHide = true;
 
             if (this.isCircleAtEdge()) {
@@ -195,13 +182,13 @@ export class MouseEffects {
                 }
             }
         }
-    }
+    };
 
     private static handleScroll = (): void => {
         // You can add scroll-based behavior here if needed
-    }
+    };
 
     private static handleSelectionChange = (): void => {
         // Optional selection-based behavior
-    }
+    };
 }

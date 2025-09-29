@@ -6,11 +6,11 @@ export class LoadingScreen {
     // Session helpers
     // -----------------------------
     private static hasPlayed(): boolean {
-        return sessionStorage.getItem("loadingPlayed") === "true";
+        return sessionStorage.getItem('loadingPlayed') === 'true';
     }
 
     private static markPlayed(): void {
-        sessionStorage.setItem("loadingPlayed", "true");
+        sessionStorage.setItem('loadingPlayed', 'true');
     }
 
     // -----------------------------
@@ -29,7 +29,7 @@ export class LoadingScreen {
         // First load → run the full animation sequence
         this.isInitialized = true;
         this.showInitialScreen();
-        
+
         // Start the full sequence after 1 second
         const timeout = setTimeout(() => {
             this.startFullSequence();
@@ -39,7 +39,7 @@ export class LoadingScreen {
     }
 
     static cleanup(): void {
-        this.animationTimeouts.forEach(timeout => clearTimeout(timeout));
+        this.animationTimeouts.forEach((timeout) => clearTimeout(timeout));
         this.animationTimeouts = [];
         this.isInitialized = false;
     }
@@ -48,33 +48,33 @@ export class LoadingScreen {
     // Helpers
     // -----------------------------
     private static hasRequiredElements(): boolean {
-        const initialScreen = document.getElementById("initial-screen");
-        const loadingScreen = document.getElementById("loading-screen");
-        const pixelTransition = document.getElementById("pixel-transition");
+        const initialScreen = document.getElementById('initial-screen');
+        const loadingScreen = document.getElementById('loading-screen');
+        const pixelTransition = document.getElementById('pixel-transition');
         return !!(initialScreen && loadingScreen && pixelTransition);
     }
 
     private static showInitialScreen(): void {
-        const initialScreen = document.getElementById("initial-screen");
+        const initialScreen = document.getElementById('initial-screen');
         if (!initialScreen) return;
         // Initial screen is already visible by default, no need to fade it in
-        initialScreen.style.display = "flex";
-        initialScreen.style.opacity = "1";
+        initialScreen.style.display = 'flex';
+        initialScreen.style.opacity = '1';
     }
 
     private static showInitialScreenAndFade(): void {
-        const initialScreen = document.getElementById("initial-screen");
+        const initialScreen = document.getElementById('initial-screen');
         if (!initialScreen) return;
 
         // Initial screen is already visible, just ensure it's displayed
-        initialScreen.style.display = "flex";
-        initialScreen.style.opacity = "1";
+        initialScreen.style.display = 'flex';
+        initialScreen.style.opacity = '1';
 
         // Fade out after 1 second
         const timeout = setTimeout(() => {
-            initialScreen.style.opacity = "0";
+            initialScreen.style.opacity = '0';
             setTimeout(() => {
-                initialScreen.style.display = "none";
+                initialScreen.style.display = 'none';
             }, 300); // Wait for fade transition
         }, 1000);
 
@@ -92,13 +92,13 @@ export class LoadingScreen {
             if (!this.isInitialized) return;
 
             // Hide initial screen, show loading screen
-            const initialScreen = document.getElementById("initial-screen");
-            const loadingScreen = document.getElementById("loading-screen");
-            
-            if (initialScreen) initialScreen.style.display = "none";
+            const initialScreen = document.getElementById('initial-screen');
+            const loadingScreen = document.getElementById('loading-screen');
+
+            if (initialScreen) initialScreen.style.display = 'none';
             if (loadingScreen) {
-                loadingScreen.style.display = "flex";
-                loadingScreen.style.opacity = "1";
+                loadingScreen.style.display = 'flex';
+                loadingScreen.style.opacity = '1';
             }
 
             // Second pixelation: uncover to reveal loading screen
@@ -118,10 +118,10 @@ export class LoadingScreen {
     }
 
     private static firstPixelation(callback: () => void): void {
-        const pixelTransition = document.getElementById("pixel-transition");
+        const pixelTransition = document.getElementById('pixel-transition');
         if (!pixelTransition) return;
 
-        pixelTransition.style.display = "grid";
+        pixelTransition.style.display = 'grid';
         this.createPixelGrid(pixelTransition);
         const pixels = Array.from(pixelTransition.children) as HTMLElement[];
 
@@ -129,25 +129,25 @@ export class LoadingScreen {
     }
 
     private static secondPixelation(callback: () => void): void {
-        const pixelTransition = document.getElementById("pixel-transition");
+        const pixelTransition = document.getElementById('pixel-transition');
         if (!pixelTransition) return;
 
         const pixels = Array.from(pixelTransition.children) as HTMLElement[];
         this.animatePixelsToTransparent(pixels, () => {
             if (!this.isInitialized) return;
-            pixelTransition.style.display = "none";
+            pixelTransition.style.display = 'none';
             callback();
         });
     }
 
     private static finalFadeOut(): void {
-        const pixelTransition = document.getElementById("pixel-transition");
-        const loadingScreen = document.getElementById("loading-screen");
-        
+        const pixelTransition = document.getElementById('pixel-transition');
+        const loadingScreen = document.getElementById('loading-screen');
+
         if (!pixelTransition) return;
 
         // Create pixel grid and cover everything
-        pixelTransition.style.display = "grid";
+        pixelTransition.style.display = 'grid';
         this.createPixelGrid(pixelTransition);
         const pixels = Array.from(pixelTransition.children) as HTMLElement[];
 
@@ -158,8 +158,8 @@ export class LoadingScreen {
             const timeout = setTimeout(() => {
                 if (!this.isInitialized) return;
 
-                if (loadingScreen) loadingScreen.style.display = "none";
-                pixelTransition.style.display = "none";
+                if (loadingScreen) loadingScreen.style.display = 'none';
+                pixelTransition.style.display = 'none';
 
                 // Mark as played so subsequent visits just show initial screen
                 this.markPlayed();
@@ -173,7 +173,7 @@ export class LoadingScreen {
     // Pixel helpers
     // -----------------------------
     private static createPixelGrid(container: HTMLElement): void {
-        container.innerHTML = "";
+        container.innerHTML = '';
         const gridSize = 50;
         const totalPixels = gridSize * gridSize;
 
@@ -181,8 +181,8 @@ export class LoadingScreen {
         container.style.gridTemplateRows = `repeat(${gridSize}, 1fr)`;
 
         for (let i = 0; i < totalPixels; i++) {
-            const pixel = document.createElement("div");
-            pixel.classList.add("pixel");
+            const pixel = document.createElement('div');
+            pixel.classList.add('pixel');
             container.appendChild(pixel);
         }
     }
@@ -192,11 +192,11 @@ export class LoadingScreen {
         const maxDelay = 800;
         let completedCount = 0;
 
-        pixels.forEach(pixel => {
+        pixels.forEach((pixel) => {
             const delay = Math.random() * maxDelay;
             const timeout = setTimeout(() => {
                 if (!this.isInitialized) return;
-                pixel.classList.add("black");
+                pixel.classList.add('black');
                 completedCount++;
                 if (completedCount === totalPixels && callback) callback();
             }, delay);
@@ -210,11 +210,11 @@ export class LoadingScreen {
         const maxDelay = 800;
         let completedCount = 0;
 
-        pixels.forEach(pixel => {
+        pixels.forEach((pixel) => {
             const delay = Math.random() * maxDelay;
             const timeout = setTimeout(() => {
                 if (!this.isInitialized) return;
-                pixel.classList.remove("black");
+                pixel.classList.remove('black');
                 completedCount++;
                 if (completedCount === totalPixels && callback) callback();
             }, delay);

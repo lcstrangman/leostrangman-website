@@ -1,7 +1,7 @@
 export class Accessibility {
     private static isInitialized = false;
     private static accessToggled = false;
-    
+
     // DOM elements
     private static scrollTrack: HTMLElement | null = null;
     private static accessibilityBackground: HTMLElement | null = null;
@@ -13,7 +13,7 @@ export class Accessibility {
     static init(): void {
         // Clear any existing listeners
         this.cleanup();
-        
+
         // Check if required elements exist
         if (!this.hasRequiredElements()) {
             return;
@@ -28,7 +28,7 @@ export class Accessibility {
         if (this.accessibilityButton && this.isInitialized) {
             this.accessibilityButton.removeEventListener('click', this.handleAccessibilityClick);
         }
-        
+
         // Reset static properties
         this.scrollTrack = null;
         this.accessibilityBackground = null;
@@ -41,19 +41,21 @@ export class Accessibility {
     }
 
     private static hasRequiredElements(): boolean {
-        const accessibilityButton = document.getElementById('parallax-accessibility');
+        const accessibilityButton = document.getElementById('access-button');
         return !!accessibilityButton;
     }
 
     private static cacheElements(): void {
         // Find scroller element (you may need to adjust the selector based on your HTML structure)
-        this.scroller = document.querySelector('.scroller') || document.querySelector('[data-scroll-container]');
+        this.scroller =
+            document.querySelector('.scroll-container') ||
+            document.querySelector('[data-scroll-container]');
         this.scrollTrack = this.scroller?.querySelector('.scroll-track') || null;
-        
+
         this.accessibilityBackground = document.getElementById('accessibility-background');
-        this.accessibilityButton = document.getElementById('parallax-accessibility');
+        this.accessibilityButton = document.getElementById('access-button');
         this.heroContent = document.getElementById('hero-content-primary');
-        this.heroContentAlt = document.getElementById('hero-content-alt');
+        this.heroContentAlt = document.getElementById('hero-content-accessible');
     }
 
     private static bindEventListeners(): void {
@@ -65,33 +67,37 @@ export class Accessibility {
     private static handleAccessibilityClick = (): void => {
         if (!this.isInitialized) return;
         this.enableAccessibility();
-    }
+    };
 
     private static enableAccessibility(): void {
         if (!this.isInitialized) return;
 
+        this.accessToggled = !this.accessToggled;
+
         // Toggle scroll animation speed
-        if (this.scrollTrack) {
-            if (this.accessToggled) {
-                this.scrollTrack.style.animation = 'scroll 20s linear infinite';
-            } else {
-                this.scrollTrack.style.animation = 'scroll 60s linear infinite';
-            }
-        }
-        
+        this.applyScrollSpeed();
+
         // Toggle visibility states
         this.accessibilityBackground?.classList.toggle('hidden');
-        this.heroContent?.classList.toggle('display-none');
-        this.heroContentAlt?.classList.toggle('display');
-        
-        // Update toggle state
-        this.accessToggled = !this.accessToggled;
-        
+        this.heroContent?.classList.toggle('removed');
+        this.heroContentAlt?.classList.toggle('removed');
+
         // Store accessibility state in sessionStorage for persistence across page transitions
         try {
             sessionStorage.setItem('accessibility-mode', this.accessToggled.toString());
         } catch (error) {
             console.warn('Unable to store accessibility state:', error);
+        }
+    }
+
+    private static applyScrollSpeed(): void {
+        const track = document.querySelector('.scroll-track');
+        if (track) {
+            if (this.accessToggled) {
+                track.classList.add('slow');
+            } else {
+                track.classList.remove('slow');
+            }
         }
     }
 
@@ -101,9 +107,16 @@ export class Accessibility {
     private static restoreAccessibilityState(): void {
         try {
             const savedState = sessionStorage.getItem('accessibility-mode');
-            if (savedState === 'true' && !this.accessToggled) {
+            if (savedState === 'true') {
                 // Restore the accessibility state without animation
-                this.enableAccessibility();
+                this.accessToggled = true;
+
+                this.applyScrollSpeed();
+
+                // Toggle visibility states
+                this.accessibilityBackground?.classList.toggle('hidden');
+                this.heroContent?.classList.toggle('removed');
+                this.heroContentAlt?.classList.toggle('removed');
             }
         } catch (error) {
             console.warn('Unable to restore accessibility state:', error);
@@ -122,7 +135,7 @@ export class Accessibility {
      */
     static setAccessibilityState(enabled: boolean): void {
         if (!this.isInitialized || this.accessToggled === enabled) return;
-        
+
         this.enableAccessibility();
     }
 
@@ -133,6 +146,17 @@ export class Accessibility {
         this.init();
         if (this.isInitialized) {
             this.restoreAccessibilityState();
+        }
+    }
+
+    static applyScrollSpeedToDOM(): void {
+        const scrollTrack = document.querySelector('.scroll-track');
+        if (scrollTrack) {
+            if (this.accessToggled) {
+                scrollTrack.classList.add('slow');
+            } else {
+                scrollTrack.classList.remove('slow');
+            }
         }
     }
 }

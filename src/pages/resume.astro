@@ -4,18 +4,20 @@ import Image from '@components/Image/Image.astro';
 import ResumeBox from '../components/ResumeBox/ResumeBox.astro';
 import ScrollingFooter from '../components/ScrollingFooter/ScrollingFooter.astro';
 ---
-<!-- Import layout with set variables for page name and color scheme -->
-<Layout title="Leo Strangman." 
-        primaryColor="#bbb387" 
-        primaryContrastColor="#192727" 
-        secondaryColor="#192727" 
-        secondaryContrastColor="#A2B690" 
-        tertiaryColor="#e4c787" 
-        tertiaryContrastColor="#593636" 
-        quaternaryColor="#9ab28a" 
-        quaternaryContrastColor="#593636" 
-        pageTitle = "RESUME">
 
+<!-- Import layout with set variables for page name and color scheme -->
+<Layout
+    title="Leo Strangman."
+    primaryColor="#bbb387"
+    primaryContrastColor="#192727"
+    secondaryColor="#192727"
+    secondaryContrastColor="#A2B690"
+    tertiaryColor="#e4c787"
+    tertiaryContrastColor="#593636"
+    quaternaryColor="#9ab28a"
+    quaternaryContrastColor="#593636"
+    pageTitle="RESUME"
+>
     <!-- Main container -->
     <div class="u-z-2 background-color u-relative">
         <!-- Matching wrapper to keep pages consistent -->
@@ -25,12 +27,12 @@ import ScrollingFooter from '../components/ScrollingFooter/ScrollingFooter.astro
 
             <!-- Color matched resume with pixelation effect -->
             <div class="u-mt-12 u-grid u-grid-cols-1 u-gap-gutter">
-                <div class = "image-wrapper u-w-full u-h-full resume-background">
-                    <canvas class = "pixel-canvas"></canvas>
+                <div class="image-wrapper resume-background u-h-full u-w-full">
+                    <canvas class="pixel-canvas"></canvas>
                     <Image
-                        class = "source-image"
-                        src= {import('@images/resume.png')}
-                        alt = "Leo Strangman Resume"
+                        class="source-image"
+                        src={import('@images/resume.png')}
+                        alt="Leo Strangman Resume"
                         caption=""
                         width={500}
                         height={700}
@@ -39,10 +41,10 @@ import ScrollingFooter from '../components/ScrollingFooter/ScrollingFooter.astro
             </div>
 
             <!-- Resume download link box -->
-            <ResumeBox mode = "download"/>
+            <ResumeBox mode="download" />
 
             <!-- Scrolling footer div -->
-            <ScrollingFooter/>
+            <ScrollingFooter />
         </div>
     </div>
 </Layout>

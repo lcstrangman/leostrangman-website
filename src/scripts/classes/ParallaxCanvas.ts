@@ -50,7 +50,7 @@ export class ParallaxCanvas {
         this.glassrender.frame = 0;
 
         // Kill all ScrollTriggers related to this canvas
-        ScrollTrigger.getAll().forEach(st => st.kill());
+        ScrollTrigger.getAll().forEach((st) => st.kill());
     }
 
     private static initializeCanvas(): void {
@@ -117,9 +117,9 @@ export class ParallaxCanvas {
                 start: 'top top',
                 end: () => `${this.hero!.offsetHeight * 0.8}px`,
                 scrub: 0,
-                onRefresh: () => this.render(),
+                onRefresh: () => this.render()
             },
-            onUpdate: () => this.render(),
+            onUpdate: () => this.render()
         });
     }
 

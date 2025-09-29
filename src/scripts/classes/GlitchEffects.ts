@@ -16,7 +16,7 @@ export class GlitchEffects {
     static init(): void {
         // Clean up any existing effects
         this.cleanup();
-        
+
         // Check if required elements exist
         if (!this.hasRequiredElements()) {
             return;
@@ -29,32 +29,28 @@ export class GlitchEffects {
 
     static cleanup(): void {
         // Clear all active intervals
-        this.activeGlitchIntervals.forEach(interval => {
+        this.activeGlitchIntervals.forEach((interval) => {
             clearInterval(interval);
         });
         this.activeGlitchIntervals.clear();
 
         // Remove event listeners and clear timeouts
-        this.glitchableElements.forEach(({ 
-            element, 
-            glitchInterval, 
-            glitchTimeout, 
-            mouseEnterHandler, 
-            mouseLeaveHandler 
-        }) => {
-            element.removeEventListener('mouseenter', mouseEnterHandler);
-            element.removeEventListener('mouseleave', mouseLeaveHandler);
-            
-            if (glitchInterval) {
-                clearInterval(glitchInterval);
+        this.glitchableElements.forEach(
+            ({ element, glitchInterval, glitchTimeout, mouseEnterHandler, mouseLeaveHandler }) => {
+                element.removeEventListener('mouseenter', mouseEnterHandler);
+                element.removeEventListener('mouseleave', mouseLeaveHandler);
+
+                if (glitchInterval) {
+                    clearInterval(glitchInterval);
+                }
+                if (glitchTimeout) {
+                    clearTimeout(glitchTimeout);
+                }
+
+                // Restore original text
+                element.textContent = element.dataset.originalText || element.textContent;
             }
-            if (glitchTimeout) {
-                clearTimeout(glitchTimeout);
-            }
-            
-            // Restore original text
-            element.textContent = element.dataset.originalText || element.textContent;
-        });
+        );
 
         // Reset state
         this.glitchableElements = [];
@@ -74,12 +70,12 @@ export class GlitchEffects {
     private static setupGlitchables(): void {
         if (!this.glitchables) return;
 
-        this.glitchables.forEach(el => this.setupGlitchable(el));
+        this.glitchables.forEach((el) => this.setupGlitchable(el));
     }
 
     private static setupGlitchable(el: HTMLElement): void {
         const originalText = el.textContent || '';
-        
+
         // Store original text in dataset for restoration
         el.dataset.originalText = originalText;
 
@@ -88,7 +84,7 @@ export class GlitchEffects {
 
         const glitchText = (): void => {
             if (!this.isInitialized) return;
-            
+
             if (glitchInterval) return; // Prevent stacking
 
             glitchInterval = setInterval(() => {
@@ -99,7 +95,7 @@ export class GlitchEffects {
                     }
                     return;
                 }
-                
+
                 el.textContent = this.shuffleText(originalText);
             }, 50);
 
@@ -107,7 +103,7 @@ export class GlitchEffects {
 
             glitchTimeout = setTimeout(() => {
                 if (!this.isInitialized) return;
-                
+
                 if (glitchInterval) {
                     clearInterval(glitchInterval);
                     this.activeGlitchIntervals.delete(glitchInterval);
@@ -150,21 +146,21 @@ export class GlitchEffects {
     }
 
     private static shuffleText(text: string): string {
-        const words = text.split(' ').map(word => {
+        const words = text.split(' ').map((word) => {
             const letters = word.replace(/[^a-zA-Z0-9[@#$%&*/\]+=©!-]/g, '');
             const punctuation = word.replace(/[a-zA-Z0-9[@#$%&*/\]+=©!-]/g, '');
-            
+
             let shuffledLetters = letters.split('');
-            
+
             // Fisher-Yates shuffle algorithm
             for (let i = shuffledLetters.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [shuffledLetters[i], shuffledLetters[j]] = [shuffledLetters[j], shuffledLetters[i]];
             }
-            
+
             return shuffledLetters.join('') + punctuation;
         });
-        
+
         return words.join(' ');
     }
 
@@ -187,7 +183,7 @@ export class GlitchEffects {
                 element.textContent = originalText;
                 return;
             }
-            
+
             element.textContent = this.shuffleText(originalText);
             glitchCount++;
         }, 50);
@@ -204,7 +200,7 @@ export class GlitchEffects {
      * Stop all active glitch effects
      */
     static stopAllGlitches(): void {
-        this.activeGlitchIntervals.forEach(interval => {
+        this.activeGlitchIntervals.forEach((interval) => {
             clearInterval(interval);
         });
         this.activeGlitchIntervals.clear();

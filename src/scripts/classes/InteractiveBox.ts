@@ -4,12 +4,15 @@ interface InteractiveInstance {
     previewImage: HTMLElement;
     bulletBoxes: HTMLElement[];
     prefix: string;
-    eventHandlers: Map<HTMLElement, {
-        mouseenter: (event: MouseEvent) => void;
-        mouseleave: (event: MouseEvent) => void;
-        click: (event: MouseEvent) => void;
-        keydown: (event: KeyboardEvent) => void;
-    }>;
+    eventHandlers: Map<
+        HTMLElement,
+        {
+            mouseenter: (event: MouseEvent) => void;
+            mouseleave: (event: MouseEvent) => void;
+            click: (event: MouseEvent) => void;
+            keydown: (event: KeyboardEvent) => void;
+        }
+    >;
 }
 
 export class InteractiveSections {
@@ -19,7 +22,7 @@ export class InteractiveSections {
     static init(): void {
         // Clean up any existing instances
         this.cleanup();
-        
+
         // Check if required elements exist
         if (!this.hasRequiredElements()) {
             return;
@@ -31,8 +34,8 @@ export class InteractiveSections {
 
     static cleanup(): void {
         // Remove all event listeners
-        this.interactiveInstances.forEach(instance => {
-            instance.bulletBoxes.forEach(box => {
+        this.interactiveInstances.forEach((instance) => {
+            instance.bulletBoxes.forEach((box) => {
                 const handlers = instance.eventHandlers.get(box);
                 if (handlers) {
                     box.removeEventListener('mouseenter', handlers.mouseenter);
@@ -41,10 +44,10 @@ export class InteractiveSections {
                     box.removeEventListener('keydown', handlers.keydown);
                 }
             });
-            
+
             // Clear event handlers map
             instance.eventHandlers.clear();
-            
+
             // Reset preview image state
             instance.previewImage.style.opacity = '0';
             instance.previewImage.classList.remove('active');
@@ -62,7 +65,7 @@ export class InteractiveSections {
     }
 
     private static setupInteractiveSections(): void {
-        document.querySelectorAll('.interactive-section').forEach(section => {
+        document.querySelectorAll('.interactive-section').forEach((section) => {
             this.setupInteractiveSection(section as HTMLElement);
         });
     }
@@ -71,23 +74,28 @@ export class InteractiveSections {
         const container = section.querySelector('.boxes-container') as HTMLElement;
         const previewImage = section.querySelector('.preview-image') as HTMLElement;
         const prefix = '/assets/images' + (container?.getAttribute('data-prefix') || '');
-        const bulletBoxes = Array.from(container?.querySelectorAll('.bullet-box') || []) as HTMLElement[];
-        
+        const bulletBoxes = Array.from(
+            container?.querySelectorAll('.bullet-box') || []
+        ) as HTMLElement[];
+
         if (!container || !previewImage || bulletBoxes.length === 0) return;
 
-        const eventHandlers = new Map<HTMLElement, {
-            mouseenter: (event: MouseEvent) => void;
-            mouseleave: (event: MouseEvent) => void;
-            click: (event: MouseEvent) => void;
-            keydown: (event: KeyboardEvent) => void;
-        }>();
+        const eventHandlers = new Map<
+            HTMLElement,
+            {
+                mouseenter: (event: MouseEvent) => void;
+                mouseleave: (event: MouseEvent) => void;
+                click: (event: MouseEvent) => void;
+                keydown: (event: KeyboardEvent) => void;
+            }
+        >();
 
-        bulletBoxes.forEach(box => {
+        bulletBoxes.forEach((box) => {
             const imageName = box.getAttribute('data-image');
             if (!imageName) return;
-            
+
             const imageSrc = `${prefix}${imageName}.png`;
-            
+
             // Make it focusable and accessible
             if (!box.hasAttribute('tabindex')) {
                 box.setAttribute('tabindex', '0');
@@ -99,7 +107,7 @@ export class InteractiveSections {
             // Create event handlers with proper context
             const mouseenterHandler = (event: MouseEvent): void => {
                 if (!this.isInitialized) return;
-                
+
                 previewImage.style.backgroundImage = `url(${imageSrc})`;
                 previewImage.style.opacity = '1';
                 previewImage.classList.add('active');
@@ -107,17 +115,17 @@ export class InteractiveSections {
 
             const mouseleaveHandler = (event: MouseEvent): void => {
                 if (!this.isInitialized) return;
-                
+
                 previewImage.style.opacity = '0';
                 previewImage.classList.remove('active');
             };
 
             const clickHandler = (event: MouseEvent): void => {
                 if (!this.isInitialized) return;
-                
+
                 // Remove highlight and image from ALL containers
                 this.clearAllActiveStates();
-                
+
                 // Activate only the current box and image
                 box.classList.add('is-active');
                 previewImage.style.backgroundImage = `url(${imageSrc})`;
@@ -127,7 +135,7 @@ export class InteractiveSections {
 
             const keydownHandler = (event: KeyboardEvent): void => {
                 if (!this.isInitialized) return;
-                
+
                 if (event.key === 'Enter' || event.key === ' ') {
                     event.preventDefault();
                     clickHandler(event as any);
@@ -162,14 +170,14 @@ export class InteractiveSections {
 
     private static clearAllActiveStates(): void {
         // Remove highlight and image from ALL containers across the entire document
-        document.querySelectorAll('.preview-image').forEach(img => {
+        document.querySelectorAll('.preview-image').forEach((img) => {
             const previewImg = img as HTMLElement;
             previewImg.style.opacity = '0';
             previewImg.classList.remove('active');
             previewImg.style.backgroundImage = '';
         });
-        
-        document.querySelectorAll('.bullet-box').forEach(box => {
+
+        document.querySelectorAll('.bullet-box').forEach((box) => {
             box.classList.remove('is-active');
         });
     }
@@ -183,11 +191,11 @@ export class InteractiveSections {
         const section = document.querySelector(sectionSelector) as HTMLElement;
         if (!section) return;
 
-        const instance = this.interactiveInstances.find(inst => inst.section === section);
+        const instance = this.interactiveInstances.find((inst) => inst.section === section);
         if (!instance) return;
 
-        const targetBox = instance.bulletBoxes.find(box => 
-            box.getAttribute('data-image') === imageName
+        const targetBox = instance.bulletBoxes.find(
+            (box) => box.getAttribute('data-image') === imageName
         );
 
         if (!targetBox) return;
@@ -207,8 +215,8 @@ export class InteractiveSections {
 
         const activeBoxes: { section: HTMLElement; imageName: string; box: HTMLElement }[] = [];
 
-        this.interactiveInstances.forEach(instance => {
-            instance.bulletBoxes.forEach(box => {
+        this.interactiveInstances.forEach((instance) => {
+            instance.bulletBoxes.forEach((box) => {
                 if (box.classList.contains('is-active')) {
                     const imageName = box.getAttribute('data-image');
                     if (imageName) {
@@ -234,7 +242,7 @@ export class InteractiveSections {
         const section = document.querySelector(sectionSelector) as HTMLElement;
         if (!section) return null;
 
-        const instance = this.interactiveInstances.find(inst => inst.section === section);
+        const instance = this.interactiveInstances.find((inst) => inst.section === section);
         if (!instance) return null;
 
         return `${instance.prefix}${imageName}.png`;
@@ -249,11 +257,11 @@ export class InteractiveSections {
         const section = document.querySelector(sectionSelector) as HTMLElement;
         if (!section) return;
 
-        const instance = this.interactiveInstances.find(inst => inst.section === section);
+        const instance = this.interactiveInstances.find((inst) => inst.section === section);
         if (!instance) return;
 
-        const targetBox = instance.bulletBoxes.find(box => 
-            box.getAttribute('data-image') === imageName
+        const targetBox = instance.bulletBoxes.find(
+            (box) => box.getAttribute('data-image') === imageName
         );
 
         if (!targetBox) return;
@@ -284,7 +292,7 @@ export class InteractiveSections {
         const section = document.querySelector(sectionSelector) as HTMLElement;
         if (!section) return [];
 
-        const instance = this.interactiveInstances.find(inst => inst.section === section);
+        const instance = this.interactiveInstances.find((inst) => inst.section === section);
         return instance ? instance.bulletBoxes : [];
     }
 }

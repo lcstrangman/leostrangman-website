@@ -28,4 +28,4 @@ const rawHTMLString = 'Hello <strong>World</strong>';
 
 ## To Do
 
--   [ ] Add default styles
+- [ ] Add default styles

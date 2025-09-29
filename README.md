@@ -1,23 +1,23 @@
 ## LEOSTRANGMAN.COM
 
--   Personal Website for Leo Strangman, with Experience, Projects, Personal Info, and Contact
--   https://leostrangman.com
+- Personal Website for Leo Strangman, with Experience, Projects, Personal Info, and Contact
+- https://leostrangman.com
 
 ## Features
 
--   [Sass] for a feature rich superset of CSS.
--   [Tailwind CSS] for a sane and scalable CSS architecture.
--   [Locomotive Scroll] for smooth scrolling with parallax effects.
--   [Swup] for versatile and extensible page transition.
--   [Prettier] for a formatted and easy to maintain codebase.
--   [Nanostores] as state manager.
+- [Sass] for a feature rich superset of CSS.
+- [Tailwind CSS] for a sane and scalable CSS architecture.
+- [Locomotive Scroll] for smooth scrolling with parallax effects.
+- [Swup] for versatile and extensible page transition.
+- [Prettier] for a formatted and easy to maintain codebase.
+- [Nanostores] as state manager.
 
 ## Getting started
 
 Make sure you have the following installed:
 
--   [Node] — at least 20.14, the latest LTS is recommended.
--   [NPM] — at least 8.0, the latest LTS is recommended.
+- [Node] — at least 20.14, the latest LTS is recommended.
+- [NPM] — at least 8.0, the latest LTS is recommended.
 
 > 💡 You can use [NVM] to install and use different versions of Node via the command-line.
 
@@ -92,12 +92,12 @@ All commands are run from the root of the project, from a terminal:
 
 ## Documentation
 
--   [Astro]
--   [Locomotive Scroll]
--   [Tailwind CSS]
--   [Swup]
--   [Prettier]
--   [Nanostores]
+- [Astro]
+- [Locomotive Scroll]
+- [Tailwind CSS]
+- [Swup]
+- [Prettier]
+- [Nanostores]
 
 [Astro]: https://docs.astro.build/en/getting-started/
 [Tailwind CSS]: https://tailwindcss.com/docs/installation

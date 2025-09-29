@@ -6,7 +6,6 @@ import { defaultSeo, type Seo } from '@data/seo';
 import { getSeo } from '@scripts/utils/seo';
 import Icon from '@components/Icon/Icon.astro';
 
-
 interface Props {
     title?: string;
     seo?: Seo;
@@ -63,7 +62,8 @@ const seoData = getSeo(seo, defaultSeo, title, currentUrl);
            --tertiary-contrast-color: ${tertiaryContrastColor};
            --quaternary-color: ${quaternaryColor};
            --quaternary-contrast-color: ${quaternaryContrastColor};
-           --page-title: ${pageTitle};`}>
+           --page-title: ${pageTitle};`}
+    >
         <!-- Mouse follower -->
         <div class="mouse-circle" aria-hidden="true"></div>
 
@@ -81,7 +81,9 @@ const seoData = getSeo(seo, defaultSeo, title, currentUrl);
                         <Icon class="hover-text" name="icon-amber-supply" />
                         <span class="loading-name-text">Leo Strangman</span>
                     </div>
-                    <p class="loading-note">For the full animated experience, use a desktop browser</p>
+                    <p class="loading-note">
+                        For the full animated experience, use a desktop browser
+                    </p>
                 </div>
             </div>
 
