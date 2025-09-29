@@ -479,6 +479,26 @@ html body {
     }
 }
 
+@media (max-width: 466px) {
+    .name-text,
+    .name-text-accessible {
+        font-size: 3rem;
+    }
+    .svg-position {
+        padding-left: 3px;
+    }
+}
+
+@media (max-width: 360px) {
+    .name-text,
+    .name-text-accessible {
+        font-size: 2.6rem;
+    }
+    .svg-position {
+        padding-left: 2px;
+    }
+}
+
 /* Page background, set on a page-by-page basis, automatically updated in footer */
 .background-color {
     background-color: var(--primary-color);

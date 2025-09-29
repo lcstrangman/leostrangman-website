@@ -16,6 +16,10 @@ Make the name text be in line with the svg properly
 
 Add initialize page logic/loading screen to the layout.astro
 Put scroll text in the footer
+
+FIX THE HERO PAGE COLORS BEING INCORRECT, SHOULD MATCH THE MOUSE CURSOR
+
+Mobile bug, mouse circle still sometimes shows up
         
 Title color options for exclusion:
 Cyan
