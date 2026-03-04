@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Image from '@components/Image/Image.astro';
+import PixelatedImage from '@components/PixelatedImage/PixelatedImage.astro';
 import Icon from '@components/Icon/Icon.astro';
 import ScrollingFooter from '../components/ScrollingFooter/ScrollingFooter.astro';
 ---
@@ -89,26 +89,17 @@ import ScrollingFooter from '../components/ScrollingFooter/ScrollingFooter.astro
             </div>
 
             <!-- Image grid -->
-            <div class="u-mt-12 u-grid u-grid-cols-2 u-gap-gutter">
-                <!-- Image container with pixelated canvas acting as the real image -->
-                <div class="image-wrapper u-h-full u-w-full">
-                    <canvas class="pixel-canvas" aria-hidden="true"></canvas>
-                    <Image
-                        class="source-image"
-                        src={import('@images/scenery.jpg')}
-                        alt="Mountain Scenery"
-                        caption=""
-                    />
-                </div>
-                <div class="image-wrapper u-h-full u-w-full">
-                    <canvas class="pixel-canvas" aria-hidden="true"></canvas>
-                    <Image
-                        class="source-image"
-                        src={import('@images/leostrangman.jpg')}
-                        alt="Portrait photograph of Leo Strangman"
-                        caption=""
-                    />
-                </div>
+            <div class="u-mt-12 u-grid u-grid-cols-1 md:u-grid-cols-2 u-gap-gutter">
+                <PixelatedImage
+                    src={import('@images/scenery.jpg')}
+                    alt="Mountain Scenery"
+                    class="u-h-full u-w-full"
+                />
+                <PixelatedImage
+                    src={import('@images/leostrangman.jpg')}
+                    alt="Portrait photograph of Leo Strangman"
+                    class="u-h-full u-w-full"
+                />
             </div>
             <!-- Container for automatically scrolling text above footer -->
             <ScrollingFooter />

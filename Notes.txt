@@ -22,16 +22,13 @@ FIX THE HERO PAGE COLORS BEING INCORRECT, SHOULD MATCH THE MOUSE CURSOR
 Mobile bug, mouse circle still sometimes shows up
 Check over responsive design, may break at around 380px and below, needs to function
 Change the box sizing on pages on mobile
-FIX THE SELECTION COLOR FOR THE ACCESSIBILITY MENU
-Improve the image pixelation thing
+
 I think the last @2025 before it resets isn't getting the glitchable class or something, it doesn't work until the 2025 hits the edge of the screen
 Make parallax better, tends to feel weird on mobile devices especially, sort of laggy
 Switch png default image to a webp
 
 Mobile devices
     the page seems to start with something lower down selected
-    Make the boxes shorter in height
-    Make the images on the index be stacked, not next to each other
     There's an extra bar at the bottom in the color of the background, which overlaps the main screen but the bottom of the site extends down to accommodate it, this is only in chrome
     It's honestly fine pretty much always, just weird during transitions and messes up the home page
     The loading screen on chrome was broken, my name had to break between two lines

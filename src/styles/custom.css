@@ -217,7 +217,7 @@ html body {
 .hero {
     position: relative;
     height: 100vh;
-    background-image: url('../assets/images/default.png');
+    background-image: url('../assets/images/default.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -404,6 +404,10 @@ html body {
     color: var(--primary-contrast-color);
     overflow: hidden;
     white-space: nowrap;
+}
+.name-text-accessible::selection {
+    background-color: var(--primary-contrast-color);
+    color: var(--primary-color);
 }
 
 .role-text-accessible {
@@ -782,6 +786,10 @@ html body {
 
 /* Mobile responsive */
 @media (max-width: 768px) {
+    .link-box {
+        height: 30vh !important;
+    }
+    
     .preview-image {
         width: 100%;
         height: auto;

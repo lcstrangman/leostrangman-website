@@ -1,0 +1,54 @@
+---
+import { Image as AstroImage } from 'astro:assets';
+
+export interface Props {
+    src: any;
+    alt?: string;
+    width?: number;
+    height?: number;
+    caption?: string;
+    class?: string;
+    sizes?: string;
+    widths?: number[];
+    loading?: 'eager' | 'lazy';
+    // Pixelation-specific props
+    startPixelSize?: number;
+    endPixelSize?: number;
+    numSteps?: number;
+    delay?: number;
+}
+
+const {
+    src,
+    alt = '',
+    width,
+    height,
+    caption,
+    class: propsClass,
+    widths = [720, 1440, 1800],
+    sizes = '(max-width: 720px) 720px, (max-width: 1440px) 1440px, 1800px',
+    loading = 'lazy',
+    startPixelSize = 70,
+    endPixelSize = 1,
+    numSteps = 5,
+    delay = 80,
+    ...rest
+} = Astro.props;
+---
+
+<div class={`image-wrapper ${propsClass || ''}`} {...rest}>
+    <canvas class="pixel-canvas" aria-hidden="true"></canvas>
+    <div class="source-image">
+        <AstroImage
+            inferSize={typeof src === 'string'}
+            src={src}
+            widths={widths}
+            sizes={sizes}
+            width={width}
+            height={height}
+            alt={alt}
+            loading={loading}
+        />
+    </div>
+    {caption && <div class="image-caption">{caption}</div>}
+</div>

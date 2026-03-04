@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Image from '@components/Image/Image.astro';
+import PixelatedImage from '@components/PixelatedImage/PixelatedImage.astro';
 import ResumeBox from '../components/ResumeBox/ResumeBox.astro';
 import ScrollingFooter from '../components/ScrollingFooter/ScrollingFooter.astro';
 ---
@@ -27,17 +27,11 @@ import ScrollingFooter from '../components/ScrollingFooter/ScrollingFooter.astro
 
             <!-- Color matched resume with pixelation effect -->
             <div class="u-mt-12 u-grid u-grid-cols-1 u-gap-gutter">
-                <div class="image-wrapper resume-background u-h-full u-w-full">
-                    <canvas class="pixel-canvas"></canvas>
-                    <Image
-                        class="source-image"
-                        src={import('@images/resume.png')}
-                        alt="Leo Strangman Resume"
-                        caption=""
-                        width={500}
-                        height={700}
-                    />
-                </div>
+                <PixelatedImage
+                    src={import('@images/resume.png')}
+                    alt="Leo Strangman resume"
+                    class="u-h-full u-w-full"
+                />
             </div>
 
             <!-- Resume download link box -->

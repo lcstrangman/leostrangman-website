@@ -33,6 +33,18 @@ import ScrollingFooter from '../components/ScrollingFooter/ScrollingFooter.astro
             <h1 id="projects-title" class="sr-only">Projects</h1>
 
             <!-- Content section with experience box -->
+             <InteractiveSection
+                title="Tablet Interface for Robot Assisted Laser Microsurgery"
+                dataPrefix="/projects-"
+                bullets={[
+                    'Developed a novel tablet-stylus UI/UX for a 7-DOF surgical robot',
+                    'Engineered robust safety protocols and assistive features to limit error',
+                    'Conducted HCI user studies with surgeons to minimize cognitive load',
+                    'Implemented real-time monitoring overlays using TypeScript and Python'
+                ]}
+                sectionIndex={4}
+            />
+            <!-- Another content box -->
             <InteractiveSection
                 title="leostrangman.com"
                 dataPrefix="/projects-"
@@ -51,8 +63,8 @@ import ScrollingFooter from '../components/ScrollingFooter/ScrollingFooter.astro
                 bullets={[
                     'Created application to post and apply to research positions at a university',
                     'Utilized RESTful APIs to manage user data, research listings, and applications',
-                    'Managed class relationships and user information securely using SQL Alchemy and Python',
-                    'Established a local server with Python and Flask to access on the university network'
+                    'Managed class relationships and user info securely with SQL Alchemy and Python',
+                    'Established a local server with Python/Flask to access on the university network'
                 ]}
                 sectionIndex={1}
             />
