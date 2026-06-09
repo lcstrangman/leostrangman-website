@@ -1,225 +1,321 @@
+// LoadingScreen.ts
 export class LoadingScreen {
     private static isInitialized = false;
-    private static animationTimeouts: NodeJS.Timeout[] = [];
+    private static animationFrameIds = new Set<number>();
+    private static timeouts: ReturnType<typeof setTimeout>[] = [];
 
-    // -----------------------------
-    // Session helpers
-    // -----------------------------
+    // ── Tuning knobs ──────────────────────────────────────────────────────────
+    private static readonly FONT_SIZE_VH        = 0.05;
+    private static readonly ROW_STAGGER_PX      = 12;   
+    private static readonly SWEEP_SPEED_PX_S    = 1600; 
+    private static readonly ERASE_SPEED_PX_S    = 2100; 
+    private static readonly SPEED_VARIANCE      = 0.25; // MASSIVE INCREASE for jagged tearing
+    
+    // Dual-speed scramble tuning
+    private static readonly FAST_SCRAMBLE_MS    = 16;   
+    private static readonly SLOW_SCRAMBLE_MS    = 100;  
+    private static readonly SCRAMBLE_BAND_CHARS = 3;    
+    
+    private static readonly REVEAL_HOLD_MS      = 500;
+    private static readonly FADE_MS             = 380;
+    // ─────────────────────────────────────────────────────────────────────────
+
+    private static readonly GLITCH_CHARS =
+        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&*+=!-[]{}()<>/\\|^~';
+
+    // ── Session ───────────────────────────────────────────────────────────────
     private static hasPlayed(): boolean {
         return sessionStorage.getItem('loadingPlayed') === 'true';
     }
-
     private static markPlayed(): void {
         sessionStorage.setItem('loadingPlayed', 'true');
     }
 
-    // -----------------------------
-    // Public API
-    // -----------------------------
+    // ── Public API ────────────────────────────────────────────────────────────
     static init(): void {
         this.cleanup();
         if (!this.hasRequiredElements()) return;
 
         if (this.hasPlayed()) {
-            // Subsequent loads → just show initial screen and fade out after 1 second
             this.showInitialScreenAndFade();
             return;
         }
 
-        // First load → run the full animation sequence
         this.isInitialized = true;
         this.showInitialScreen();
-
-        // Start the full sequence after 1 second
-        const timeout = setTimeout(() => {
-            this.startFullSequence();
-        }, 1000);
-
-        this.animationTimeouts.push(timeout);
+        this.addTimeout(() => {
+            if (this.isInitialized) this.startFullSequence();
+        }, 900);
     }
 
     static cleanup(): void {
-        this.animationTimeouts.forEach((timeout) => clearTimeout(timeout));
-        this.animationTimeouts = [];
+        this.animationFrameIds.forEach(cancelAnimationFrame);
+        this.animationFrameIds.clear();
+        this.timeouts.forEach(clearTimeout);
+        this.timeouts = [];
         this.isInitialized = false;
     }
 
-    // -----------------------------
-    // Helpers
-    // -----------------------------
+    // ── Helpers ───────────────────────────────────────────────────────────────
     private static hasRequiredElements(): boolean {
-        const initialScreen = document.getElementById('initial-screen');
-        const loadingScreen = document.getElementById('loading-screen');
-        const pixelTransition = document.getElementById('pixel-transition');
-        return !!(initialScreen && loadingScreen && pixelTransition);
+        return !!(
+            document.getElementById('initial-screen') &&
+            document.getElementById('loading-screen') &&
+            document.getElementById('loading-canvas')
+        );
     }
 
+    private static addTimeout(fn: () => void, ms: number) {
+        const id = setTimeout(fn, ms);
+        this.timeouts.push(id);
+        return id;
+    }
+
+    private static addFrame(fn: FrameRequestCallback): number {
+        const id = requestAnimationFrame(fn);
+        this.animationFrameIds.add(id);
+        return id;
+    }
+
+    private static getColors() {
+        const s = getComputedStyle(document.documentElement);
+        return {
+            bg: s.getPropertyValue('--loading-bg').trim() || '#192727',
+            fg: s.getPropertyValue('--loading-fg').trim() || '#e4c787',
+        };
+    }
+
+    private static randomChar(): string {
+        return this.GLITCH_CHARS[Math.floor(Math.random() * this.GLITCH_CHARS.length)];
+    }
+
+    // ── Screen visibility ─────────────────────────────────────────────────────
     private static showInitialScreen(): void {
-        const initialScreen = document.getElementById('initial-screen');
-        if (!initialScreen) return;
-        // Initial screen is already visible by default, no need to fade it in
-        initialScreen.style.display = 'flex';
-        initialScreen.style.opacity = '1';
+        const el = document.getElementById('initial-screen');
+        if (!el) return;
+        el.style.display = 'flex';
+        el.style.opacity = '1';
     }
 
     private static showInitialScreenAndFade(): void {
-        const initialScreen = document.getElementById('initial-screen');
-        if (!initialScreen) return;
-
-        // Initial screen is already visible, just ensure it's displayed
-        initialScreen.style.display = 'flex';
-        initialScreen.style.opacity = '1';
-
-        // Fade out after 1 second
-        const timeout = setTimeout(() => {
-            initialScreen.style.opacity = '0';
-            setTimeout(() => {
-                initialScreen.style.display = 'none';
-            }, 300); // Wait for fade transition
-        }, 1000);
-
-        this.animationTimeouts.push(timeout);
+        const el = document.getElementById('initial-screen');
+        if (!el) return;
+        el.style.display = 'flex';
+        el.style.opacity = '1';
+        this.addTimeout(() => {
+            el.style.opacity = '0';
+            this.addTimeout(() => { el.style.display = 'none'; }, 300);
+        }, 900);
     }
 
-    // -----------------------------
-    // Full sequence (first visit only)
-    // -----------------------------
+    // ── Full first-visit sequence ─────────────────────────────────────────────
     private static startFullSequence(): void {
         if (!this.isInitialized) return;
+        this.runBandSweep();
+    }
 
-        // First pixelation: cover initial screen
-        this.firstPixelation(() => {
+    // ── Band sweep ────────────────────────────────────────────────────────────
+    private static runBandSweep(): void {
+        const canvas = document.getElementById('loading-canvas') as HTMLCanvasElement | null;
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        const W = window.innerWidth;
+        const H = window.innerHeight;
+        
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width  = W * dpr;
+        canvas.height = H * dpr;
+        canvas.style.width  = `${W}px`;
+        canvas.style.height = `${H}px`;
+        ctx.scale(dpr, dpr);
+        canvas.style.pointerEvents = 'auto';
+
+        const { bg, fg } = this.getColors();
+
+        const loadingScreenEl = document.getElementById('loading-screen');
+        if (loadingScreenEl) loadingScreenEl.style.backgroundColor = bg;
+
+        const fontSize = Math.round(H * this.FONT_SIZE_VH);
+        ctx.font = `${fontSize}px Nikkei`;
+        ctx.textBaseline = 'top';
+
+        const charW = Math.max(ctx.measureText('M').width * 0.9, fontSize * 0.45); 
+        
+        const rows = Math.ceil(H / fontSize);
+        const cols = Math.ceil(W / charW) + 2;
+
+        // Give both the write head AND the erase head completely independent, high-variance speeds
+        const rowWriteSpeeds = Array.from({ length: rows }, () => {
+            const v = (Math.random() * 2 - 1) * this.SPEED_VARIANCE;
+            return this.SWEEP_SPEED_PX_S * (1 + v);
+        });
+
+        const rowEraseSpeeds = Array.from({ length: rows }, () => {
+            const v = (Math.random() * 2 - 1) * this.SPEED_VARIANCE;
+            return this.ERASE_SPEED_PX_S * (1 + v);
+        });
+
+        const shuffledOrder = Array.from({ length: rows }, (_, i) => i)
+            .sort(() => Math.random() - 0.5);
+        const rowLeadOffset = shuffledOrder.map((_, i) =>
+            shuffledOrder.indexOf(i) * this.ROW_STAGGER_PX
+        );
+
+        const settled: string[][] = Array.from({ length: rows }, () =>
+            Array.from({ length: cols }, () => this.randomChar())
+        );
+
+        const cellLastDraw: Float64Array = new Float64Array(rows * cols);
+        const startTime = performance.now();
+
+        for (let i = 0; i < cellLastDraw.length; i++) {
+            cellLastDraw[i] = startTime - Math.random() * 1000;
+        }
+
+        let swapDone = false;
+        let eraseStartTime: number | null = null;
+
+        const tick = (now: number): void => {
             if (!this.isInitialized) return;
 
-            // Hide initial screen, show loading screen
-            const initialScreen = document.getElementById('initial-screen');
-            const loadingScreen = document.getElementById('loading-screen');
+            const elapsed = (now - startTime) / 1000; 
 
-            if (initialScreen) initialScreen.style.display = 'none';
-            if (loadingScreen) {
-                loadingScreen.style.display = 'flex';
-                loadingScreen.style.opacity = '1';
+            ctx.clearRect(0, 0, W, H);
+
+            let allDone = true;
+            const rowWriteX: number[] = new Array(rows);
+            const rowEraseX: number[] = new Array(rows);
+
+            for (let r = 0; r < rows; r++) {
+                const wSpeed = rowWriteSpeeds[r];
+                const eSpeed = rowEraseSpeeds[r];
+                const lead  = rowLeadOffset[r];
+                
+                rowWriteX[r] = elapsed * wSpeed + lead - charW;
+                
+                if (eraseStartTime !== null) {
+                    const eraseElapsed = elapsed - eraseStartTime;
+                    rowEraseX[r] = eraseElapsed * eSpeed + lead - charW;
+                } else {
+                    rowEraseX[r] = -W;
+                }
+                
+                if (rowEraseX[r] < W) allDone = false;
             }
 
-            // Second pixelation: uncover to reveal loading screen
-            this.secondPixelation(() => {
-                if (!this.isInitialized) return;
+            // 1. LAYER ONE: Solid Background Cover
+            ctx.fillStyle = bg;
+            for (let r = 0; r < rows; r++) {
+                const y = r * fontSize;
+                const writeX = rowWriteX[r];
+                const eraseX = rowEraseX[r];
 
-                // Wait 2 seconds then do final fade out
-                const timeout = setTimeout(() => {
-                    if (this.isInitialized) {
-                        this.finalFadeOut();
+                if (writeX > 0 && eraseX < W) {
+                    const startX = Math.max(0, eraseX);
+                    const endX = Math.min(W, writeX);
+                    if (endX > startX) {
+                        ctx.fillRect(startX, y - 1, endX - startX, fontSize + 2);
                     }
-                }, 2000);
+                }
+            }
 
-                this.animationTimeouts.push(timeout);
+            // 2. LAYER TWO: Dual-Speed Typographic Sweep with Jitter
+            ctx.fillStyle = fg;
+            for (let r = 0; r < rows; r++) {
+                const y = r * fontSize;
+                const writeX = rowWriteX[r];
+                const eraseX = rowEraseX[r];
+
+                const firstCol = Math.max(0, Math.floor(eraseX / charW));
+                const lastCol  = Math.min(cols - 1, Math.ceil(writeX / charW));
+
+                for (let c = firstCol; c <= lastCol; c++) {
+                    const x = c * charW;
+                    const distFromWrite = writeX - x;
+                    
+                    const isLeadingEdge = distFromWrite < charW * this.SCRAMBLE_BAND_CHARS;
+                    const currentInterval = isLeadingEdge ? this.FAST_SCRAMBLE_MS : this.SLOW_SCRAMBLE_MS;
+
+                    const idx = r * cols + c;
+
+                    if (now - cellLastDraw[idx] > currentInterval) {
+                        settled[r][c] = this.randomChar();
+                        const jitter = Math.random() * currentInterval * 0.8;
+                        cellLastDraw[idx] = now + jitter;
+                    } 
+                    
+                    ctx.fillText(settled[r][c], x, y);
+                }
+            }
+
+            // ZERO-HOLD DOM SWAP
+            if (!swapDone) {
+                const allCovered = rowWriteX.every(wx => wx >= W);
+                
+                if (allCovered) {
+                    swapDone = true;
+                    eraseStartTime = elapsed; 
+                    
+                    const initial = document.getElementById('initial-screen');
+                    const loading = document.getElementById('loading-screen');
+                    
+                    if (initial) {
+                        initial.style.transition = 'none';
+                        initial.style.display = 'none';
+                    }
+                    
+                    if (loading) {
+                        loading.style.transition = 'none';
+                        loading.style.display = 'flex';
+                        loading.style.opacity = '1';
+                    }
+
+                    const nameEl = document.getElementById('loading-name-text');
+                    if (nameEl) nameEl.textContent = this.FULL_NAME;
+                }
+            }
+
+            if (!allDone) {
+                this.addFrame(tick);
+            } else {
+                canvas.style.pointerEvents = 'none';
+                ctx.clearRect(0, 0, W, H);
+                this.addTimeout(() => this.fadeOutAndFinish(), this.REVEAL_HOLD_MS);
+            }
+        };
+
+        this.addFrame(tick);
+    }
+
+    // ── Fade out and finish ───────────────────────────────────────────────────
+    private static fadeOutAndFinish(): void {
+        const loading = document.getElementById('loading-screen');
+        const canvas  = document.getElementById('loading-canvas') as HTMLCanvasElement | null;
+        const overlay = document.getElementById('loading-overlay');
+
+        const targets = [loading, canvas, overlay].filter(Boolean) as HTMLElement[];
+
+        targets.forEach((el) => {
+            el.style.transition = `opacity ${this.FADE_MS}ms cubic-bezier(0.4, 0, 0.2, 1)`;
+            el.style.opacity = '0';
+        });
+
+        this.addTimeout(() => {
+            targets.forEach((el) => {
+                el.style.display = 'none';
+                el.style.transition = '';
+                el.style.opacity = '';
             });
-        });
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
+                canvas.style.pointerEvents = 'none';
+            }
+            this.markPlayed();
+        }, this.FADE_MS + 50);
     }
 
-    private static firstPixelation(callback: () => void): void {
-        const pixelTransition = document.getElementById('pixel-transition');
-        if (!pixelTransition) return;
-
-        pixelTransition.style.display = 'grid';
-        this.createPixelGrid(pixelTransition);
-        const pixels = Array.from(pixelTransition.children) as HTMLElement[];
-
-        this.animatePixelsToBlack(pixels, callback);
-    }
-
-    private static secondPixelation(callback: () => void): void {
-        const pixelTransition = document.getElementById('pixel-transition');
-        if (!pixelTransition) return;
-
-        const pixels = Array.from(pixelTransition.children) as HTMLElement[];
-        this.animatePixelsToTransparent(pixels, () => {
-            if (!this.isInitialized) return;
-            pixelTransition.style.display = 'none';
-            callback();
-        });
-    }
-
-    private static finalFadeOut(): void {
-        const pixelTransition = document.getElementById('pixel-transition');
-        const loadingScreen = document.getElementById('loading-screen');
-
-        if (!pixelTransition) return;
-
-        // Create pixel grid and cover everything
-        pixelTransition.style.display = 'grid';
-        this.createPixelGrid(pixelTransition);
-        const pixels = Array.from(pixelTransition.children) as HTMLElement[];
-
-        this.animatePixelsToBlack(pixels, () => {
-            if (!this.isInitialized) return;
-
-            // Hide everything
-            const timeout = setTimeout(() => {
-                if (!this.isInitialized) return;
-
-                if (loadingScreen) loadingScreen.style.display = 'none';
-                pixelTransition.style.display = 'none';
-
-                // Mark as played so subsequent visits just show initial screen
-                this.markPlayed();
-            }, 100);
-
-            this.animationTimeouts.push(timeout);
-        });
-    }
-
-    // -----------------------------
-    // Pixel helpers
-    // -----------------------------
-    private static createPixelGrid(container: HTMLElement): void {
-        container.innerHTML = '';
-        const gridSize = 50;
-        const totalPixels = gridSize * gridSize;
-
-        container.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
-        container.style.gridTemplateRows = `repeat(${gridSize}, 1fr)`;
-
-        for (let i = 0; i < totalPixels; i++) {
-            const pixel = document.createElement('div');
-            pixel.classList.add('pixel');
-            container.appendChild(pixel);
-        }
-    }
-
-    private static animatePixelsToBlack(pixels: HTMLElement[], callback?: () => void): void {
-        const totalPixels = pixels.length;
-        const maxDelay = 800;
-        let completedCount = 0;
-
-        pixels.forEach((pixel) => {
-            const delay = Math.random() * maxDelay;
-            const timeout = setTimeout(() => {
-                if (!this.isInitialized) return;
-                pixel.classList.add('black');
-                completedCount++;
-                if (completedCount === totalPixels && callback) callback();
-            }, delay);
-
-            this.animationTimeouts.push(timeout);
-        });
-    }
-
-    private static animatePixelsToTransparent(pixels: HTMLElement[], callback?: () => void): void {
-        const totalPixels = pixels.length;
-        const maxDelay = 800;
-        let completedCount = 0;
-
-        pixels.forEach((pixel) => {
-            const delay = Math.random() * maxDelay;
-            const timeout = setTimeout(() => {
-                if (!this.isInitialized) return;
-                pixel.classList.remove('black');
-                completedCount++;
-                if (completedCount === totalPixels && callback) callback();
-            }, delay);
-
-            this.animationTimeouts.push(timeout);
-        });
-    }
+    private static readonly FULL_NAME = 'Leo Strangman';
 }

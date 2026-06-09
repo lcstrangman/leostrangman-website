@@ -36,7 +36,6 @@ const seoData = getSeo(seo, defaultSeo, title, currentUrl);
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="generator" content={Astro.generator} />
-
         <SEO {...seoData} />
     </head>
 
@@ -58,17 +57,19 @@ const seoData = getSeo(seo, defaultSeo, title, currentUrl);
 
         <!-- Loading screens -->
         <div role="banner" aria-label="Loading Screen">
+            <!-- Shown briefly on every page load -->
             <div id="initial-screen">
                 <div class="icon-wrapper u-select-none">
                     <Icon class="hover-text" name="icon-amber-supply" />
                 </div>
             </div>
 
+            <!-- Full loading screen, first visit only -->
             <div id="loading-screen">
                 <div class="loading-content">
-                    <div class="logo-name u-flex u-flex-row">
-                        <Icon class="hover-text" name="icon-amber-supply" />
-                        <span class="loading-name-text">Leo Strangman</span>
+                    <div class="loading-top">
+                        <Icon class="loading-icon" name="icon-amber-supply" />
+                        <span class="loading-name-text" id="loading-name-text"></span>
                     </div>
                     <p class="loading-note">
                         For the full animated experience, use a desktop browser
@@ -76,7 +77,12 @@ const seoData = getSeo(seo, defaultSeo, title, currentUrl);
                 </div>
             </div>
 
-            <div id="pixel-transition"></div>
+            <!-- Single canvas used for all wipe transitions — replaces the 2500-div grid -->
+            <canvas
+                id="loading-canvas"
+                aria-hidden="true"
+                style="position:fixed;inset:0;z-index:10002;pointer-events:none;"
+            ></canvas>
         </div>
 
         <!-- Main content -->
