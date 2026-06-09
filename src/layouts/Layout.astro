@@ -4,37 +4,25 @@ import '@styles/custom.css';
 import { SEO } from 'astro-seo';
 import { defaultSeo, type Seo } from '@data/seo';
 import { getSeo } from '@scripts/utils/seo';
+import { themes, type ThemeKey } from '@data/themes';
 import Icon from '@components/Icon/Icon.astro';
 
 interface Props {
     title?: string;
     seo?: Seo;
     pageTitle?: string;
-    primaryColor?: string;
-    primaryContrastColor?: string;
-    secondaryColor?: string;
-    secondaryContrastColor?: string;
-    tertiaryColor?: string;
-    tertiaryContrastColor?: string;
-    quaternaryColor?: string;
-    quaternaryContrastColor?: string;
+    theme?: ThemeKey;
 }
 
 const {
     title = 'INDEX',
     seo = {},
     pageTitle = 'INDEX',
-    primaryColor = '#e4c787',
-    primaryContrastColor = '#192727',
-    secondaryColor = '#9ab28a',
-    secondaryContrastColor = '#593636',
-    tertiaryColor = '#c8a8a8',
-    tertiaryContrastColor = '#2a3a4a',
-    quaternaryColor = '#c4a8b8',
-    quaternaryContrastColor = '#3a2d2d'
+    theme = 'index',
 } = Astro.props;
 
-// Dynamic canonical for current page
+const t = themes[theme];
+
 const currentUrl = `${Astro.site}${Astro.url.pathname}`;
 const seoData = getSeo(seo, defaultSeo, title, currentUrl);
 ---
@@ -49,20 +37,21 @@ const seoData = getSeo(seo, defaultSeo, title, currentUrl);
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="generator" content={Astro.generator} />
 
-        <!-- SEO / canonical / robots -->
         <SEO {...seoData} />
     </head>
 
     <body
-        style={`--primary-color: ${primaryColor};
-           --primary-contrast-color: ${primaryContrastColor};
-           --secondary-color: ${secondaryColor};
-           --secondary-contrast-color: ${secondaryContrastColor};
-           --tertiary-color: ${tertiaryColor};
-           --tertiary-contrast-color: ${tertiaryContrastColor};
-           --quaternary-color: ${quaternaryColor};
-           --quaternary-contrast-color: ${quaternaryContrastColor};
-           --page-title: ${pageTitle};`}
+        style={`
+            --primary-color: ${t.primaryColor};
+            --primary-contrast-color: ${t.primaryContrastColor};
+            --secondary-color: ${t.secondaryColor};
+            --secondary-contrast-color: ${t.secondaryContrastColor};
+            --tertiary-color: ${t.tertiaryColor};
+            --tertiary-contrast-color: ${t.tertiaryContrastColor};
+            --quaternary-color: ${t.quaternaryColor};
+            --quaternary-contrast-color: ${t.quaternaryContrastColor};
+            --page-title: ${pageTitle};
+        `}
     >
         <!-- Mouse follower -->
         <div class="mouse-circle" aria-hidden="true"></div>
@@ -95,14 +84,14 @@ const seoData = getSeo(seo, defaultSeo, title, currentUrl);
             <main
                 id="swup"
                 class="transition-fade"
-                data-primary-color={primaryColor}
-                data-primary-contrast-color={primaryContrastColor}
-                data-secondary-color={secondaryColor}
-                data-secondary-contrast-color={secondaryContrastColor}
-                data-tertiary-color={tertiaryColor}
-                data-tertiary-contrast-color={tertiaryContrastColor}
-                data-quaternary-color={quaternaryColor}
-                data-quaternary-contrast-color={quaternaryContrastColor}
+                data-primary-color={t.primaryColor}
+                data-primary-contrast-color={t.primaryContrastColor}
+                data-secondary-color={t.secondaryColor}
+                data-secondary-contrast-color={t.secondaryContrastColor}
+                data-tertiary-color={t.tertiaryColor}
+                data-tertiary-contrast-color={t.tertiaryContrastColor}
+                data-quaternary-color={t.quaternaryColor}
+                data-quaternary-contrast-color={t.quaternaryContrastColor}
                 data-page-title={pageTitle}
             >
                 <div id="content">

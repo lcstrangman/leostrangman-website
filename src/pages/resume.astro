@@ -3,42 +3,20 @@ import Layout from '../layouts/Layout.astro';
 import PixelatedImage from '@components/PixelatedImage/PixelatedImage.astro';
 import ResumeBox from '../components/ResumeBox/ResumeBox.astro';
 import ScrollingFooter from '../components/ScrollingFooter/ScrollingFooter.astro';
+import PageShell from '../components/PageShell/PageShell.astro';
 ---
 
-<!-- Import layout with set variables for page name and color scheme -->
-<Layout
-    title="Leo Strangman."
-    primaryColor="#bbb387"
-    primaryContrastColor="#192727"
-    secondaryColor="#192727"
-    secondaryContrastColor="#A2B690"
-    tertiaryColor="#e4c787"
-    tertiaryContrastColor="#593636"
-    quaternaryColor="#9ab28a"
-    quaternaryContrastColor="#593636"
-    pageTitle="RESUME"
->
-    <!-- Main container -->
-    <div class="u-z-2 background-color u-relative">
-        <!-- Matching wrapper to keep pages consistent -->
-        <div class="link-box-wrapper">
-            <!-- Canvas for the moving line header effect -->
-            <div class="line-container hover-text u-h-[50vh] u-w-full" id="lines-wrapper"></div>
-
-            <!-- Color matched resume with pixelation effect -->
-            <div class="u-mt-12 u-grid u-grid-cols-1 u-gap-gutter">
-                <PixelatedImage
-                    src={import('@images/resume.png')}
-                    alt="Leo Strangman resume"
-                    class="u-h-full u-w-full"
-                />
-            </div>
-
-            <!-- Resume download link box -->
-            <ResumeBox mode="download" />
-
-            <!-- Scrolling footer div -->
-            <ScrollingFooter />
+<Layout title="Leo Strangman." theme="resume" pageTitle="RESUME">
+    <PageShell>
+        <div class="u-mt-12 u-grid u-grid-cols-1 u-gap-gutter">
+            <PixelatedImage
+                src={import('@images/resume.png')}
+                alt="Leo Strangman resume"
+                class="u-h-full u-w-full"
+            />
         </div>
-    </div>
+
+        <ResumeBox mode="download" />
+        <ScrollingFooter />
+    </PageShell>
 </Layout>

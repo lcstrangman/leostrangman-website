@@ -3,46 +3,24 @@ import Layout from '../layouts/Layout.astro';
 import InteractiveSection from '../components/InteractiveSection/InteractiveSection.astro';
 import ResumeBox from '../components/ResumeBox/ResumeBox.astro';
 import ScrollingFooter from '../components/ScrollingFooter/ScrollingFooter.astro';
+import PageShell from '../components/PageShell/PageShell.astro';
 ---
 
-<!-- Import layout with set variables for page name and color scheme -->
-<Layout
-    title="Leo Strangman."
-    primaryColor="#9ab28a"
-    primaryContrastColor="#593636"
-    secondaryColor="#C2BA93"
-    secondaryContrastColor="#2A2F04"
-    tertiaryColor="#e4c787"
-    tertiaryContrastColor="#192727"
-    quaternaryColor="#c8a8a8"
-    quaternaryContrastColor="#3a2d2d"
-    pageTitle="MY WORK"
->
-    <!-- Main container -->
-    <div class="u-z-2 background-color u-relative">
-        <!-- Matching wrapper to keep pages consistent -->
-        <div class="link-box-wrapper">
-            <!-- Canvas for the moving line header effect -->
-            <div class="line-container hover-text u-h-[50vh] u-w-full" id="lines-wrapper"></div>
+<Layout title="Leo Strangman." theme="work" pageTitle="MY WORK">
+    <PageShell>
+        <InteractiveSection
+            title="MASSACHUSETTS GENERAL HOSPITAL"
+            dataPrefix="/work-"
+            bullets={[
+                'Front and back-end website development for the Neural Systems Group',
+                'Automated data analysis collected with biomedical research equipment',
+                'Supported design of a novel biomedical monitoring and brain imaging system',
+                'Aided in redesigning and fabricating housing and sensor components',
+            ]}
+            sectionIndex={0}
+        />
 
-            <!-- Content section with work box -->
-            <InteractiveSection
-                title="MASSACHUSETTS GENERAL HOSPITAL"
-                dataPrefix="/work-"
-                bullets={[
-                    'Front and back-end website development for the Neural Systems Group',
-                    'Automated data analysis collected with biomedical research equipment',
-                    'Supported design of a novel biomedical monitoring and brain imaging system',
-                    'Aided in redesigning and fabricating housing and sensor components'
-                ]}
-                sectionIndex={0}
-            />
-
-            <!-- Resume page link box -->
-            <ResumeBox mode="view" />
-
-            <!-- Container for automatically scrolling text above footer -->
-            <ScrollingFooter />
-        </div>
-    </div>
+        <ResumeBox mode="view" />
+        <ScrollingFooter />
+    </PageShell>
 </Layout>

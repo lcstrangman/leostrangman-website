@@ -1,0 +1,26 @@
+---
+export interface Props {
+    text: string;
+    subtext: string;
+    href: string;
+    external?: boolean;
+    trackingClass?: string;
+}
+
+const { text, subtext, href, external = false, trackingClass = '' } = Astro.props;
+
+const externalAttrs = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
+---
+
+<div class="contact-box u-flex u-w-full u-flex-col u-items-center u-justify-center u-text-center">
+    <a
+        class:list={['glitchable', 'contact-box-text', 'hover-text', trackingClass]}
+        href={href}
+        {...externalAttrs}
+    >
+        {text}
+    </a>
+    <div class="glitchable contact-box-subtext hover-text u-tracking-wide">
+        {subtext}
+    </div>
+</div>

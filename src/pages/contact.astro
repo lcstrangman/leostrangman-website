@@ -1,157 +1,51 @@
 ---
-import ScrollingFooter from '../components/ScrollingFooter/ScrollingFooter.astro';
 import Layout from '../layouts/Layout.astro';
+import ContactLink from '../components/ContactLink/ContactLink.astro';
+import ScrollingFooter from '../components/ScrollingFooter/ScrollingFooter.astro';
+import PageShell from '../components/PageShell/PageShell.astro';
 ---
 
-<!-- Import layout with set variables for page name and color scheme -->
-<Layout
-    title="Leo Strangman."
-    primaryColor="#2a2d17"
-    primaryContrastColor="#e4c787"
-    secondaryColor="#e4c787"
-    secondaryContrastColor="#192727"
-    tertiaryColor="#F2E2C0"
-    tertiaryContrastColor="#945442"
-    quaternaryColor="#9ab28a"
-    quaternaryContrastColor="#593636"
-    pageTitle="CONTACT"
->
-    <!-- Main container -->
-    <div class="u-z-2 background-color u-relative">
-        <!-- Matching wrapper to keep pages consistent -->
-        <div class="link-box-wrapper">
-            <!-- Canvas for the moving line header effect -->
-            <div class="line-container hover-text u-h-[50vh] u-w-full" id="lines-wrapper"></div>
-
-            <!-- Top box for location information -->
-            <div class="u-mt-12 u-grid u-grid-cols-1 u-gap-gutter">
-                <div
-                    class="contact-box location-box u-flex u-w-full u-flex-col u-items-center u-justify-center u-text-center"
-                >
-                    <div class="glitchable contact-box-text tracking-location hover-text">
-                        Boston, MA
-                    </div>
-                    <div class="glitchable contact-box-title-subtext hover-text u-tracking-wide">
-                        Open to In-Person/Remote Work
-                    </div>
+<Layout title="Leo Strangman." theme="contact" pageTitle="CONTACT">
+    <PageShell>
+        <div class="u-mt-12 u-grid u-grid-cols-1 u-gap-gutter">
+            <div class="contact-box location-box u-flex u-w-full u-flex-col u-items-center u-justify-center u-text-center">
+                <div class="glitchable contact-box-text tracking-location hover-text">Boston, MA</div>
+                <div class="glitchable contact-box-title-subtext hover-text u-tracking-wide">
+                    Open to In-Person/Remote Work
                 </div>
             </div>
-
-            <!-- Boxes for contact links -->
-            <div class="button-desktop u-mt-12 u-grid u-grid-cols-2 u-gap-gutter">
-                <div
-                    class="contact-box u-flex u-w-full u-flex-col u-items-center u-justify-center u-text-center"
-                >
-                    <a
-                        class="glitchable contact-box-text tracking-email hover-text"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        href="mailto:lcstrangman@gmail.com">Email</a
-                    >
-                    <div class="glitchable contact-box-subtext hover-text u-tracking-wide">
-                        lcstrangman@gmail.com
-                    </div>
-                </div>
-                <div
-                    class="contact-box u-flex u-w-full u-flex-col u-items-center u-justify-center u-text-center"
-                >
-                    <a
-                        class="glitchable contact-box-text tracking-work hover-text"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        href="https://www.linkedin.com/in/leostrangman/">LinkedIn</a
-                    >
-                    <div class="glitchable contact-box-subtext hover-text u-tracking-wide">
-                        /in/leostrangman
-                    </div>
-                </div>
-            </div>
-            <div class="button-desktop u-mt-12 u-grid u-grid-cols-2 u-gap-gutter">
-                <div
-                    class="contact-box u-flex u-w-full u-flex-col u-items-center u-justify-center u-text-center"
-                >
-                    <a
-                        class="glitchable contact-box-text tracking-github hover-text"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        href="https://github.com/lcstrangman/">GitHub</a
-                    >
-                    <div class="glitchable contact-box-subtext hover-text u-tracking-wide">
-                        /lcstrangman
-                    </div>
-                </div>
-                <div
-                    class="contact-box u-flex u-w-full u-flex-col u-items-center u-justify-center u-text-center"
-                >
-                    <a class="glitchable contact-box-text tracking-resume hover-text" href="/resume"
-                        >Resume</a
-                    >
-                    <div class="glitchable contact-box-subtext hover-text u-tracking-wide">
-                        /resume
-                    </div>
-                </div>
-            </div>
-            <!-- Version of boxes for mobile devices -->
-            <div class="button-mobile u-mt-12">
-                <div
-                    class="contact-box u-flex u-w-full u-flex-col u-items-center u-justify-center u-text-center"
-                >
-                    <a
-                        class="glitchable contact-box-text tracking-email hover-text"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        href="mailto:lcstrangman@gmail.com">Email</a
-                    >
-                    <div class="glitchable contact-box-subtext hover-text u-tracking-wide">
-                        lcstrangman@gmail.com
-                    </div>
-                </div>
-            </div>
-            <div class="button-mobile u-mt-12">
-                <div
-                    class="contact-box u-flex u-w-full u-flex-col u-items-center u-justify-center u-text-center"
-                >
-                    <a
-                        class="glitchable contact-box-text tracking-work hover-text"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        href="https://www.linkedin.com/in/leostrangman/">LinkedIn</a
-                    >
-                    <div class="glitchable contact-box-subtext hover-text u-tracking-wide">
-                        /in/leostrangman
-                    </div>
-                </div>
-            </div>
-            <div class="button-mobile u-mt-12">
-                <div
-                    class="contact-box u-flex u-w-full u-flex-col u-items-center u-justify-center u-text-center"
-                >
-                    <a
-                        class="glitchable contact-box-text tracking-github hover-text"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        href="https://github.com/lcstrangman/">GitHub</a
-                    >
-                    <div class="glitchable contact-box-subtext hover-text u-tracking-wide">
-                        /lcstrangman
-                    </div>
-                </div>
-            </div>
-            <div class="button-mobile u-mt-12 u-grid">
-                <div
-                    class="contact-box u-flex u-w-full u-flex-col u-items-center u-justify-center u-text-center"
-                >
-                    <a class="glitchable contact-box-text tracking-resume hover-text" href="/resume"
-                        >Resume</a
-                    >
-                    <div class="glitchable contact-box-subtext hover-text u-tracking-wide">
-                        /resume
-                    </div>
-                </div>
-            </div>
-
-            <!-- Container for automatically scrolling text above footer -->
-            <ScrollingFooter />
         </div>
-    </div>
+
+        <div class="u-mt-12 u-grid u-grid-cols-1 md:u-grid-cols-2 u-gap-gutter">
+            <ContactLink
+                text="Email"
+                subtext="lcstrangman@gmail.com"
+                href="mailto:lcstrangman@gmail.com"
+                external
+                trackingClass="tracking-email"
+            />
+            <ContactLink
+                text="LinkedIn"
+                subtext="/in/leostrangman"
+                href="https://www.linkedin.com/in/leostrangman/"
+                external
+                trackingClass="tracking-work"
+            />
+            <ContactLink
+                text="GitHub"
+                subtext="/lcstrangman"
+                href="https://github.com/lcstrangman/"
+                external
+                trackingClass="tracking-github"
+            />
+            <ContactLink
+                text="Resume"
+                subtext="/resume"
+                href="/resume"
+                trackingClass="tracking-resume"
+            />
+        </div>
+
+        <ScrollingFooter />
+    </PageShell>
 </Layout>

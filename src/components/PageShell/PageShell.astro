@@ -1,0 +1,14 @@
+---
+// PageShell.astro
+// Shared wrapper for all interior pages (about, contact, projects, resume, work).
+// Renders the z-2 background div, link-box-wrapper padding, and the lines canvas header.
+// index.astro does NOT use this — it has its own hero section.
+---
+
+<div class="u-z-2 background-color u-relative">
+    <div class="link-box-wrapper">
+        <div class="line-container hover-text u-h-[50vh] u-w-full" id="lines-wrapper"></div>
+
+        <slot />
+    </div>
+</div>

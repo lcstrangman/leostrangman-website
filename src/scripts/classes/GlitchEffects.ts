@@ -1,148 +1,96 @@
-interface GlitchableElement {
-    element: HTMLElement;
-    originalText: string;
-    glitchInterval: NodeJS.Timeout | null;
-    glitchTimeout: NodeJS.Timeout | null;
-    mouseEnterHandler: () => void;
-    mouseLeaveHandler: () => void;
-}
-
 export class GlitchEffects {
     private static isInitialized = false;
-    private static glitchables: NodeListOf<HTMLElement> | null = null;
-    private static activeGlitchIntervals = new Set<NodeJS.Timeout>();
-    private static glitchableElements: GlitchableElement[] = [];
+    private static activeGlitchIntervals = new Map<HTMLElement, NodeJS.Timeout>();
+    private static activeGlitchTimeouts = new Map<HTMLElement, NodeJS.Timeout>();
 
     static init(): void {
-        // Clean up any existing effects
         this.cleanup();
 
-        // Check if required elements exist
-        if (!this.hasRequiredElements()) {
-            return;
-        }
+        // Store original text on every .glitchable element so it's always available
+        document.querySelectorAll<HTMLElement>('.glitchable').forEach((el) => {
+            if (!el.dataset.originalText) {
+                el.dataset.originalText = el.textContent ?? '';
+            }
+        });
+
+        document.addEventListener('mouseenter', this.handleMouseEnter, true);
+        document.addEventListener('mouseleave', this.handleMouseLeave, true);
 
         this.isInitialized = true;
-        this.cacheElements();
-        this.setupGlitchables();
     }
 
     static cleanup(): void {
-        // Clear all active intervals
-        this.activeGlitchIntervals.forEach((interval) => {
+        document.removeEventListener('mouseenter', this.handleMouseEnter, true);
+        document.removeEventListener('mouseleave', this.handleMouseLeave, true);
+
+        // Clear any in-flight intervals/timeouts and restore text
+        this.activeGlitchIntervals.forEach((interval, el) => {
             clearInterval(interval);
+            el.textContent = el.dataset.originalText ?? el.textContent;
         });
         this.activeGlitchIntervals.clear();
 
-        // Remove event listeners and clear timeouts
-        this.glitchableElements.forEach(
-            ({ element, glitchInterval, glitchTimeout, mouseEnterHandler, mouseLeaveHandler }) => {
-                element.removeEventListener('mouseenter', mouseEnterHandler);
-                element.removeEventListener('mouseleave', mouseLeaveHandler);
+        this.activeGlitchTimeouts.forEach((timeout) => clearTimeout(timeout));
+        this.activeGlitchTimeouts.clear();
 
-                if (glitchInterval) {
-                    clearInterval(glitchInterval);
-                }
-                if (glitchTimeout) {
-                    clearTimeout(glitchTimeout);
-                }
-
-                // Restore original text
-                element.textContent = element.dataset.originalText || element.textContent;
-            }
-        );
-
-        // Reset state
-        this.glitchableElements = [];
-        this.glitchables = null;
         this.isInitialized = false;
     }
 
-    private static hasRequiredElements(): boolean {
-        const glitchables = document.querySelectorAll('.glitchable');
-        return glitchables.length > 0;
-    }
+    // Captured arrow functions so add/removeEventListener use the same reference
+    private static handleMouseEnter = (e: Event): void => {
+        if (!this.isInitialized) return;
+        const el = (e.target as HTMLElement).closest<HTMLElement>('.glitchable');
+        if (!el) return;
+        this.startGlitch(el);
+    };
 
-    private static cacheElements(): void {
-        this.glitchables = document.querySelectorAll('.glitchable');
-    }
+    private static handleMouseLeave = (e: Event): void => {
+        if (!this.isInitialized) return;
+        const el = (e.target as HTMLElement).closest<HTMLElement>('.glitchable');
+        if (!el) return;
+        this.stopGlitch(el);
+    };
 
-    private static setupGlitchables(): void {
-        if (!this.glitchables) return;
+    private static startGlitch(el: HTMLElement): void {
+        // Already glitching — don't stack
+        if (this.activeGlitchIntervals.has(el)) return;
 
-        this.glitchables.forEach((el) => this.setupGlitchable(el));
-    }
+        // Lazily stamp original text if it wasn't set during init (e.g. dynamically added element)
+        if (!el.dataset.originalText) {
+            el.dataset.originalText = el.textContent ?? '';
+        }
+        const originalText = el.dataset.originalText;
 
-    private static setupGlitchable(el: HTMLElement): void {
-        const originalText = el.textContent || '';
-
-        // Store original text in dataset for restoration
-        el.dataset.originalText = originalText;
-
-        let glitchInterval: NodeJS.Timeout | null = null;
-        let glitchTimeout: NodeJS.Timeout | null = null;
-
-        const glitchText = (): void => {
-            if (!this.isInitialized) return;
-
-            if (glitchInterval) return; // Prevent stacking
-
-            glitchInterval = setInterval(() => {
-                if (!this.isInitialized) {
-                    if (glitchInterval) {
-                        clearInterval(glitchInterval);
-                        this.activeGlitchIntervals.delete(glitchInterval);
-                    }
-                    return;
-                }
-
-                el.textContent = this.shuffleText(originalText);
-            }, 50);
-
-            this.activeGlitchIntervals.add(glitchInterval);
-
-            glitchTimeout = setTimeout(() => {
-                if (!this.isInitialized) return;
-
-                if (glitchInterval) {
-                    clearInterval(glitchInterval);
-                    this.activeGlitchIntervals.delete(glitchInterval);
-                    glitchInterval = null;
-                }
-                el.textContent = originalText;
-            }, 250);
-        };
-
-        const stopGlitch = (): void => {
-            if (glitchInterval) {
-                clearInterval(glitchInterval);
-                this.activeGlitchIntervals.delete(glitchInterval);
-                glitchInterval = null;
+        const interval = setInterval(() => {
+            if (!this.isInitialized) {
+                this.stopGlitch(el);
+                return;
             }
-            if (glitchTimeout) {
-                clearTimeout(glitchTimeout);
-                glitchTimeout = null;
-            }
-            el.textContent = originalText;
-        };
+            el.textContent = this.shuffleText(originalText);
+        }, 50);
 
-        // Create handlers that maintain proper context
-        const mouseEnterHandler = () => glitchText();
-        const mouseLeaveHandler = () => stopGlitch();
+        const timeout = setTimeout(() => {
+            this.stopGlitch(el);
+        }, 250);
 
-        // Add event listeners
-        el.addEventListener('mouseenter', mouseEnterHandler);
-        el.addEventListener('mouseleave', mouseLeaveHandler);
+        this.activeGlitchIntervals.set(el, interval);
+        this.activeGlitchTimeouts.set(el, timeout);
+    }
 
-        // Store element data for cleanup
-        this.glitchableElements.push({
-            element: el,
-            originalText,
-            glitchInterval,
-            glitchTimeout,
-            mouseEnterHandler,
-            mouseLeaveHandler
-        });
+    private static stopGlitch(el: HTMLElement): void {
+        const interval = this.activeGlitchIntervals.get(el);
+        if (interval !== undefined) {
+            clearInterval(interval);
+            this.activeGlitchIntervals.delete(el);
+        }
+
+        const timeout = this.activeGlitchTimeouts.get(el);
+        if (timeout !== undefined) {
+            clearTimeout(timeout);
+            this.activeGlitchTimeouts.delete(el);
+        }
+
+        el.textContent = el.dataset.originalText ?? el.textContent;
     }
 
     private static shuffleText(text: string): string {
@@ -150,64 +98,31 @@ export class GlitchEffects {
             const letters = word.replace(/[^a-zA-Z0-9[@#$%&*/\]+=©!-]/g, '');
             const punctuation = word.replace(/[a-zA-Z0-9[@#$%&*/\]+=©!-]/g, '');
 
-            let shuffledLetters = letters.split('');
-
-            // Fisher-Yates shuffle algorithm
-            for (let i = shuffledLetters.length - 1; i > 0; i--) {
+            const shuffled = letters.split('');
+            for (let i = shuffled.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
-                [shuffledLetters[i], shuffledLetters[j]] = [shuffledLetters[j], shuffledLetters[i]];
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
             }
 
-            return shuffledLetters.join('') + punctuation;
+            return shuffled.join('') + punctuation;
         });
 
         return words.join(' ');
     }
 
-    /**
-     * Manually trigger glitch effect on a specific element
-     */
+    // Public helpers kept for any external callers in app.ts
     static triggerGlitch(selector: string): void {
         if (!this.isInitialized) return;
-
-        const element = document.querySelector(selector) as HTMLElement;
-        if (!element) return;
-
-        const originalText = element.dataset.originalText || element.textContent || '';
-        let glitchCount = 0;
-        const maxGlitches = 5;
-
-        const glitchInterval = setInterval(() => {
-            if (!this.isInitialized || glitchCount >= maxGlitches) {
-                clearInterval(glitchInterval);
-                element.textContent = originalText;
-                return;
-            }
-
-            element.textContent = this.shuffleText(originalText);
-            glitchCount++;
-        }, 50);
+        const el = document.querySelector<HTMLElement>(selector);
+        if (!el) return;
+        this.startGlitch(el);
     }
 
-    /**
-     * Get count of active glitch effects
-     */
+    static stopAllGlitches(): void {
+        this.activeGlitchIntervals.forEach((_, el) => this.stopGlitch(el));
+    }
+
     static getActiveGlitchCount(): number {
         return this.activeGlitchIntervals.size;
-    }
-
-    /**
-     * Stop all active glitch effects
-     */
-    static stopAllGlitches(): void {
-        this.activeGlitchIntervals.forEach((interval) => {
-            clearInterval(interval);
-        });
-        this.activeGlitchIntervals.clear();
-
-        // Restore all original text
-        this.glitchableElements.forEach(({ element }) => {
-            element.textContent = element.dataset.originalText || element.textContent;
-        });
     }
 }
