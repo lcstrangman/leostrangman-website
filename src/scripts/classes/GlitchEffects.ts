@@ -1,7 +1,7 @@
 export class GlitchEffects {
     private static isInitialized = false;
-    private static activeGlitchIntervals = new Map<HTMLElement, NodeJS.Timeout>();
-    private static activeGlitchTimeouts = new Map<HTMLElement, NodeJS.Timeout>();
+    private static activeGlitchIntervals = new Map<HTMLElement, ReturnType<typeof setInterval>>();
+    private static activeGlitchTimeouts = new Map<HTMLElement, ReturnType<typeof setTimeout>>();
 
     static init(): void {
         this.cleanup();
